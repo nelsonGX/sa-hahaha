@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>岩壁計算機 - 測試儀表板</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>
+        [x-cloak] { display: none !important; }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen p-4 md:p-8" x-data="dashboard()">
+    <div class="max-w-6xl mx-auto">
+        <!-- Header -->
+        <header class="flex justify-between items-center mb-8">
+            <h1 class="text-3xl font-bold text-slate-800">岩壁計算機 <span class="text-blue-600 text-lg">Beta</span></h1>
+            <div class="text-sm text-slate-500" x-show="data" x-cloak>
+                學號：<span class="font-mono" x-text="data.student_id"></span> | 
+                系所：<span x-text="data.department_name"></span> | 
+                入學：<span x-text="data.enrollment_year"></span>
+            </div>
+        </header>
+
+        <!-- Login Card -->
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 mb-8 max-w-md mx-auto" x-show="!data" x-cloak>
+            <h2 class="text-xl font-semibold mb-4 text-center">登入 SIS 同步成績</h2>
+            <form @submit.prevent="syncGrades">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-slate-700 mb-1">學號</label>
+                    <input type="text" x-model="login.student_id" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="例如：413401223" required>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-slate-700 mb-1">密碼</label>
+                    <input type="password" x-model="login.password" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="SIS 密碼" required>
+                </div>
+                <div class="flex items-center mb-6">
+                    <input type="checkbox" id="mock" x-model="login.use_mock" class="mr-2">
+                    <label for="mock" class="text-sm text-slate-600">使用測試假資料 (Mock)</label>
+                </div>
+                <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg font-medium hover:bg-blue-700 transition" :disabled="loading">
+                    <span x-show="!loading">開始同步</span>
+                    <span x-show="loading">同步中...</span>
+                </button>
+            </form>
+        </div>
+
+        <!-- Dashboard Content -->
+        <template x-if="data">
+            <div class="space-y-8">
+                <!-- Warnings -->
+                <template x-if="data.warnings.length > 0">
+                    <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded shadow-sm">
+                        <h3 class="font-bold text-amber-800 mb-2">畢業預警</h3>
+                        <ul class="list-disc list-inside text-amber-700 space-y-1">
+                            <template x-for="warn in data.warnings">
+                                <li x-text="warn"></li>
+                            </template>
+                        </ul>
+                    </div>
+                </template>
+
+                <!-- Summary Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" x-show="data.credit_summary.details">
+                    <!-- 全人教育 -->
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                        <h3 class="text-sm font-medium text-slate-500 mb-2 tracking-wider">全人教育總進度</h3>
+                        <div class="text-3xl font-bold" x-text="data.credit_summary.details.holistic_education.earned + ' / ' + data.credit_summary.details.holistic_education.target"></div>
+                        <div class="text-sm text-rose-500 mt-1" x-show="data.credit_summary.details.holistic_education.target > data.credit_summary.details.holistic_education.earned" x-text="'還差 ' + (data.credit_summary.details.holistic_education.target - data.credit_summary.details.holistic_education.earned) + ' 學分'"></div>
+                        <div class="text-sm text-emerald-500 mt-1" x-show="data.credit_summary.details.holistic_education.target <= data.credit_summary.details.holistic_education.earned">已達標 🎉</div>
+                        <div class="w-full bg-slate-100 h-2 rounded-full mt-4 overflow-hidden">
+                            <div class="bg-amber-500 h-full transition-all duration-500" :style="`width: ${Math.min(100, (data.credit_summary.details.holistic_education.earned/data.credit_summary.details.holistic_education.target)*100)}%`"></div>
+                        </div>
+                    </div>
+                    <!-- 必修 -->
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                        <h3 class="text-sm font-medium text-slate-500 mb-2 tracking-wider">必修總進度</h3>
+                        <div class="text-3xl font-bold" x-text="data.credit_summary.details.required_courses.earned + ' / ' + data.credit_summary.details.required_courses.target"></div>
+                        <div class="text-sm text-rose-500 mt-1" x-show="data.credit_summary.details.required_courses.target > data.credit_summary.details.required_courses.earned" x-text="'還差 ' + (data.credit_summary.details.required_courses.target - data.credit_summary.details.required_courses.earned) + ' 學分'"></div>
+                        <div class="text-sm text-emerald-500 mt-1" x-show="data.credit_summary.details.required_courses.target <= data.credit_summary.details.required_courses.earned">已達標 🎉</div>
+                        <div class="w-full bg-slate-100 h-2 rounded-full mt-4 overflow-hidden">
+                            <div class="bg-blue-600 h-full transition-all duration-500" :style="`width: ${Math.min(100, (data.credit_summary.details.required_courses.earned/data.credit_summary.details.required_courses.target)*100)}%`"></div>
+                        </div>
+                    </div>
+                    <!-- 選修 -->
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                        <h3 class="text-sm font-medium text-slate-500 mb-2 tracking-wider">選修總進度</h3>
+                        <div class="text-3xl font-bold" x-text="data.credit_summary.details.elective_courses.earned + ' / ' + data.credit_summary.details.elective_courses.target"></div>
+                        <div class="text-sm text-rose-500 mt-1" x-show="data.credit_summary.details.elective_courses.target > data.credit_summary.details.elective_courses.earned" x-text="'還差 ' + (data.credit_summary.details.elective_courses.target - data.credit_summary.details.elective_courses.earned) + ' 學分'"></div>
+                        <div class="text-sm text-emerald-500 mt-1" x-show="data.credit_summary.details.elective_courses.target <= data.credit_summary.details.elective_courses.earned">已達標 🎉</div>
+                        <div class="w-full bg-slate-100 h-2 rounded-full mt-4 overflow-hidden">
+                            <div class="bg-emerald-500 h-full transition-all duration-500" :style="`width: ${Math.min(100, (data.credit_summary.details.elective_courses.earned/data.credit_summary.details.elective_courses.target)*100)}%`"></div>
+                        </div>
+                    </div>
+                    <!-- 通識 -->
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                        <h3 class="text-sm font-medium text-slate-500 mb-2 tracking-wider">通識總進度</h3>
+                        <div class="text-3xl font-bold" x-text="data.credit_summary.details.general_ed.earned + ' / ' + data.credit_summary.details.general_ed.target"></div>
+                        <div class="text-sm text-rose-500 mt-1" x-show="data.credit_summary.details.general_ed.target > data.credit_summary.details.general_ed.earned" x-text="'還差 ' + (data.credit_summary.details.general_ed.target - data.credit_summary.details.general_ed.earned) + ' 學分'"></div>
+                        <div class="text-sm text-emerald-500 mt-1" x-show="data.credit_summary.details.general_ed.target <= data.credit_summary.details.general_ed.earned">已達標 🎉</div>
+                        <div class="w-full bg-slate-100 h-2 rounded-full mt-4 overflow-hidden">
+                            <div class="bg-purple-500 h-full transition-all duration-500" :style="`width: ${Math.min(100, (data.credit_summary.details.general_ed.earned/data.credit_summary.details.general_ed.target)*100)}%`"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detailed IM Section -->
+                <div class="bg-white p-8 rounded-xl shadow-sm border border-slate-200" x-show="data.credit_summary.details">
+                    <h2 class="text-2xl font-bold mb-6 flex items-center">
+                        <span class="w-2 h-8 bg-blue-600 rounded mr-3"></span>
+                        資管系畢業初審細項
+                    </h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
+                        <template x-for="(val, key) in data.credit_summary.details">
+                            <div class="space-y-1" x-show="typeof val === 'object' && val !== null">
+                                <div class="flex justify-between text-sm">
+                                    <span class="font-medium text-slate-600" x-text="formatKey(key)"></span>
+                                    <span class="text-slate-400" x-text="val.earned + ' / ' + val.target"></span>
+                                </div>
+                                <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                                    <div class="h-full bg-blue-500" :style="`width: ${Math.min(100, (val.earned/val.target)*100)}%`"></div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+
+                <!-- Course Table -->
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                    <div class="p-6 border-b border-slate-100 flex justify-between items-center">
+                        <h3 class="font-bold text-lg text-slate-800">歷年修課明細</h3>
+                        <div class="flex gap-2">
+                            <button @click="sortRecords('semester')" class="text-xs bg-slate-100 px-3 py-1 rounded-full hover:bg-slate-200 transition">按學期排序</button>
+                            <button @click="sortRecords('audit_category')" class="text-xs bg-slate-100 px-3 py-1 rounded-full hover:bg-slate-200 transition">按分類排序</button>
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead class="bg-slate-50 text-slate-500 text-xs uppercase">
+                                <tr>
+                                    <th class="px-6 py-4 border-b">學期</th>
+                                    <th class="px-6 py-4 border-b">課程名稱</th>
+                                    <th class="px-6 py-4 border-b text-center">學分</th>
+                                    <th class="px-6 py-4 border-b text-center">成績</th>
+                                    <th class="px-6 py-4 border-b">審查標籤</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-sm divide-y divide-slate-100">
+                                <template x-for="r in data.course_records">
+                                    <tr class="hover:bg-slate-50 transition-colors">
+                                        <td class="px-6 py-4 font-mono text-slate-500" x-text="r.semester"></td>
+                                        <td class="px-6 py-4">
+                                            <div class="font-medium text-slate-800" x-text="r.course_name"></div>
+                                            <div class="text-[10px] text-slate-400" x-text="r.category"></div>
+                                        </td>
+                                        <td class="px-6 py-4 text-center" x-text="r.credits"></td>
+                                        <td class="px-6 py-4 text-center">
+                                            <span class="px-2 py-0.5 rounded text-[10px] font-bold" 
+                                                :class="isPassed(r.score) ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700'"
+                                                x-text="r.score"></span>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <span class="px-2 py-1 rounded text-[10px] font-medium border"
+                                                :class="getCategoryStyle(r.audit_category)"
+                                                x-text="r.audit_category"></span>
+                                        </td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="text-center pb-12">
+                    <button @click="data = null" class="text-slate-400 hover:text-slate-600 underline text-sm">重新載入其他學號</button>
+                </div>
+            </div>
+        </template>
+    </div>
+
+    <script>
+        function dashboard() {
+            return {
+                loading: false,
+                login: { student_id: '', password: '', use_mock: true },
+                data: null,
+                sortOrder: 'asc',
+                async syncGrades() {
+                    this.loading = true;
+                    try {
+                        const res = await fetch('/api/sync-grades', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(this.login)
+                        });
+                        const result = await res.json();
+                        if (result.status === 'success') {
+                            this.data = result.data;
+                            this.sortRecords('semester');
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                        } else {
+                            alert('同步失敗：' + (result.detail?.message || result.message));
+                        }
+                    } catch (e) {
+                        alert('連線失敗，請檢查後端是否啟動');
+                    } finally {
+                        this.loading = false;
+                    }
+                },
+                isPassed(score) {
+                    if (!isNaN(score)) return parseInt(score) >= 60;
+                    return ['抵免','通過','及格'].includes(score);
+                },
+                sortRecords(key) {
+                    this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
+                    this.data.course_records.sort((a, b) => {
+                        let va = a[key], vb = b[key];
+                        return this.sortOrder === 'asc' ? va.localeCompare(vb) : vb.localeCompare(va);
+                    });
+                },
+                formatKey(key) {
+                    const map = {
+                        required_courses: '必修 (64)',
+                        elective_courses: '選修 (32)',
+                        holistic_education: '全人教育 (32)',
+                        holistic_core: '全人核心 (8)',
+                        basic_skills: '基本能力 (12)',
+                        general_ed: '通識 (12)',
+                        pe_semesters: '體育學期數 (4)'
+                    };
+                    return map[key] || key;
+                },
+                getCategoryStyle(cat) {
+                    if (cat.includes('必修')) return 'bg-blue-50 text-blue-600 border-blue-200';
+                    if (cat.includes('選修')) return 'bg-emerald-50 text-emerald-600 border-emerald-200';
+                    if (cat.includes('核心') || cat.includes('能力')) return 'bg-slate-50 text-slate-600 border-slate-200';
+                    if (cat.includes('通識')) return 'bg-purple-50 text-purple-600 border-purple-200';
+                    if (cat.includes('體育')) return 'bg-rose-50 text-rose-600 border-rose-200';
+                    return 'bg-slate-50 text-slate-400 border-slate-100';
+                }
+            }
+        }
+    </script>
+</body>
+</html>
