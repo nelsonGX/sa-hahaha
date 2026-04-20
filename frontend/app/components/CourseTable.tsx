@@ -15,13 +15,92 @@ function isPassed(score: string): boolean {
   return ['抵免', '通過', '及格'].includes(score);
 }
 
-function getCategoryStyle(cat: string): string {
-  if (cat.includes('必修')) return 'bg-blue-50 text-blue-600 border-blue-200';
-  if (cat.includes('選修')) return 'bg-emerald-50 text-emerald-600 border-emerald-200';
-  if (cat.includes('核心') || cat.includes('能力')) return 'bg-slate-50 text-slate-600 border-slate-200';
-  if (cat.includes('通識')) return 'bg-purple-50 text-purple-600 border-purple-200';
-  if (cat.includes('體育')) return 'bg-rose-50 text-rose-600 border-rose-200';
-  return 'bg-slate-50 text-slate-400 border-slate-200';
+interface SortChipProps {
+  id: 'semester' | 'audit_category';
+  label: string;
+  active: boolean;
+  sortAsc: boolean;
+  onToggleSort: (key: 'semester' | 'audit_category') => void;
+}
+
+function SortChip({ id, label, active, sortAsc, onToggleSort }: SortChipProps) {
+  return (
+    <button
+      onClick={() => onToggleSort(id)}
+      style={{
+        padding: '3px 10px',
+        borderRadius: 9999,
+        fontSize: 12,
+        fontWeight: 600,
+        letterSpacing: '0.125px',
+        border: '1px solid var(--border)',
+        background: active ? 'var(--notion-blue)' : 'transparent',
+        color: active ? '#ffffff' : 'var(--warm-gray-500)',
+        cursor: 'pointer',
+        transition: 'background 0.15s, color 0.15s',
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: 4,
+      }}
+    >
+      {label}
+      <span style={{ opacity: active ? 1 : 0.4, fontSize: 10 }}>
+        {active && !sortAsc ? '▲' : '▼'}
+      </span>
+    </button>
+  );
+}
+
+function CategoryBadge({ cat }: { cat: string }) {
+  let bg = 'var(--badge-bg)';
+  let color = 'var(--badge-text)';
+
+  if (cat.includes('必修')) {
+    bg = 'var(--badge-bg)'; color = 'var(--badge-text)';
+  } else if (cat.includes('選修')) {
+    bg = 'rgba(42,157,153,0.1)'; color = '#2a9d99';
+  } else if (cat.includes('通識')) {
+    bg = 'rgba(57,28,87,0.08)'; color = '#391c57';
+  } else if (cat.includes('體育')) {
+    bg = 'rgba(221,91,0,0.08)'; color = '#dd5b00';
+  } else if (cat.includes('核心') || cat.includes('能力')) {
+    bg = 'rgba(0,0,0,0.05)'; color = 'var(--warm-gray-500)';
+  }
+
+  return (
+    <span
+      style={{
+        background: bg,
+        color,
+        borderRadius: 9999,
+        padding: '2px 8px',
+        fontSize: 12,
+        fontWeight: 600,
+        letterSpacing: '0.125px',
+        whiteSpace: 'nowrap',
+      }}
+    >
+      {cat}
+    </span>
+  );
+}
+
+function ScoreBadge({ score }: { score: string }) {
+  const passed = isPassed(score);
+  return (
+    <span
+      style={{
+        background: passed ? 'rgba(26,174,57,0.1)' : 'rgba(221,91,0,0.08)',
+        color: passed ? '#1aae39' : '#dd5b00',
+        borderRadius: 4,
+        padding: '2px 6px',
+        fontSize: 12,
+        fontWeight: 600,
+      }}
+    >
+      {score}
+    </span>
+  );
 }
 
 export default function CourseTable({ records }: CourseTableProps) {
@@ -45,81 +124,80 @@ export default function CourseTable({ records }: CourseTableProps) {
     });
   }, [records, sortKey, sortAsc]);
 
-  function SortIcon({ active, asc }: { active: boolean; asc: boolean }) {
-    return (
-      <svg
-        className={`inline w-3.5 h-3.5 ml-1 transition-opacity ${active ? 'opacity-100' : 'opacity-30'}`}
-        fill="none" stroke="currentColor" viewBox="0 0 24 24"
-      >
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-          d={active && !asc ? 'M5 15l7-7 7 7' : 'M19 9l-7 7-7-7'} />
-      </svg>
-    );
-  }
-
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
-      <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
-        <h3 className="font-bold text-slate-800">歷年修課明細</h3>
+    <div
+      className="rounded-xl overflow-hidden"
+      style={{
+        background: '#ffffff',
+        border: '1px solid var(--border)',
+        boxShadow: 'var(--shadow-card)',
+      }}
+    >
+      <div
+        className="flex items-center justify-between px-6 py-4"
+        style={{ borderBottom: '1px solid var(--border)' }}
+      >
+        <h3
+          className="font-bold"
+          style={{ fontSize: 16, color: 'rgba(0,0,0,0.95)', letterSpacing: '-0.25px' }}
+        >
+          歷年修課明細
+        </h3>
         <div className="flex gap-2">
-          <button
-            onClick={() => toggleSort('semester')}
-            className={`text-xs px-3 py-1 rounded-full border transition-colors ${
-              sortKey === 'semester'
-                ? 'bg-indigo-600 text-white border-indigo-600'
-                : 'bg-slate-50 text-slate-500 border-slate-200 hover:bg-slate-100'
-            }`}
-          >
-            按學期
-            <SortIcon active={sortKey === 'semester'} asc={sortAsc} />
-          </button>
-          <button
-            onClick={() => toggleSort('audit_category')}
-            className={`text-xs px-3 py-1 rounded-full border transition-colors ${
-              sortKey === 'audit_category'
-                ? 'bg-indigo-600 text-white border-indigo-600'
-                : 'bg-slate-50 text-slate-500 border-slate-200 hover:bg-slate-100'
-            }`}
-          >
-            按分類
-            <SortIcon active={sortKey === 'audit_category'} asc={sortAsc} />
-          </button>
+          <SortChip id="semester" label="按學期" active={sortKey === 'semester'} sortAsc={sortAsc} onToggleSort={toggleSort} />
+          <SortChip id="audit_category" label="按分類" active={sortKey === 'audit_category'} sortAsc={sortAsc} onToggleSort={toggleSort} />
         </div>
       </div>
 
       <div className="overflow-x-auto">
-        <table className="w-full text-left text-sm">
-          <thead className="bg-slate-50 text-slate-400 text-xs uppercase">
-            <tr>
-              <th className="px-6 py-3 font-medium">學期</th>
-              <th className="px-6 py-3 font-medium">課程名稱</th>
-              <th className="px-6 py-3 font-medium text-center">學分</th>
-              <th className="px-6 py-3 font-medium text-center">成績</th>
-              <th className="px-6 py-3 font-medium">審查標籤</th>
+        <table className="w-full text-left">
+          <thead>
+            <tr style={{ background: 'var(--warm-white)' }}>
+              {['學期', '課程名稱', '學分', '成績', '審查標籤'].map((h, i) => (
+                <th
+                  key={h}
+                  style={{
+                    padding: '10px 20px',
+                    fontSize: 12,
+                    fontWeight: 600,
+                    color: 'var(--warm-gray-300)',
+                    letterSpacing: '0.125px',
+                    textTransform: 'uppercase',
+                    textAlign: i >= 2 && i <= 3 ? 'center' : 'left',
+                    borderBottom: '1px solid var(--border)',
+                  }}
+                >
+                  {h}
+                </th>
+              ))}
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-50">
+          <tbody>
             {sorted.map((r, i) => (
-              <tr key={i} className="hover:bg-slate-50/70 transition-colors">
-                <td className="px-6 py-3.5 font-mono text-slate-400 text-xs">{r.semester}</td>
-                <td className="px-6 py-3.5">
-                  <p className="font-medium text-slate-800">{r.course_name}</p>
-                  <p className="text-xs text-slate-400 mt-0.5">{r.category}</p>
+              <tr
+                key={i}
+                style={{ borderBottom: '1px solid rgba(0,0,0,0.05)' }}
+                onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--warm-white)')}
+                onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
+              >
+                <td
+                  className="font-mono"
+                  style={{ padding: '12px 20px', fontSize: 12, color: 'var(--warm-gray-300)', whiteSpace: 'nowrap' }}
+                >
+                  {r.semester}
                 </td>
-                <td className="px-6 py-3.5 text-center text-slate-600">{r.credits}</td>
-                <td className="px-6 py-3.5 text-center">
-                  <span className={`inline-block px-2 py-0.5 rounded text-xs font-bold ${
-                    isPassed(r.score)
-                      ? 'bg-emerald-100 text-emerald-700'
-                      : 'bg-rose-100 text-rose-700'
-                  }`}>
-                    {r.score}
-                  </span>
+                <td style={{ padding: '12px 20px' }}>
+                  <p style={{ fontSize: 14, fontWeight: 500, color: 'rgba(0,0,0,0.95)' }}>{r.course_name}</p>
+                  <p style={{ fontSize: 12, color: 'var(--warm-gray-300)', marginTop: 2 }}>{r.category}</p>
                 </td>
-                <td className="px-6 py-3.5">
-                  <span className={`inline-block px-2 py-1 rounded text-xs font-medium border ${getCategoryStyle(r.audit_category)}`}>
-                    {r.audit_category}
-                  </span>
+                <td style={{ padding: '12px 20px', textAlign: 'center', fontSize: 14, color: 'var(--warm-gray-500)' }}>
+                  {r.credits}
+                </td>
+                <td style={{ padding: '12px 20px', textAlign: 'center' }}>
+                  <ScoreBadge score={r.score} />
+                </td>
+                <td style={{ padding: '12px 20px' }}>
+                  <CategoryBadge cat={r.audit_category} />
                 </td>
               </tr>
             ))}

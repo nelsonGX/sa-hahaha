@@ -26,38 +26,72 @@ export default function Dashboard() {
         onReset={() => setData(null)}
       />
 
-      <main className="bg-slate-50 min-h-screen">
-        {/* Hero */}
-        <div className="bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-            <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
-              <div>
-                <p className="text-indigo-300 text-sm mb-1">
-                  {enrollment_year} 學年度入學 · {department_name}
-                </p>
-                <h1 className="text-3xl font-bold tracking-tight">
-                  學號 <span className="font-mono">{student_id}</span>
-                </h1>
-              </div>
-              <div className="flex items-center gap-4 bg-white/10 backdrop-blur rounded-2xl px-6 py-3">
+      <main style={{ background: 'var(--warm-white)', minHeight: '100vh' }}>
+        <div
+          style={{
+            background: '#ffffff',
+            borderBottom: '1px solid var(--border)',
+          }}
+        >
+          <div className="max-w-6xl mx-auto px-6 py-10">
+            <p style={{ fontSize: 14, color: 'var(--warm-gray-300)', marginBottom: 6 }}>
+              {enrollment_year} 學年度入學 · {department_name}
+            </p>
+            <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
+              <h1
+                className="font-bold"
+                style={{
+                  fontSize: 40,
+                  letterSpacing: '-1.5px',
+                  lineHeight: 1.1,
+                  color: 'rgba(0,0,0,0.95)',
+                }}
+              >
+                學號{' '}
+                <span className="font-mono" style={{ letterSpacing: '-0.5px' }}>
+                  {student_id}
+                </span>
+              </h1>
+
+              <div
+                className="flex items-center gap-6 shrink-0"
+                style={{
+                  background: 'var(--warm-white)',
+                  border: '1px solid var(--border)',
+                  borderRadius: 12,
+                  padding: '16px 24px',
+                  boxShadow: 'var(--shadow-card)',
+                }}
+              >
                 <div className="text-center">
-                  <p className="text-3xl font-bold">{credit_summary.total_earned}</p>
-                  <p className="text-xs text-slate-300 mt-0.5">已修學分</p>
+                  <p
+                    className="font-bold"
+                    style={{ fontSize: 32, letterSpacing: '-1px', color: 'rgba(0,0,0,0.95)', lineHeight: 1 }}
+                  >
+                    {credit_summary.total_earned}
+                  </p>
+                  <p style={{ fontSize: 12, color: 'var(--warm-gray-300)', marginTop: 4 }}>已修學分</p>
                 </div>
-                <div className="w-px h-10 bg-white/20" />
+                <div style={{ width: 1, height: 36, background: 'var(--border)' }} />
                 <div className="text-center">
-                  <p className={`text-lg font-semibold ${warnings.length > 0 ? 'text-amber-400' : 'text-emerald-400'}`}>
+                  <p
+                    className="font-semibold"
+                    style={{
+                      fontSize: 16,
+                      color: warnings.length > 0 ? '#dd5b00' : '#2a9d99',
+                      lineHeight: 1,
+                    }}
+                  >
                     {warnings.length > 0 ? `${warnings.length} 項預警` : '無預警'}
                   </p>
-                  <p className="text-xs text-slate-300 mt-0.5">畢業狀態</p>
+                  <p style={{ fontSize: 12, color: 'var(--warm-gray-300)', marginTop: 4 }}>畢業狀態</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Content */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+        <div className="max-w-6xl mx-auto px-6 py-10 flex flex-col gap-6">
           <WarningBanner warnings={warnings} />
 
           {credit_summary.details && (

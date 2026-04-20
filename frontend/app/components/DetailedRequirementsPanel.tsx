@@ -20,16 +20,26 @@ function Row({ label, earned, target }: { label: string; earned: number; target:
 
   return (
     <div>
-      <div className="flex justify-between items-center text-sm mb-1.5">
-        <span className="font-medium text-slate-600">{label}</span>
-        <span className={`font-semibold tabular-nums ${done ? 'text-emerald-600' : 'text-slate-400'}`}>
+      <div className="flex justify-between items-center mb-1.5">
+        <span style={{ fontSize: 14, fontWeight: 500, color: 'var(--warm-gray-500)' }}>{label}</span>
+        <span
+          className="tabular-nums"
+          style={{ fontSize: 14, fontWeight: 600, color: done ? '#2a9d99' : 'var(--warm-gray-300)' }}
+        >
           {earned} / {target}
         </span>
       </div>
-      <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+      <div
+        className="w-full rounded-full overflow-hidden"
+        style={{ height: 4, background: 'rgba(0,0,0,0.07)' }}
+      >
         <div
-          className={`h-full rounded-full transition-all duration-700 ${done ? 'bg-emerald-500' : 'bg-blue-500'}`}
-          style={{ width: `${pct}%` }}
+          className="h-full rounded-full"
+          style={{
+            width: `${pct}%`,
+            background: done ? '#2a9d99' : 'var(--notion-blue)',
+            transition: 'width 0.7s ease',
+          }}
         />
       </div>
     </div>
@@ -40,23 +50,29 @@ export default function DetailedRequirementsPanel({ details }: DetailedRequireme
   const entries = Object.entries(details) as [keyof DetailedRequirements, CreditCategory | { earned: number; target: number; domains: Record<string, CreditCategory> }][];
 
   return (
-    <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
-      <div className="flex items-center gap-3 mb-6">
-        <div className="w-1 h-7 bg-blue-600 rounded-full" />
-        <h2 className="text-xl font-bold text-slate-800">資管系畢業初審細項</h2>
-      </div>
+    <div
+      className="rounded-xl p-6"
+      style={{
+        background: '#ffffff',
+        border: '1px solid var(--border)',
+        boxShadow: 'var(--shadow-card)',
+      }}
+    >
+      <h2
+        className="font-bold mb-6"
+        style={{ fontSize: 18, color: 'rgba(0,0,0,0.95)', letterSpacing: '-0.25px' }}
+      >
+        資管系畢業初審細項
+      </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-5">
-        {entries.map(([key, val]) => {
-          const label = KEY_LABELS[key] ?? key;
-          return (
-            <Row
-              key={key}
-              label={label}
-              earned={val.earned}
-              target={val.target}
-            />
-          );
-        })}
+        {entries.map(([key, val]) => (
+          <Row
+            key={key}
+            label={KEY_LABELS[key] ?? key}
+            earned={val.earned}
+            target={val.target}
+          />
+        ))}
       </div>
     </div>
   );

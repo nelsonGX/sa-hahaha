@@ -6,24 +6,70 @@ interface NavbarProps {
 
 export default function Navbar({ studentId, departmentName, onReset }: NavbarProps) {
   return (
-    <nav className="sticky top-0 z-40 bg-slate-900/95 backdrop-blur border-b border-white/10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-14">
-          <div className="flex items-center gap-3">
-            <span className="text-indigo-400 text-xl">⛰</span>
-            <span className="text-white font-bold tracking-tight">岩壁計算機</span>
-            <span className="hidden sm:inline-flex items-center gap-1.5 ml-2 px-2.5 py-0.5 rounded-full bg-indigo-600/20 border border-indigo-500/30 text-xs text-indigo-300 font-medium">
+    <nav
+      className="sticky top-0 z-40"
+      style={{
+        background: '#ffffff',
+        borderBottom: '1px solid var(--border)',
+      }}
+    >
+      <div className="max-w-6xl mx-auto px-6">
+        <div className="flex items-center justify-between" style={{ height: 56 }}>
+          <div className="flex items-center gap-2.5">
+            <span style={{ fontSize: 20 }}>⛰️</span>
+            <span
+              className="font-bold"
+              style={{ fontSize: 15, color: 'rgba(0,0,0,0.95)', letterSpacing: '-0.25px' }}
+            >
+              岩壁計算機
+            </span>
+            <span
+              className="hidden sm:inline-flex items-center"
+              style={{
+                background: 'var(--badge-bg)',
+                color: 'var(--badge-text)',
+                borderRadius: 9999,
+                padding: '2px 8px',
+                fontSize: 12,
+                fontWeight: 600,
+                letterSpacing: '0.125px',
+              }}
+            >
               Beta
             </span>
           </div>
+
           <div className="flex items-center gap-4">
             <div className="hidden sm:block text-right">
-              <p className="text-xs text-slate-500 font-mono">{studentId}</p>
-              <p className="text-xs text-slate-400">{departmentName}</p>
+              <p
+                className="font-mono"
+                style={{ fontSize: 12, color: 'var(--warm-gray-300)' }}
+              >
+                {studentId}
+              </p>
+              <p style={{ fontSize: 12, color: 'var(--warm-gray-500)' }}>{departmentName}</p>
             </div>
             <button
               onClick={onReset}
-              className="px-3 py-1.5 rounded-lg text-xs text-slate-400 border border-slate-700 hover:bg-white/5 hover:text-white transition-colors"
+              style={{
+                padding: '4px 12px',
+                border: '1px solid var(--border)',
+                borderRadius: 4,
+                fontSize: 13,
+                fontWeight: 500,
+                color: 'var(--warm-gray-500)',
+                background: 'transparent',
+                cursor: 'pointer',
+                transition: 'color 0.15s, background 0.15s',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = 'rgba(0,0,0,0.95)';
+                e.currentTarget.style.background = 'rgba(0,0,0,0.04)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = 'var(--warm-gray-500)';
+                e.currentTarget.style.background = 'transparent';
+              }}
             >
               重新載入
             </button>
