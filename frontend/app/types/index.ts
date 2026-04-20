@@ -1,35 +1,43 @@
-export interface StudentInfo {
-  name: string;
-  department: string;
-  enrollmentYear: string;
-  grade: string;
-}
-
-export interface CreditProgress {
-  id: string;
-  category: string;
-  earned: number;
-  required: number;
-}
-
-export interface Course {
-  id: string;
-  name: string;
+export interface CourseRecord {
+  semester: string;
+  course_name: string;
   credits: number;
-  teacher?: string;
-  time?: string;
+  score: string;
+  category: string;
+  audit_category: string;
 }
 
-export interface FailedCourse extends Course {
-  grade: number;
+export interface CreditCategory {
+  earned: number;
+  target: number;
 }
 
-export interface RecommendedCourse extends Course {
-  categoryId: string;
-  teacher: string;
-  time: string;
+export interface GeneralEducationCredit {
+  earned: number;
+  target: number;
+  domains: Record<string, CreditCategory>;
 }
 
-export interface PlannedCourse extends Course {
-  time: string;
+export interface DetailedRequirements {
+  required_courses: CreditCategory;
+  elective_courses: CreditCategory;
+  holistic_education: CreditCategory;
+  holistic_core: CreditCategory;
+  basic_skills: CreditCategory;
+  general_ed: GeneralEducationCredit;
+  pe_semesters: CreditCategory;
+}
+
+export interface CreditSummary {
+  total_earned: number;
+  details?: DetailedRequirements;
+}
+
+export interface StudentData {
+  student_id: string;
+  department_name: string;
+  enrollment_year: number;
+  course_records: CourseRecord[];
+  credit_summary: CreditSummary;
+  warnings: string[];
 }
