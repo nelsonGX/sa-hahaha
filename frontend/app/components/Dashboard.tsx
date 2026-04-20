@@ -5,9 +5,7 @@ import type { StudentData } from '../types';
 import LoginForm from './LoginForm';
 import Navbar from './Navbar';
 import WarningBanner from './WarningBanner';
-import SummaryCards from './SummaryCards';
-import DetailedRequirementsPanel from './DetailedRequirementsPanel';
-import CourseTable from './CourseTable';
+import RequirementsTree from './RequirementsTree';
 
 export default function Dashboard() {
   const [data, setData] = useState<StudentData | null>(null);
@@ -61,13 +59,12 @@ export default function Dashboard() {
           <WarningBanner warnings={warnings} />
 
           {credit_summary.details && (
-            <>
-              <SummaryCards details={credit_summary.details} />
-              <DetailedRequirementsPanel details={credit_summary.details} />
-            </>
+            <RequirementsTree
+              details={credit_summary.details}
+              records={course_records}
+              enrollmentYear={enrollment_year}
+            />
           )}
-
-          <CourseTable records={course_records} />
         </div>
       </main>
     </>
