@@ -1,4 +1,5 @@
 import type { DetailedRequirements } from '../types';
+import { getProgressValue } from '../utils/progress';
 
 interface SummaryCardsProps {
   details: DetailedRequirements;
@@ -12,13 +13,17 @@ const cards = [
 ] satisfies { key: keyof Pick<DetailedRequirements, 'required_courses' | 'elective_courses' | 'holistic_education' | 'general_ed'>; label: string }[];
 
 function ProgressBar({ earned, target }: { earned: number; target: number }) {
-  const pct = Math.min(100, Math.round((earned / target) * 100));
-  const done = earned >= target;
+  const { pct, done } = getProgressValue(earned, target);
+  const hasProgress = pct > 0;
   return (
-    <div className="w-full rounded-full overflow-hidden h-1 bg-black/[0.07] mt-4">
+    <div className="mt-4 h-1.5 w-full rounded-full overflow-hidden bg-[#e7e1d9]">
       <div
-        className={`h-full rounded-full ${done ? 'bg-[#2a9d99]' : 'bg-[var(--notion-blue)]'}`}
-        style={{ width: `${pct}%`, transition: 'width 0.7s ease' }}
+        className={done ? 'h-full rounded-full bg-[#213183]' : 'h-full rounded-full bg-[#6f7ec9]'}
+        style={{
+          width: `${pct}%`,
+          minWidth: hasProgress ? 6 : 0,
+          transition: 'width 0.7s ease',
+        }}
       />
     </div>
   );
@@ -29,8 +34,7 @@ export default function SummaryCards({ details }: SummaryCardsProps) {
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       {cards.map(({ key, label }) => {
         const item = details[key];
-        const { earned, target } = item;
-        const done = earned >= target;
+        const { earned, target, done } = getProgressValue(item.earned, item.target);
 
         return (
           <div

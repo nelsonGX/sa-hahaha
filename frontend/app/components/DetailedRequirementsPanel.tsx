@@ -1,4 +1,5 @@
 import type { DetailedRequirements, CreditCategory } from '../types';
+import { getProgressValue } from '../utils/progress';
 
 interface DetailedRequirementsPanelProps {
   details: DetailedRequirements;
@@ -15,21 +16,25 @@ const KEY_LABELS: Record<string, string> = {
 };
 
 function Row({ label, earned, target }: { label: string; earned: number; target: number }) {
-  const pct = Math.min(100, Math.round((earned / target) * 100));
-  const done = earned >= target;
+  const { pct, done, earned: safeEarned, target: safeTarget } = getProgressValue(earned, target);
+  const hasProgress = pct > 0;
 
   return (
     <div>
       <div className="flex justify-between items-center mb-1.5">
         <span className="text-sm font-medium text-[#615d59]">{label}</span>
         <span className={`tabular-nums text-sm font-semibold ${done ? 'text-[#2a9d99]' : 'text-[#615d59]'}`}>
-          {earned} / {target}
+          {safeEarned} / {safeTarget}
         </span>
       </div>
-      <div className="w-full rounded-full overflow-hidden h-1 bg-black/[0.07]">
+      <div className="h-1.5 w-full rounded-full overflow-hidden bg-[#e7e1d9]">
         <div
-          className={`h-full rounded-full ${done ? 'bg-[#2a9d99]' : 'bg-[var(--notion-blue)]'}`}
-          style={{ width: `${pct}%`, transition: 'width 0.7s ease' }}
+          className={done ? 'h-full rounded-full bg-[#213183]' : 'h-full rounded-full bg-[#6f7ec9]'}
+          style={{
+            width: `${pct}%`,
+            minWidth: hasProgress ? 6 : 0,
+            transition: 'width 0.7s ease',
+          }}
         />
       </div>
     </div>
