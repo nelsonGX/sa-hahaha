@@ -27,10 +27,10 @@ function SortChip({ id, label, active, sortAsc, onToggleSort }: SortChipProps) {
   return (
     <button
       onClick={() => onToggleSort(id)}
-      className={`px-2.5 py-[3px] rounded-full text-xs font-semibold tracking-[0.125px] border cursor-pointer transition-colors inline-flex items-center gap-1 ${
+      className={`px-2.5 py-0.75 rounded-full text-xs font-semibold tracking-[0.125px] border cursor-pointer transition-colors inline-flex items-center gap-1 ${
         active
-          ? 'bg-[var(--notion-blue)] text-white border-transparent'
-          : 'bg-transparent text-[#615d59] border-black/10 hover:bg-black/[0.04]'
+          ? 'bg-(--notion-blue) text-white border-transparent'
+          : 'bg-transparent text-[#615d59] border-black/10 hover:bg-black/4'
       }`}
     >
       {label}
@@ -86,7 +86,7 @@ export default function CourseTable({ records }: CourseTableProps) {
   }, [records, sortKey, sortAsc]);
 
   return (
-    <div className="rounded-xl overflow-hidden bg-white border border-black/10 shadow-[var(--shadow-card)]">
+    <div className="rounded-xl overflow-hidden bg-white border border-black/10 shadow-(--shadow-card)">
       <div className="flex items-center justify-between px-6 py-4 border-b border-black/10">
         <h3 className="font-bold text-base text-black/95 tracking-[-0.25px]">
           歷年修課明細

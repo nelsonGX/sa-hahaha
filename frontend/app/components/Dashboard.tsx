@@ -38,7 +38,7 @@ export default function Dashboard() {
                 <span className="font-mono tracking-[-0.5px]">{student_id}</span>
               </h1>
 
-              <div className="flex items-center gap-6 shrink-0 bg-[#f6f5f4] border border-black/10 rounded-xl px-6 py-4 shadow-[var(--shadow-card)]">
+              <div className="flex items-center gap-6 shrink-0 bg-[#f6f5f4] border border-black/10 rounded-xl px-6 py-4 shadow-(--shadow-card)">
                 <div className="text-center">
                   <p className="font-bold text-[32px] tracking-[-1px] text-black/95 leading-none">
                     {credit_summary.total_earned}

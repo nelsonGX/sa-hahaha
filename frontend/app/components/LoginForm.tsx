@@ -42,7 +42,7 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
           </p>
         </div>
 
-        <div className="rounded-2xl p-8 bg-white border border-black/10 shadow-[var(--shadow-deep)]">
+        <div className="rounded-2xl p-8 bg-white border border-black/10 shadow-(--shadow-deep)">
           <h2 className="font-semibold mb-6 text-base text-black/95">
             登入 SIS 同步成績
           </h2>
@@ -84,7 +84,7 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
                   onChange={(e) => setUseMock(e.target.checked)}
                   className="sr-only peer"
                 />
-                <div className="w-9 h-5 rounded-full border border-black/15 bg-black/[0.08] transition-colors peer-checked:bg-[var(--notion-blue)] peer-checked:border-transparent" />
+                <div className="w-9 h-5 rounded-full border border-black/15 bg-black/8 transition-colors peer-checked:bg-(--notion-blue) peer-checked:border-transparent" />
                 <div className="absolute top-0.5 left-0.5 w-4 h-4 bg-white rounded-full shadow-sm transition-transform peer-checked:translate-x-4" />
               </div>
               <span className="text-sm text-[#615d59]">
@@ -102,7 +102,7 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
             <button
               type="submit"
               disabled={loading}
-              className="flex items-center justify-center gap-2 px-4 py-2 rounded text-[15px] font-semibold text-white bg-[var(--notion-blue)] border border-transparent transition-colors cursor-pointer hover:bg-[var(--notion-blue-active)] active:scale-[.97] disabled:bg-[#a39e98] disabled:cursor-not-allowed"
+              className="flex items-center justify-center gap-2 px-4 py-2 rounded text-[15px] font-semibold text-white bg-(--notion-blue) border border-transparent transition-colors cursor-pointer hover:bg-(--notion-blue-active) active:scale-[.97] disabled:bg-[#a39e98] disabled:cursor-not-allowed"
             >
               {loading ? '同步中...' : '開始同步'}
             </button>
