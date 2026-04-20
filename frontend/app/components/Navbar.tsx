@@ -26,7 +26,7 @@ export default function Navbar({ studentId, departmentName, onReset }: NavbarPro
             </div>
             <button
               onClick={onReset}
-              className="px-3 py-1 border border-black/10 rounded text-[13px] font-medium text-[#615d59] bg-transparent cursor-pointer transition-colors hover:text-black/95 hover:bg-black/[0.04]"
+              className="px-3 py-1 border border-black/10 rounded text-[13px] font-medium text-[#615d59] bg-transparent cursor-pointer transition-colors hover:text-black/95 hover:bg-black/4"
             >
               重新載入
             </button>
