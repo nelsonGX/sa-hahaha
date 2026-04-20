@@ -27,24 +27,14 @@ function SortChip({ id, label, active, sortAsc, onToggleSort }: SortChipProps) {
   return (
     <button
       onClick={() => onToggleSort(id)}
-      style={{
-        padding: '3px 10px',
-        borderRadius: 9999,
-        fontSize: 12,
-        fontWeight: 600,
-        letterSpacing: '0.125px',
-        border: '1px solid var(--border)',
-        background: active ? 'var(--notion-blue)' : 'transparent',
-        color: active ? '#ffffff' : 'var(--warm-gray-500)',
-        cursor: 'pointer',
-        transition: 'background 0.15s, color 0.15s',
-        display: 'inline-flex',
-        alignItems: 'center',
-        gap: 4,
-      }}
+      className={`px-2.5 py-[3px] rounded-full text-xs font-semibold tracking-[0.125px] border cursor-pointer transition-colors inline-flex items-center gap-1 ${
+        active
+          ? 'bg-[var(--notion-blue)] text-white border-transparent'
+          : 'bg-transparent text-[#615d59] border-black/10 hover:bg-black/[0.04]'
+      }`}
     >
       {label}
-      <span style={{ opacity: active ? 1 : 0.4, fontSize: 10 }}>
+      <span className={`text-[10px] ${active ? 'opacity-100' : 'opacity-40'}`}>
         {active && !sortAsc ? '▲' : '▼'}
       </span>
     </button>
@@ -52,34 +42,14 @@ function SortChip({ id, label, active, sortAsc, onToggleSort }: SortChipProps) {
 }
 
 function CategoryBadge({ cat }: { cat: string }) {
-  let bg = 'var(--badge-bg)';
-  let color = 'var(--badge-text)';
-
-  if (cat.includes('必修')) {
-    bg = 'var(--badge-bg)'; color = 'var(--badge-text)';
-  } else if (cat.includes('選修')) {
-    bg = 'rgba(42,157,153,0.1)'; color = '#2a9d99';
-  } else if (cat.includes('通識')) {
-    bg = 'rgba(57,28,87,0.08)'; color = '#391c57';
-  } else if (cat.includes('體育')) {
-    bg = 'rgba(221,91,0,0.08)'; color = '#dd5b00';
-  } else if (cat.includes('核心') || cat.includes('能力')) {
-    bg = 'rgba(0,0,0,0.05)'; color = 'var(--warm-gray-500)';
-  }
+  let cls = 'bg-[#f2f9ff] text-[#097fe8]';
+  if (cat.includes('選修'))                          cls = 'bg-[rgba(42,157,153,0.1)] text-[#2a9d99]';
+  else if (cat.includes('通識'))                     cls = 'bg-[rgba(57,28,87,0.08)] text-[#391c57]';
+  else if (cat.includes('體育'))                     cls = 'bg-[rgba(221,91,0,0.08)] text-[#dd5b00]';
+  else if (cat.includes('核心') || cat.includes('能力')) cls = 'bg-black/5 text-[#615d59]';
 
   return (
-    <span
-      style={{
-        background: bg,
-        color,
-        borderRadius: 9999,
-        padding: '2px 8px',
-        fontSize: 12,
-        fontWeight: 600,
-        letterSpacing: '0.125px',
-        whiteSpace: 'nowrap',
-      }}
-    >
+    <span className={`rounded-full px-2 py-0.5 text-xs font-semibold tracking-[0.125px] whitespace-nowrap ${cls}`}>
       {cat}
     </span>
   );
@@ -88,16 +58,7 @@ function CategoryBadge({ cat }: { cat: string }) {
 function ScoreBadge({ score }: { score: string }) {
   const passed = isPassed(score);
   return (
-    <span
-      style={{
-        background: passed ? 'rgba(26,174,57,0.1)' : 'rgba(221,91,0,0.08)',
-        color: passed ? '#1aae39' : '#dd5b00',
-        borderRadius: 4,
-        padding: '2px 6px',
-        fontSize: 12,
-        fontWeight: 600,
-      }}
-    >
+    <span className={`rounded px-1.5 py-0.5 text-xs font-semibold ${passed ? 'bg-[rgba(26,174,57,0.1)] text-[#1aae39]' : 'bg-[rgba(221,91,0,0.08)] text-[#dd5b00]'}`}>
       {score}
     </span>
   );
@@ -125,22 +86,9 @@ export default function CourseTable({ records }: CourseTableProps) {
   }, [records, sortKey, sortAsc]);
 
   return (
-    <div
-      className="rounded-xl overflow-hidden"
-      style={{
-        background: '#ffffff',
-        border: '1px solid var(--border)',
-        boxShadow: 'var(--shadow-card)',
-      }}
-    >
-      <div
-        className="flex items-center justify-between px-6 py-4"
-        style={{ borderBottom: '1px solid var(--border)' }}
-      >
-        <h3
-          className="font-bold"
-          style={{ fontSize: 16, color: 'rgba(0,0,0,0.95)', letterSpacing: '-0.25px' }}
-        >
+    <div className="rounded-xl overflow-hidden bg-white border border-black/10 shadow-[var(--shadow-card)]">
+      <div className="flex items-center justify-between px-6 py-4 border-b border-black/10">
+        <h3 className="font-bold text-base text-black/95 tracking-[-0.25px]">
           歷年修課明細
         </h3>
         <div className="flex gap-2">
@@ -152,20 +100,11 @@ export default function CourseTable({ records }: CourseTableProps) {
       <div className="overflow-x-auto">
         <table className="w-full text-left">
           <thead>
-            <tr style={{ background: 'var(--warm-white)' }}>
+            <tr className="bg-[#f6f5f4]">
               {['學期', '課程名稱', '學分', '成績', '審查標籤'].map((h, i) => (
                 <th
                   key={h}
-                  style={{
-                    padding: '10px 20px',
-                    fontSize: 12,
-                    fontWeight: 600,
-                    color: 'var(--warm-gray-300)',
-                    letterSpacing: '0.125px',
-                    textTransform: 'uppercase',
-                    textAlign: i >= 2 && i <= 3 ? 'center' : 'left',
-                    borderBottom: '1px solid var(--border)',
-                  }}
+                  className={`px-5 py-2.5 text-xs font-semibold text-[#615d59] tracking-[0.125px] uppercase border-b border-black/10 ${i >= 2 && i <= 3 ? 'text-center' : 'text-left'}`}
                 >
                   {h}
                 </th>
@@ -174,29 +113,21 @@ export default function CourseTable({ records }: CourseTableProps) {
           </thead>
           <tbody>
             {sorted.map((r, i) => (
-              <tr
-                key={i}
-                style={{ borderBottom: '1px solid rgba(0,0,0,0.05)' }}
-                onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--warm-white)')}
-                onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
-              >
-                <td
-                  className="font-mono"
-                  style={{ padding: '12px 20px', fontSize: 12, color: 'var(--warm-gray-300)', whiteSpace: 'nowrap' }}
-                >
+              <tr key={i} className="border-b border-black/5 hover:bg-[#f6f5f4] transition-colors">
+                <td className="font-mono px-5 py-3 text-xs text-[#615d59] whitespace-nowrap">
                   {r.semester}
                 </td>
-                <td style={{ padding: '12px 20px' }}>
-                  <p style={{ fontSize: 14, fontWeight: 500, color: 'rgba(0,0,0,0.95)' }}>{r.course_name}</p>
-                  <p style={{ fontSize: 12, color: 'var(--warm-gray-300)', marginTop: 2 }}>{r.category}</p>
+                <td className="px-5 py-3">
+                  <p className="text-sm font-medium text-black/95">{r.course_name}</p>
+                  <p className="text-xs text-[#615d59] mt-0.5">{r.category}</p>
                 </td>
-                <td style={{ padding: '12px 20px', textAlign: 'center', fontSize: 14, color: 'var(--warm-gray-500)' }}>
+                <td className="px-5 py-3 text-center text-sm text-[#615d59]">
                   {r.credits}
                 </td>
-                <td style={{ padding: '12px 20px', textAlign: 'center' }}>
+                <td className="px-5 py-3 text-center">
                   <ScoreBadge score={r.score} />
                 </td>
-                <td style={{ padding: '12px 20px' }}>
+                <td className="px-5 py-3">
                   <CategoryBadge cat={r.audit_category} />
                 </td>
               </tr>

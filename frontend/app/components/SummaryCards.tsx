@@ -15,17 +15,10 @@ function ProgressBar({ earned, target }: { earned: number; target: number }) {
   const pct = Math.min(100, Math.round((earned / target) * 100));
   const done = earned >= target;
   return (
-    <div
-      className="w-full rounded-full overflow-hidden"
-      style={{ height: 4, background: 'rgba(0,0,0,0.07)', marginTop: 16 }}
-    >
+    <div className="w-full rounded-full overflow-hidden h-1 bg-black/[0.07] mt-4">
       <div
-        className="h-full rounded-full"
-        style={{
-          width: `${pct}%`,
-          background: done ? '#2a9d99' : 'var(--notion-blue)',
-          transition: 'width 0.7s ease',
-        }}
+        className={`h-full rounded-full ${done ? 'bg-[#2a9d99]' : 'bg-[var(--notion-blue)]'}`}
+        style={{ width: `${pct}%`, transition: 'width 0.7s ease' }}
       />
     </div>
   );
@@ -42,29 +35,18 @@ export default function SummaryCards({ details }: SummaryCardsProps) {
         return (
           <div
             key={key}
-            className="rounded-xl p-5"
-            style={{
-              background: '#ffffff',
-              border: '1px solid var(--border)',
-              boxShadow: 'var(--shadow-card)',
-            }}
+            className="rounded-xl p-5 bg-white border border-black/10 shadow-[var(--shadow-card)]"
           >
-            <p
-              className="font-semibold mb-3"
-              style={{ fontSize: 12, color: 'var(--warm-gray-300)', letterSpacing: '0.125px', textTransform: 'uppercase' }}
-            >
+            <p className="font-semibold mb-3 text-xs text-[#615d59] tracking-[0.125px] uppercase">
               {label}總進度
             </p>
-            <p style={{ fontSize: 32, fontWeight: 700, letterSpacing: '-1px', color: 'rgba(0,0,0,0.95)', lineHeight: 1 }}>
+            <p className="text-[32px] font-bold tracking-[-1px] text-black/95 leading-none">
               {earned}
-              <span style={{ fontSize: 18, fontWeight: 400, color: 'var(--warm-gray-300)', marginLeft: 4 }}>
+              <span className="text-lg font-normal text-[#615d59] ml-1">
                 / {target}
               </span>
             </p>
-            <p
-              className="mt-1.5"
-              style={{ fontSize: 13, fontWeight: 500, color: done ? '#2a9d99' : '#dd5b00' }}
-            >
+            <p className={`mt-1.5 text-[13px] font-medium ${done ? 'text-[#2a9d99]' : 'text-[#dd5b00]'}`}>
               {done ? '已達標' : `還差 ${target - earned} 學分`}
             </p>
             <ProgressBar earned={earned} target={target} />

@@ -21,25 +21,15 @@ function Row({ label, earned, target }: { label: string; earned: number; target:
   return (
     <div>
       <div className="flex justify-between items-center mb-1.5">
-        <span style={{ fontSize: 14, fontWeight: 500, color: 'var(--warm-gray-500)' }}>{label}</span>
-        <span
-          className="tabular-nums"
-          style={{ fontSize: 14, fontWeight: 600, color: done ? '#2a9d99' : 'var(--warm-gray-300)' }}
-        >
+        <span className="text-sm font-medium text-[#615d59]">{label}</span>
+        <span className={`tabular-nums text-sm font-semibold ${done ? 'text-[#2a9d99]' : 'text-[#615d59]'}`}>
           {earned} / {target}
         </span>
       </div>
-      <div
-        className="w-full rounded-full overflow-hidden"
-        style={{ height: 4, background: 'rgba(0,0,0,0.07)' }}
-      >
+      <div className="w-full rounded-full overflow-hidden h-1 bg-black/[0.07]">
         <div
-          className="h-full rounded-full"
-          style={{
-            width: `${pct}%`,
-            background: done ? '#2a9d99' : 'var(--notion-blue)',
-            transition: 'width 0.7s ease',
-          }}
+          className={`h-full rounded-full ${done ? 'bg-[#2a9d99]' : 'bg-[var(--notion-blue)]'}`}
+          style={{ width: `${pct}%`, transition: 'width 0.7s ease' }}
         />
       </div>
     </div>
@@ -50,18 +40,8 @@ export default function DetailedRequirementsPanel({ details }: DetailedRequireme
   const entries = Object.entries(details) as [keyof DetailedRequirements, CreditCategory | { earned: number; target: number; domains: Record<string, CreditCategory> }][];
 
   return (
-    <div
-      className="rounded-xl p-6"
-      style={{
-        background: '#ffffff',
-        border: '1px solid var(--border)',
-        boxShadow: 'var(--shadow-card)',
-      }}
-    >
-      <h2
-        className="font-bold mb-6"
-        style={{ fontSize: 18, color: 'rgba(0,0,0,0.95)', letterSpacing: '-0.25px' }}
-      >
+    <div className="rounded-xl p-6 bg-white border border-black/10 shadow-[var(--shadow-card)]">
+      <h2 className="font-bold mb-6 text-lg text-black/95 tracking-[-0.25px]">
         資管系畢業初審細項
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-5">
