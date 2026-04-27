@@ -9,6 +9,7 @@ class CourseRecord(BaseModel):
     score: str
     category: str           # 學校原始分類
     audit_category: str = "未分類"  # 系統審查後的精確分類
+    status: str = "passed"          # 狀態: passed (通過), failed (不及格/停修), enrolled (正在修課)
 
 # 學分進度分類
 class CreditCategory(BaseModel):

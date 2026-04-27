@@ -3,6 +3,7 @@ from app.schemas.credit_schema import (
     StudentData, CourseRecord, CreditSummary, 
     CreditCategory, GeneralEducationCredit, DetailedRequirements
 )
+from app.services.estu_scraper import EstuScraper
 
 class FjuScraperService:
     def __init__(self):
@@ -39,6 +40,7 @@ class FjuScraperService:
             return self._get_mock_data(student_id)
 
         try:
+            # 1. 登入主系統獲取歷年成績
             login_payload = {"empNo": student_id, "password": password, "systemSn": 31}
             login_headers = {
                 "Content-Type": "application/json",
@@ -76,6 +78,68 @@ class FjuScraperService:
                     score=score_str,
                     category=category
                 ))
+                
+            # 2. 同步爬取選課系統 (當前學期正在修的課)
+            try:
+                estu_scraper = EstuScraper()
+                enrolled_courses = estu_scraper.get_enrolled_courses(student_id, password)
+                
+                def normalize_name(name):
+                    return name.replace("英-專業", "").replace("英-專", "").replace(" ", "").strip()
+                    
+                existing_records_map = {normalize_name(r.course_name): r for r in records if r.score.strip() in ["", "未評定成績"]}
+                
+                for course in enrolled_courses:
+                    course_name = course.get("科目名稱")
+                    if not course_name:
+                        continue
+                        
+                    norm_name = normalize_name(course_name)
+                    
+                    # 判斷分類，選課系統有通識領域欄位
+                    domain = course.get("通識領域", "").strip()
+                    req_sel = course.get("學生選課設定選別", "").strip()
+                    
+                    category = "必修"
+                    if req_sel == "選": category = "選修"
+                    elif req_sel == "通": category = f"通識-{domain}" if domain else "通識"
+                    
+                    # 判斷是否為 EMI (看課程標記或名稱)
+                    mark = course.get("課程標記", "")
+                    if "EMI" in mark or "英-專" in course_name:
+                        category += " (EMI)"
+                        
+                    if norm_name in existing_records_map:
+                        existing_cat = existing_records_map[norm_name].category
+                        
+                        # 如果歷年成績系統的分類比較詳細(例如通識-人文)，就保留歷年系統的分類
+                        if "通識-" in existing_cat and "通識" in category and "通識-" not in category:
+                            final_category = existing_cat
+                        else:
+                            final_category = category
+                            
+                        # 保留 EMI 標記
+                        if "(EMI)" in category and "(EMI)" not in final_category:
+                            final_category += " (EMI)"
+                            
+                        # 覆蓋為合併後的分類
+                        existing_records_map[norm_name].category = final_category
+                        existing_records_map[norm_name].course_name = course_name
+                    else:
+                        try:
+                            credits_val = int(float(course.get("學分", 0)))
+                        except ValueError:
+                            credits_val = 0
+                            
+                        records.append(CourseRecord(
+                            semester=f"{course.get('學年度', '114')}-{course.get('學期', '2')}", # fallback
+                            course_name=course_name,
+                            credits=credits_val,
+                            score="", # 空字串代表正在修 (enrolled)
+                            category=category
+                        ))
+            except Exception as estu_e:
+                print(f"⚠️ 選課系統爬取失敗，但不影響主成績單: {estu_e}")
             
             estimated_enrollment_year = 100 + int(student_id[1:3]) if len(student_id) >= 3 and student_id.startswith('4') else 0
             department_name = self.DEPARTMENT_MAP.get(student_id[3:5], "未知系所") if len(student_id) >= 5 else "未知系所"
@@ -99,9 +163,11 @@ class FjuScraperService:
     def _calculate_credit_summary(self, records: list[CourseRecord], department_name: str, enrollment_year: int) -> tuple[CreditSummary, list[str]]:
         warnings = []
         
-        def is_passed(score: str):
-            if score.isdigit(): return int(score) >= 60
-            return score in ["抵免", "及格", "通過"]
+        def get_status(score: str):
+            if not score or score.strip() == "" or score.strip() == "未評定成績": return "enrolled"
+            if score.isdigit(): return "passed" if int(score) >= 60 else "failed"
+            if score in ["抵免", "及格", "通過"]: return "passed"
+            return "failed"
 
         # 計數器
         earned_total = 0
@@ -124,40 +190,54 @@ class FjuScraperService:
         BASIC_SKILLS_KEYWORDS = ["國文", "外語", "外國語文", "英語", "英文", "法文", "德文", "日文", "西班牙文", "韓文"]
         PE_KEYWORDS = ["體育", "羽球", "桌球", "游泳", "網球", "排球", "籃球"]
 
-        passed_courses = {r.course_name for r in records if is_passed(r.score)}
-        failed_courses = {r.course_name for r in records if not is_passed(r.score) and r.score != "停修"}
+        passed_courses = {r.course_name for r in records if get_status(r.score) == "passed"}
+        enrolled_courses = {r.course_name for r in records if get_status(r.score) == "enrolled"}
+        failed_courses = {r.course_name for r in records if get_status(r.score) == "failed" and r.score != "停修"}
 
         for r in records:
-            if not is_passed(r.score):
+            r.status = get_status(r.score)
+            
+            if r.status == "failed":
                 r.audit_category = "不及格/停修"
                 continue
             
+            # 以下分類適用於 passed (計算學分) 與 enrolled (僅標示分類，不計學分，除非你想讓修課中算進去，但通常不算)
+            # 這裡我們為了進度條準確，enrolled不加學分，但分類正確
+            is_passed_course = (r.status == "passed")
+            
             # 核心課程 (含體育)
             if any(k in r.course_name for k in PE_KEYWORDS):
-                pe_count += 1
                 r.audit_category = "核心課程(體育)"
-                holistic_core_earned += r.credits
-                earned_total += r.credits
+                if is_passed_course:
+                    pe_count += 1
+                    holistic_core_earned += r.credits
+                    earned_total += r.credits
             elif any(k in r.course_name for k in HOLISTIC_CORE_KEYWORDS):
                 r.audit_category = "核心課程"
-                holistic_core_earned += r.credits
-                earned_total += r.credits
+                if is_passed_course:
+                    holistic_core_earned += r.credits
+                    earned_total += r.credits
             
             # 基本能力課程 (含國文與外語)
             elif any(k in r.course_name for k in BASIC_SKILLS_KEYWORDS):
                 r.audit_category = "基本能力課程"
-                basic_skills_earned += r.credits
-                earned_total += r.credits
+                if is_passed_course:
+                    basic_skills_earned += r.credits
+                    earned_total += r.credits
 
             # 通識課程 (12學分)
             elif "通識" in r.category:
-                ge_earned += r.credits
-                earned_total += r.credits
                 r.audit_category = "通識課程"
+                if is_passed_course:
+                    ge_earned += r.credits
+                    earned_total += r.credits
+                
                 for domain in ge_domains:
                     if domain[:2] in r.category:
-                        r.audit_category = f"通識-{domain[:2]}"
-                        ge_domains[domain].earned += r.credits
+                        sub_domain = r.category.split(":")[-1].strip() if ":" in r.category else ""
+                        r.audit_category = f"通識-{domain[:2]} ({sub_domain})" if sub_domain else f"通識-{domain[:2]}"
+                        if is_passed_course:
+                            ge_domains[domain].earned += r.credits
 
             # 必修 (排除以上全人課程後的剩餘必修)
             elif "必修" in r.category:
@@ -165,21 +245,29 @@ class FjuScraperService:
                     r.audit_category = "不計畢業學分"
                 else:
                     r.audit_category = "必修"
-                    req_earned += r.credits
-                    earned_total += r.credits
+                    if is_passed_course:
+                        req_earned += r.credits
+                        earned_total += r.credits
 
             # 選修
             elif "選修" in r.category:
                 r.audit_category = "選修"
-                ele_earned += r.credits
-                earned_total += r.credits
+                if is_passed_course:
+                    ele_earned += r.credits
+                    earned_total += r.credits
             
             else:
                 r.audit_category = "其他"
 
+            if "(EMI)" in r.category:
+                r.audit_category += " (EMI)"
+
         # 擋修預警
-        if "系統分析與設計" not in passed_courses: 
-            warnings.append("⚠️ 您尚未通過『系統分析與設計』，這將擋修『資訊系統專題一』。")
+        if "系統分析與設計" not in passed_courses and "系統分析與設計" not in enrolled_courses: 
+            warnings.append("⚠️ 您尚未通過『系統分析與設計』(且未正在修課)，這將擋修『資訊系統專題一』。")
+        elif "系統分析與設計" in enrolled_courses:
+            warnings.append("📝 您正在修習『系統分析與設計』，請確保及格以免擋修『資訊系統專題一』。")
+            
         if any("資訊系統專題二" in c for c in failed_courses): 
             warnings.append("🚨 您的『資訊系統專題二』不及格，依規定需重修『專題一』與『專題二』。")
 
@@ -211,6 +299,7 @@ class FjuScraperService:
             CourseRecord(semester="113-2", course_name="羽球", credits=0, score="88", category="必修"),
             CourseRecord(semester="113-2", course_name="會計學", credits=3, score="92", category="必修"),
             CourseRecord(semester="114-1", course_name="雲端應用", credits=3, score="85", category="選修"),
+            CourseRecord(semester="114-1", course_name="系統分析與設計", credits=3, score="", category="必修"),
         ]
         summary, warnings = self._calculate_credit_summary(records, "資訊管理學系", 113)
         return StudentData(
