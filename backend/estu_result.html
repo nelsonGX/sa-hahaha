@@ -1,0 +1,682 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1"><meta http-equiv="content-type" content="text/html; charset=UTF-8" /><title>
+
+</title>
+  <script type = "text/javascript">
+      window.history.forward(1);
+      function closeWindow() {
+//          var tmpurl = "";
+//          var strFeature = "Top=-150,Left=-15,width=100,height=100"
+          //          window.open("", "closeWindow", "");
+          window.opener = null;
+          window.close();
+      }
+ 
+</script>
+</head>
+<body>
+    <form method="post" action="HisListNew.aspx" id="form1">
+<div class="aspNetHidden">
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+<input type="hidden" name="__LASTFOCUS" id="__LASTFOCUS" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="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" />
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['form1'];
+if (!theForm) {
+    theForm = document.form1;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="/CheckSellist/WebResource.axd?d=sS9VkyR92nQHspzIGBJywwmuFSZp1b7JGxdEu3IN6Ekc250aGQqign5HGgELWypIdEGLM2jF1nBnGdg03W7ZV6f5Pq4SCRJnYRX18GCX7is1&amp;t=635647397048800000" type="text/javascript"></script>
+
+<div class="aspNetHidden">
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="2B127D33" />
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="/wEWIgK9rO72AgKXopf+AgKC8Y/YBQKC8bv/AgLty+3uDwLty5mSBwLIosoFAsii5qgJAtO1qJgKAtO1xL8DAr6Mtq8MAr6MotIFAvvvw8IFAvvv/+kCAsbGodkPAsbG3fwEAvGs4ZsHAvGsnb8MAtyHz64JAtyH+9UGAqeercUDAqee2egIAorK+OQMApjpqmICx7qelgMC4sGS7QwCkZOGoQ8CrKTaxw8Cpri6zgYCtbDoqQ4CrtXXoQEC/dfanAgCmOmuwwgCtIu93AagunSD17uU/AiTQYorc4idjHcbTZ4Lio64eWHtltOAew==" />
+</div>
+    <div>
+    <center>
+        
+        <p style="padding: 10px; margin: 10px; text-align: center; color: #000000;">
+            <span id="LabTitle" style="color:Maroon;font-size:XX-Large;font-weight:bold;"></span>
+        </p>
+        
+        <div id="Panel2" style="font-weight:bold;">
+	
+          
+                <table>
+                    <tr>
+                        <td style="padding: 10px 20px 10px 20px; margin: 10px">
+                            <span id="LabDayngt" style="color:#350000;font-size:Large;font-weight:bold;">部　別</span>
+                        </td>
+                        <td style="padding: 10px 20px 10px 20px; margin: 10px">
+                            <span id="LabDptno" style="color:#350000;font-size:Large;font-weight:bold;">班　　級</span>
+                        </td>
+                        <td style="padding: 10px 20px 10px 20px; margin: 10px">
+                            <span id="LabStuno" style="color:#350000;font-size:Large;font-weight:bold;">學　　號</span>
+                        </td>
+                        <td style="padding: 10px 20px 10px 20px; margin: 10px">
+                            <span id="LabStucna" style="color:#350000;font-size:Large;font-weight:bold;">姓　名</span>
+                        </td>
+                        <td style="padding: 10px 20px 10px 20px; margin: 10px">
+                            <span id="LabTotNum" style="color:#350000;font-size:Medium;font-weight:bold;">總學分</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px 20px 10px 20px; margin: 10px;">
+                            <span id="LabDayngt1" style="color:#990000;font-size:Large;font-weight:bold;">日間部</span>
+                            
+                            
+                            
+                            
+                            
+                        </td>
+                        <td style="padding: 10px 20px 10px 20px; margin: 10px;">
+                            <span id="LabDptno1" style="color:#990000;font-size:Large;font-weight:bold;">資管二甲</span>
+                        </td>
+                        <td style="padding: 10px 20px 10px 20px; margin: 10px;">
+                            <span id="LabStuno1" style="color:#990000;font-size:Large;font-weight:bold;">413401223</span>
+                        </td>
+                        <td style="padding: 10px 20px 10px 20px; margin: 10px;">
+                            <span id="LabStucna1" style="color:#990000;font-size:Large;font-weight:bold;">鍾孟奇</span>
+                        </td>
+                        <td style="padding: 10px 20px 10px 20px; margin: 10px;" align="center">
+                            <span id="LabTotNum1" style="color:#990000;font-size:Large;font-weight:bold;">25</span>
+                        </td>
+                    </tr>
+                </table>
+                <table border="0">
+                    <tr>
+                        <td>
+                            <span id="Lab_DM" Display="Dynamic" style="color:#333300;"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span id="Lab_Minor" Display="Dynamic" style="color:#006600;"></span>
+                            <span id="Lab_Edu" Display="Dynamic" style="color:#663300;"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span id="Lab_Pro" Display="Dynamic" style="color:#6600CC;"></span>
+                        </td>
+                    </tr>
+                </table>
+           
+        
+</div>
+        <div id="Panel21" style="font-weight:bold;">
+	
+           
+                <table border="0">
+                    <tr>
+                        <td>
+                            <span id="Lab_SelState" Display="Dynamic" style="color:#CC33FF;">目前資料：114學年度第2學期選課錯誤更正結果<br/><p><font color=blue size=+3><b>114學年度第2學期停修申請截止日：115年05月11日</b></font></p></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span id="LabSelMsg" Display="Dynamic" style="color:Red;font-size:Large;font-weight:bold;text-align: center">您尚未確認選課清單</span>
+                        </td>
+                    </tr>
+                </table>
+                <table border="0">
+                    <tr>
+                        <td>
+                            <select name="DDL_YM" onchange="javascript:setTimeout(&#39;__doPostBack(\&#39;DDL_YM\&#39;,\&#39;\&#39;)&#39;, 0)" id="DDL_YM" Display="Dynamic" style="color:#3333CC;font-size:Large;font-weight:bold;">
+		<option selected="selected" value="1142">1142</option>
+		<option value="1141">1141</option>
+		<option value="1132">1132</option>
+		<option value="1131">1131</option>
+		<option value="1122">1122</option>
+		<option value="1121">1121</option>
+		<option value="1112">1112</option>
+		<option value="1111">1111</option>
+		<option value="1102">1102</option>
+		<option value="1101">1101</option>
+		<option value="1092">1092</option>
+		<option value="1091">1091</option>
+		<option value="1082">1082</option>
+		<option value="1081">1081</option>
+		<option value="1072">1072</option>
+		<option value="1071">1071</option>
+		<option value="1062">1062</option>
+		<option value="1061">1061</option>
+		<option value="1052">1052</option>
+		<option value="1051">1051</option>
+
+	</select>
+                            <input type="submit" name="Btn_CourseTable" value="課程表" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;Btn_CourseTable&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, false))" id="Btn_CourseTable" Display="Dynamic" style="font-size:Medium;" />
+                                                       
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span id="Lab_NoteMsg" Display="Dynamic" style="color:#FF3300;">點選【課程表】前，請先關閉【快顯封鎖程式】功能。</span>
+                            
+                            
+                        </td>
+                    </tr>
+                </table>
+           
+            <table>
+                <tr>
+                    <td>
+                        <span id="Lab_GV_ErrMsg" style="color:Red;font-size:Large;">【有疑義或停修之選課】：無</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span id="Lab_HrBar"><hr></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span id="Lab_GV_Msg" style="color:Maroon;font-size:Large;">【已選課程】</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div>
+		<table cellspacing="0" cellpadding="3" rules="cols" id="GV_NewSellist" style="background-color:White;border-color:#999999;border-width:1px;border-style:None;border-collapse:collapse;font-size: small">
+			<tr style="color:White;background-color:#000084;font-weight:bold;">
+				<th scope="col">NO</th><th scope="col">課程標記</th><th scope="col">學年度</th><th scope="col">學期</th><th scope="col">課程代碼</th><th scope="col">主開課程碼</th><th scope="col">開課單位名稱</th><th scope="col" style="font-family:微軟正黑體;font-size:11px;width:8%;">科目名稱</th><th scope="col">學分</th><th scope="col">開課選別</th><th scope="col">學生選課設定選別</th><th scope="col">期次</th><th scope="col">授課教師</th><th scope="col">星期</th><th scope="col">週別</th><th scope="col">節次</th><th scope="col">教室</th><th scope="col">星期</th><th scope="col">週別</th><th scope="col">節次</th><th scope="col">教室</th><th scope="col">星期</th><th scope="col">週別</th><th scope="col">節次</th><th scope="col">教室</th><th scope="col">通識領域</th><th scope="col">備註</th>
+			</tr><tr style="color:Black;background-color:#EEEEEE;">
+				<td>
+                                        1
+                                    </td><td>
+                                        <input type="submit" name="GV_NewSellist$ctl02$Btn_Apply" value="申請停修" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;GV_NewSellist$ctl02$Btn_Apply&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, false))" id="GV_NewSellist_Btn_Apply_0" />
+                                        <br />
+                                        <span id="GV_NewSellist_Lab_ErrLab_0"></span>
+                                                                                    
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                            
+                                              
+                                    </td><td align="left" valign="middle" style="width:50px;white-space:nowrap;">114</td><td align="left" valign="middle" style="width:30px;white-space:nowrap;">2</td><td align="left" valign="middle" style="width:150px;white-space:nowrap;">D740324498</td><td align="left" valign="middle" style="width:150px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:150px;white-space:nowrap;">資管三</td><td align="left" valign="middle" style="font-family:微軟正黑體;font-size:11px;width:8%;">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <span id="GV_NewSellist_Lab_Coucna_0">巨量資料概論</span><br>                                                    
+                                                    <span id="GV_NewSellist_Lab_CCEName_0" style="color:Red;font-size:Large;"></span>
+                                                    <span id="GV_NewSellist_Lab_CCE1Name_0" style="color:Red;font-size:Large;"></span>
+                                                    <span id="GV_NewSellist_Lab_CCE2Name_0" style="color:Red;font-size:Large;"></span>
+                                                    <span id="GV_NewSellist_Lab_CCRName_0" style="color:Green;font-size:Large;"></span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">3.00</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">選</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">選</td><td align="left" valign="middle" style="width:50px;white-space:nowrap;">0</td><td align="left" valign="middle" style="width:150px;white-space:nowrap;">林湘霖</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">一</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">全</td><td align="left" valign="middle" style="width:80px;white-space:nowrap;">D2-D4</td><td align="left" valign="middle" style="width:70px;white-space:nowrap;">ES401</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:80px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:70px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:80px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:70px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:60px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:200px;white-space:nowrap;"> </td>
+			</tr><tr style="color:Black;background-color:Gainsboro;">
+				<td>
+                                        2
+                                    </td><td>
+                                        <input type="submit" name="GV_NewSellist$ctl03$Btn_Apply" value="申請停修" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;GV_NewSellist$ctl03$Btn_Apply&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, false))" id="GV_NewSellist_Btn_Apply_1" />
+                                        <br />
+                                        <span id="GV_NewSellist_Lab_ErrLab_1"></span>
+                                                                                    
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                            
+                                              
+                                    </td><td align="left" valign="middle" style="width:50px;white-space:nowrap;">114</td><td align="left" valign="middle" style="width:30px;white-space:nowrap;">2</td><td align="left" valign="middle" style="width:150px;white-space:nowrap;">DPTT830554</td><td align="left" valign="middle" style="width:150px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:150px;white-space:nowrap;">PT歷史與文化</td><td align="left" valign="middle" style="font-family:微軟正黑體;font-size:11px;width:8%;">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <span id="GV_NewSellist_Lab_Coucna_1">經營博物館典藏與展覽實務</span><br>                                                    
+                                                    <span id="GV_NewSellist_Lab_CCEName_1" style="color:Red;font-size:Large;"></span>
+                                                    <span id="GV_NewSellist_Lab_CCE1Name_1" style="color:Red;font-size:Large;"></span>
+                                                    <span id="GV_NewSellist_Lab_CCE2Name_1" style="color:Red;font-size:Large;"></span>
+                                                    <span id="GV_NewSellist_Lab_CCRName_1" style="color:Green;font-size:Large;"></span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">2.00</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">通</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">通</td><td align="left" valign="middle" style="width:50px;white-space:nowrap;">0</td><td align="left" valign="middle" style="width:150px;white-space:nowrap;">游量凱</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">一</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">全</td><td align="left" valign="middle" style="width:80px;white-space:nowrap;">D5-D6</td><td align="left" valign="middle" style="width:70px;white-space:nowrap;">ES506</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:80px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:70px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:80px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:70px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:60px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:200px;white-space:nowrap;">請確定貴系是否排除此課程學群。</td>
+			</tr><tr style="color:Black;background-color:#EEEEEE;">
+				<td>
+                                        3
+                                    </td><td>
+                                        <input type="submit" name="GV_NewSellist$ctl04$Btn_Apply" value="申請停修" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;GV_NewSellist$ctl04$Btn_Apply&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, false))" id="GV_NewSellist_Btn_Apply_2" />
+                                        <br />
+                                        <span id="GV_NewSellist_Lab_ErrLab_2"></span>
+                                                                                    
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                            
+                                              
+                                    </td><td align="left" valign="middle" style="width:50px;white-space:nowrap;">114</td><td align="left" valign="middle" style="width:30px;white-space:nowrap;">2</td><td align="left" valign="middle" style="width:150px;white-space:nowrap;">D741201584</td><td align="left" valign="middle" style="width:150px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:150px;white-space:nowrap;">資管二甲</td><td align="left" valign="middle" style="font-family:微軟正黑體;font-size:11px;width:8%;">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <span id="GV_NewSellist_Lab_Coucna_2">系統分析與設計</span><br>                                                    
+                                                    <span id="GV_NewSellist_Lab_CCEName_2" style="color:Red;font-size:Large;"></span>
+                                                    <span id="GV_NewSellist_Lab_CCE1Name_2" style="color:Red;font-size:Large;"></span>
+                                                    <span id="GV_NewSellist_Lab_CCE2Name_2" style="color:Red;font-size:Large;"></span>
+                                                    <span id="GV_NewSellist_Lab_CCRName_2" style="color:Green;font-size:Large;"></span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">3.00</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">必</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">必</td><td align="left" valign="middle" style="width:50px;white-space:nowrap;">0</td><td align="left" valign="middle" style="width:150px;white-space:nowrap;">吳濟聰</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">二</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">全</td><td align="left" valign="middle" style="width:80px;white-space:nowrap;">D2-D4</td><td align="left" valign="middle" style="width:70px;white-space:nowrap;">BS440</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:80px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:70px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:80px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:70px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:60px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:200px;white-space:nowrap;"> </td>
+			</tr><tr style="color:Black;background-color:Gainsboro;">
+				<td>
+                                        4
+                                    </td><td>
+                                        <input type="submit" name="GV_NewSellist$ctl05$Btn_Apply" value="申請停修" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;GV_NewSellist$ctl05$Btn_Apply&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, false))" id="GV_NewSellist_Btn_Apply_3" />
+                                        <br />
+                                        <span id="GV_NewSellist_Lab_ErrLab_3"></span>
+                                                                                    
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                            
+                                              
+                                    </td><td align="left" valign="middle" style="width:50px;white-space:nowrap;">114</td><td align="left" valign="middle" style="width:30px;white-space:nowrap;">2</td><td align="left" valign="middle" style="width:150px;white-space:nowrap;">D741210681</td><td align="left" valign="middle" style="width:150px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:150px;white-space:nowrap;">資管二甲</td><td align="left" valign="middle" style="font-family:微軟正黑體;font-size:11px;width:8%;">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <span id="GV_NewSellist_Lab_Coucna_3">資料通訊與網路</span><br>                                                    
+                                                    <span id="GV_NewSellist_Lab_CCEName_3" style="color:Red;font-size:Large;"></span>
+                                                    <span id="GV_NewSellist_Lab_CCE1Name_3" style="color:Red;font-size:Large;"></span>
+                                                    <span id="GV_NewSellist_Lab_CCE2Name_3" style="color:Red;font-size:Large;"></span>
+                                                    <span id="GV_NewSellist_Lab_CCRName_3" style="color:Green;font-size:Large;"></span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">3.00</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">必</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">必</td><td align="left" valign="middle" style="width:50px;white-space:nowrap;">0</td><td align="left" valign="middle" style="width:150px;white-space:nowrap;">林青峰</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">二</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">全</td><td align="left" valign="middle" style="width:80px;white-space:nowrap;">D5-D7</td><td align="left" valign="middle" style="width:70px;white-space:nowrap;">BS336</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:80px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:70px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:80px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:70px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:60px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:200px;white-space:nowrap;"> </td>
+			</tr><tr style="color:Black;background-color:#EEEEEE;">
+				<td>
+                                        5
+                                    </td><td>
+                                        <input type="submit" name="GV_NewSellist$ctl06$Btn_Apply" value="申請停修" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;GV_NewSellist$ctl06$Btn_Apply&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, false))" id="GV_NewSellist_Btn_Apply_4" />
+                                        <br />
+                                        <span id="GV_NewSellist_Lab_ErrLab_4"></span>
+                                                                                    
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                            
+                                              
+                                    </td><td align="left" valign="middle" style="width:50px;white-space:nowrap;">114</td><td align="left" valign="middle" style="width:30px;white-space:nowrap;">2</td><td align="left" valign="middle" style="width:150px;white-space:nowrap;">D741202492</td><td align="left" valign="middle" style="width:150px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:150px;white-space:nowrap;">資管二甲</td><td align="left" valign="middle" style="font-family:微軟正黑體;font-size:11px;width:8%;">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <span id="GV_NewSellist_Lab_Coucna_4">資料結構</span><br>                                                    
+                                                    <span id="GV_NewSellist_Lab_CCEName_4" style="color:Red;font-size:Large;"></span>
+                                                    <span id="GV_NewSellist_Lab_CCE1Name_4" style="color:Red;font-size:Large;"></span>
+                                                    <span id="GV_NewSellist_Lab_CCE2Name_4" style="color:Red;font-size:Large;"></span>
+                                                    <span id="GV_NewSellist_Lab_CCRName_4" style="color:Green;font-size:Large;"></span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">3.00</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">必</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">必</td><td align="left" valign="middle" style="width:50px;white-space:nowrap;">0</td><td align="left" valign="middle" style="width:150px;white-space:nowrap;">王冠云</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">三</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">全</td><td align="left" valign="middle" style="width:80px;white-space:nowrap;">D2-D4</td><td align="left" valign="middle" style="width:70px;white-space:nowrap;">BS440</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">三</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">全</td><td align="left" valign="middle" style="width:80px;white-space:nowrap;">D1-D1</td><td align="left" valign="middle" style="width:70px;white-space:nowrap;">BS440</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:80px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:70px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:60px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:200px;white-space:nowrap;">實習課：週三D1</td>
+			</tr><tr style="color:Black;background-color:Gainsboro;">
+				<td>
+                                        6
+                                    </td><td>
+                                        
+                                        <br />
+                                        <span id="GV_NewSellist_Lab_ErrLab_5"></span>
+                                                                                    
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                            
+                                              
+                                    </td><td align="left" valign="middle" style="width:50px;white-space:nowrap;">114</td><td align="left" valign="middle" style="width:30px;white-space:nowrap;">2</td><td align="left" valign="middle" style="width:150px;white-space:nowrap;">D741202795</td><td align="left" valign="middle" style="width:150px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:150px;white-space:nowrap;">資管二甲</td><td align="left" valign="middle" style="font-family:微軟正黑體;font-size:11px;width:8%;">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <span id="GV_NewSellist_Lab_Coucna_5">導師時間</span><br>                                                    
+                                                    <span id="GV_NewSellist_Lab_CCEName_5" style="color:Red;font-size:Large;"></span>
+                                                    <span id="GV_NewSellist_Lab_CCE1Name_5" style="color:Red;font-size:Large;"></span>
+                                                    <span id="GV_NewSellist_Lab_CCE2Name_5" style="color:Red;font-size:Large;"></span>
+                                                    <span id="GV_NewSellist_Lab_CCRName_5" style="color:Green;font-size:Large;"></span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">0.00</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">必</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">必</td><td align="left" valign="middle" style="width:50px;white-space:nowrap;">4</td><td align="left" valign="middle" style="width:150px;white-space:nowrap;">林雅文</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">三</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">全</td><td align="left" valign="middle" style="width:80px;white-space:nowrap;">D5-D6</td><td align="left" valign="middle" style="width:70px;white-space:nowrap;">BS336</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:80px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:70px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:80px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:70px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:60px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:200px;white-space:nowrap;"> </td>
+			</tr><tr style="color:Black;background-color:#EEEEEE;">
+				<td>
+                                        7
+                                    </td><td>
+                                        <input type="submit" name="GV_NewSellist$ctl08$Btn_Apply" value="申請停修" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;GV_NewSellist$ctl08$Btn_Apply&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, false))" id="GV_NewSellist_Btn_Apply_6" />
+                                        <br />
+                                        <span id="GV_NewSellist_Lab_ErrLab_6"></span>
+                                                                                    
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                            
+                                              
+                                    </td><td align="left" valign="middle" style="width:50px;white-space:nowrap;">114</td><td align="left" valign="middle" style="width:30px;white-space:nowrap;">2</td><td align="left" valign="middle" style="width:150px;white-space:nowrap;">D741202222</td><td align="left" valign="middle" style="width:150px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:150px;white-space:nowrap;">資管二甲</td><td align="left" valign="middle" style="font-family:微軟正黑體;font-size:11px;width:8%;">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <span id="GV_NewSellist_Lab_Coucna_6">統計學</span><br>                                                    
+                                                    <span id="GV_NewSellist_Lab_CCEName_6" style="color:Red;font-size:Large;"></span>
+                                                    <span id="GV_NewSellist_Lab_CCE1Name_6" style="color:Red;font-size:Large;"></span>
+                                                    <span id="GV_NewSellist_Lab_CCE2Name_6" style="color:Red;font-size:Large;"></span>
+                                                    <span id="GV_NewSellist_Lab_CCRName_6" style="color:Green;font-size:Large;"></span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">3.00</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">必</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">必</td><td align="left" valign="middle" style="width:50px;white-space:nowrap;">2</td><td align="left" valign="middle" style="width:150px;white-space:nowrap;">鄭美娟</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">四</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">全</td><td align="left" valign="middle" style="width:80px;white-space:nowrap;">D2-D4</td><td align="left" valign="middle" style="width:70px;white-space:nowrap;">ES917</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">四</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">全</td><td align="left" valign="middle" style="width:80px;white-space:nowrap;">D1-D1</td><td align="left" valign="middle" style="width:70px;white-space:nowrap;">ES917</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:80px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:70px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:60px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:200px;white-space:nowrap;">實習課：週四D1</td>
+			</tr><tr style="color:Black;background-color:Gainsboro;">
+				<td>
+                                        8
+                                    </td><td>
+                                        <input type="submit" name="GV_NewSellist$ctl09$Btn_Apply" value="申請停修" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;GV_NewSellist$ctl09$Btn_Apply&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, false))" id="GV_NewSellist_Btn_Apply_7" />
+                                        <br />
+                                        <span id="GV_NewSellist_Lab_ErrLab_7"></span>
+                                                                                    
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                            
+                                              
+                                    </td><td align="left" valign="middle" style="width:50px;white-space:nowrap;">114</td><td align="left" valign="middle" style="width:30px;white-space:nowrap;">2</td><td align="left" valign="middle" style="width:150px;white-space:nowrap;">D741202457</td><td align="left" valign="middle" style="width:150px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:150px;white-space:nowrap;">資管二甲</td><td align="left" valign="middle" style="font-family:微軟正黑體;font-size:11px;width:8%;">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <span id="GV_NewSellist_Lab_Coucna_7">經濟學</span><br>                                                    
+                                                    <span id="GV_NewSellist_Lab_CCEName_7" style="color:Red;font-size:Large;"></span>
+                                                    <span id="GV_NewSellist_Lab_CCE1Name_7" style="color:Red;font-size:Large;"></span>
+                                                    <span id="GV_NewSellist_Lab_CCE2Name_7" style="color:Red;font-size:Large;"></span>
+                                                    <span id="GV_NewSellist_Lab_CCRName_7" style="color:Green;font-size:Large;"></span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">3.00</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">必</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">必</td><td align="left" valign="middle" style="width:50px;white-space:nowrap;">2</td><td align="left" valign="middle" style="width:150px;white-space:nowrap;">韓南偉</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">四</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">全</td><td align="left" valign="middle" style="width:80px;white-space:nowrap;">D5-D7</td><td align="left" valign="middle" style="width:70px;white-space:nowrap;">LM503</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">四</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">全</td><td align="left" valign="middle" style="width:80px;white-space:nowrap;">DN-DN</td><td align="left" valign="middle" style="width:70px;white-space:nowrap;">LM503</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:80px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:70px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:60px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:200px;white-space:nowrap;">實習課：週四DN(12:40-13:30)</td>
+			</tr><tr style="color:Black;background-color:#EEEEEE;">
+				<td>
+                                        9
+                                    </td><td>
+                                        <input type="submit" name="GV_NewSellist$ctl10$Btn_Apply" value="申請停修" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;GV_NewSellist$ctl10$Btn_Apply&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, false))" id="GV_NewSellist_Btn_Apply_8" />
+                                        <br />
+                                        <span id="GV_NewSellist_Lab_ErrLab_8"></span>
+                                                                                    
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                            
+                                              
+                                    </td><td align="left" valign="middle" style="width:50px;white-space:nowrap;">114</td><td align="left" valign="middle" style="width:30px;white-space:nowrap;">2</td><td align="left" valign="middle" style="width:150px;white-space:nowrap;">DATP203638E</td><td align="left" valign="middle" style="width:150px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:150px;white-space:nowrap;">體育二以上必</td><td align="left" valign="middle" style="font-family:微軟正黑體;font-size:11px;width:8%;">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <span id="GV_NewSellist_Lab_Coucna_8">羽球</span><br>                                                    
+                                                    <span id="GV_NewSellist_Lab_CCEName_8" style="color:Red;font-size:Large;"></span>
+                                                    <span id="GV_NewSellist_Lab_CCE1Name_8" style="color:Red;font-size:Large;"></span>
+                                                    <span id="GV_NewSellist_Lab_CCE2Name_8" style="color:Red;font-size:Large;"></span>
+                                                    <span id="GV_NewSellist_Lab_CCRName_8" style="color:Green;font-size:Large;"></span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">0.00</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">必</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">必</td><td align="left" valign="middle" style="width:50px;white-space:nowrap;">0</td><td align="left" valign="middle" style="width:150px;white-space:nowrap;">陳冠旭</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">五</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">全</td><td align="left" valign="middle" style="width:80px;white-space:nowrap;">D1-D2</td><td align="left" valign="middle" style="width:70px;white-space:nowrap;">中美堂</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:80px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:70px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:80px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:70px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:60px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:200px;white-space:nowrap;"> </td>
+			</tr><tr style="color:Black;background-color:Gainsboro;">
+				<td>
+                                        10
+                                    </td><td>
+                                        <input type="submit" name="GV_NewSellist$ctl11$Btn_Apply" value="申請停修" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;GV_NewSellist$ctl11$Btn_Apply&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, false))" id="GV_NewSellist_Btn_Apply_9" />
+                                        <br />
+                                        <span id="GV_NewSellist_Lab_ErrLab_9"></span>
+                                                                                    
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                            
+                                              
+                                    </td><td align="left" valign="middle" style="width:50px;white-space:nowrap;">114</td><td align="left" valign="middle" style="width:30px;white-space:nowrap;">2</td><td align="left" valign="middle" style="width:150px;white-space:nowrap;">DFTEN00768D</td><td align="left" valign="middle" style="width:150px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:150px;white-space:nowrap;">FT-非英文</td><td align="left" valign="middle" style="font-family:微軟正黑體;font-size:11px;width:8%;">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <span id="GV_NewSellist_Lab_Coucna_9">外國語文(基礎法文)</span><br>                                                    
+                                                    <span id="GV_NewSellist_Lab_CCEName_9" style="color:Red;font-size:Large;"></span>
+                                                    <span id="GV_NewSellist_Lab_CCE1Name_9" style="color:Red;font-size:Large;"></span>
+                                                    <span id="GV_NewSellist_Lab_CCE2Name_9" style="color:Red;font-size:Large;"></span>
+                                                    <span id="GV_NewSellist_Lab_CCRName_9" style="color:Green;font-size:Large;"></span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">2.00</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">必</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">必</td><td align="left" valign="middle" style="width:50px;white-space:nowrap;">2</td><td align="left" valign="middle" style="width:150px;white-space:nowrap;">江宜靜</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">五</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">全</td><td align="left" valign="middle" style="width:80px;white-space:nowrap;">D3-D4</td><td align="left" valign="middle" style="width:70px;white-space:nowrap;">LA312</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:80px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:70px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:80px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:70px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:60px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:200px;white-space:nowrap;"> 第二外語</td>
+			</tr><tr style="color:Black;background-color:#EEEEEE;">
+				<td>
+                                        11
+                                    </td><td>
+                                        <input type="submit" name="GV_NewSellist$ctl12$Btn_Apply" value="申請停修" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;GV_NewSellist$ctl12$Btn_Apply&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, false))" id="GV_NewSellist_Btn_Apply_10" />
+                                        <br />
+                                        <span id="GV_NewSellist_Lab_ErrLab_10"></span>
+                                                                                    
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                            
+                                              
+                                    </td><td align="left" valign="middle" style="width:50px;white-space:nowrap;">114</td><td align="left" valign="middle" style="width:30px;white-space:nowrap;">2</td><td align="left" valign="middle" style="width:150px;white-space:nowrap;">D740435553</td><td align="left" valign="middle" style="width:150px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:150px;white-space:nowrap;">資管四</td><td align="left" valign="middle" style="font-family:微軟正黑體;font-size:11px;width:8%;">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <span id="GV_NewSellist_Lab_Coucna_10">新媒體科技互動應用</span><br>                                                    
+                                                    <span id="GV_NewSellist_Lab_CCEName_10" style="color:Red;font-size:Large;"></span>
+                                                    <span id="GV_NewSellist_Lab_CCE1Name_10" style="color:Red;font-size:Large;"></span>
+                                                    <span id="GV_NewSellist_Lab_CCE2Name_10" style="color:Red;font-size:Large;">英-專業</span>
+                                                    <span id="GV_NewSellist_Lab_CCRName_10" style="color:Green;font-size:Large;"></span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">3.00</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">選</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">選</td><td align="left" valign="middle" style="width:50px;white-space:nowrap;">0</td><td align="left" valign="middle" style="width:150px;white-space:nowrap;">鄭美娟</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">五</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">全</td><td align="left" valign="middle" style="width:80px;white-space:nowrap;">D5-D7</td><td align="left" valign="middle" style="width:70px;white-space:nowrap;">BS440</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:80px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:70px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:15px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:80px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:70px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:60px;white-space:nowrap;">&nbsp;</td><td align="left" valign="middle" style="width:200px;white-space:nowrap;"> </td>
+			</tr>
+		</table>
+	</div>
+                    </td>
+                </tr>
+            </table>
+        
+</div>
+        <div id="Panel3">
+	
+            <table style="width: 90%;">
+                <tr>
+                    <td style="text-align: center">
+                        
+                    </td>
+                    <td style="text-align: center; padding-right: 5px; padding-left: 5px;">
+                    </td>
+                    <td style="text-align: center">
+                        <input type="submit" name="ButExit1" value="離開系統" onclick="closeWindow();WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ButExit1&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, false))" id="ButExit1" style="color:Maroon;font-size:Medium;font-weight:bold;" />
+                    </td>
+                </tr>
+            </table>
+        
+</div>
+        <br />
+        <div id="Panel4" style="width:60%;">
+	
+            <table cellpadding="5" cellspacing="5"                 
+                style="width: 100%; background-color: #F2F2FF; color: #000000; text-align: left;">
+                <tr>
+                    <td colspan="2">
+                        課程標記說明：
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Ｃ：衝堂
+                    </td>
+                    <td>
+                        Ｒ：擋修
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Ｄ：主開課碼重複
+                    </td>
+                    <td>
+                        Ｖ：無教育學程資格
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Ｅ：無開課
+                    </td>
+                    <td>
+                        Ｘ：不可日夜互選
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Ｆ：連續學期未過
+                    </td>
+                    <td>
+                        Ｗ：停修
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Ｇ：本系系開通識不得選
+                    </td>
+                    <td>
+                        Ｚ：全班成績未到
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Ｈ：重複修習
+                    </td>
+                    <td>
+                        ＠：補考（999.00）
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Ｌ：成績低於５０分
+                    </td>
+                    <td>
+                        ＄：扣考（777.00）
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Ｎ︰缺考（888.00）
+                    </td>
+                    <td>
+                        ＃：逾期零分（444.00）
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Ｐ：個人成績未到
+                    </td>
+                    <td>
+                        ＆：違規（666.00）
+                    </td>
+                </tr>
+            </table>
+        
+</div>
+        </center>
+    </div>
+    </form>
+</body>
+</html>
