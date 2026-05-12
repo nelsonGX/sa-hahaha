@@ -206,7 +206,10 @@ class FjuScraperService:
             is_passed_course = (r.status == "passed")
             
             # 核心課程 (含體育)
-            if any(k in r.course_name for k in PE_KEYWORDS):
+            # 雙重驗證：優先看開課單位是否含「體育」，若無則退回關鍵字檢查
+            is_pe_course = "體育" in r.offering_dept if r.offering_dept else any(k in r.course_name for k in PE_KEYWORDS)
+
+            if is_pe_course:
                 r.audit_category = "核心課程(體育)"
                 if is_passed_course:
                     pe_count += 1
@@ -219,7 +222,7 @@ class FjuScraperService:
                     earned_total += r.credits
             
             # 基本能力課程 (含國文與外語)
-            elif any(k in r.course_name for k in BASIC_SKILLS_KEYWORDS):
+            elif ("FT" in r.offering_dept) or any(k in r.course_name for k in BASIC_SKILLS_KEYWORDS):
                 r.audit_category = "基本能力課程"
                 if is_passed_course:
                     basic_skills_earned += r.credits
@@ -305,4 +308,6 @@ class FjuScraperService:
         return StudentData(
             student_id=student_id, department_name="資訊管理學系", enrollment_year=113,
             course_records=records, credit_summary=summary, warnings=warnings
+        )
+mary=summary, warnings=warnings
         )
