@@ -30,7 +30,12 @@ export function earnedCredits(courses: CourseRecord[]): number {
 
 // Re-derive category for non-passed courses (backend marks them all "不及格/停修")
 export function getEffectiveCategory(r: CourseRecord): string {
-  if (r.audit_category !== '不及格/停修') return r.audit_category;
+  if (r.audit_category !== '不及格/停修') {
+    // Normalize "通識-自然 (NT歷史與文化)" → "通識-自然" so it matches DOMAIN_AUDIT_PREFIX keys
+    const tMatch = r.audit_category.match(/^(通識-[^\s(]+)/);
+    if (tMatch) return tMatch[1];
+    return r.audit_category;
+  }
   const n = r.course_name;
   const c = r.category;
   if (['大學入門', '人生哲學', '專業倫理', '企業倫理'].some(k => n.includes(k))) return '核心課程';
