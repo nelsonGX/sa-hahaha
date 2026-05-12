@@ -30,9 +30,9 @@ npm run dev
 ```bash
 cd backend
 uv sync
-uv run fastapi dev
+uv run fastapi dev --port 8667
 ```
-後端 API 伺服器與測試儀表板將啟動於 [http://localhost:8000](http://localhost:8000)
+後端 API 伺服器與測試儀表板將啟動於 [http://localhost:8667](http://localhost:8667)
 
 ---
 
