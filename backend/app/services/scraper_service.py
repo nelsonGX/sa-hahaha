@@ -1,4 +1,5 @@
 import requests
+import re
 from app.schemas.credit_schema import (
     StudentData, CourseRecord, CreditSummary, 
     CreditCategory, GeneralEducationCredit, DetailedRequirements
@@ -36,7 +37,8 @@ class FjuScraperService:
         }
 
     def _normalize_course_name(self, name: str) -> str:
-        return name.replace("英-專業", "").replace("英-專", "").replace(" ", "").strip()
+        normalized = name.replace("英-專業", "").replace("英-專", "").replace(" ", "").strip()
+        return re.sub(r"(網|EMI)$", "", normalized).strip()
 
     def _is_enrolled_score(self, score: str) -> bool:
         return score.strip() in ["", "未評定成績"]
@@ -73,7 +75,6 @@ class FjuScraperService:
                 continue
 
             existing.category = self._more_specific_category(existing.category, record.category)
-            existing.course_name = record.course_name or existing.course_name
             if not existing.score.strip():
                 existing.score = record.score
 
@@ -169,7 +170,6 @@ class FjuScraperService:
                             
                         # 覆蓋為合併後的分類
                         existing_records_map[norm_name].category = final_category
-                        existing_records_map[norm_name].course_name = course_name
                     else:
                         try:
                             credits_val = int(float(course.get("學分", 0)))
