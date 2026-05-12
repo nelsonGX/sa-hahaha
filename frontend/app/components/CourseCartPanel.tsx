@@ -1,11 +1,13 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useCourseCart } from './requirements/CourseCartContext';
 
 export default function CourseCartPanel() {
   const { items, remove } = useCourseCart();
   const [open, setOpen] = useState(false);
+  const router = useRouter();
 
   const totalCredits = items.reduce((s, i) => s + i.credits, 0);
 
@@ -95,8 +97,11 @@ export default function CourseCartPanel() {
                   <span className="text-sm text-[#615d59]">預計修習學分</span>
                   <span className="font-bold text-xl text-black/90">{totalCredits}</span>
                 </div>
-                <button className="w-full bg-black text-white font-semibold text-sm rounded-xl py-3 hover:bg-black/85 transition-colors active:scale-[0.98]">
-                  匯出選課清單
+                <button
+                  onClick={() => router.push('/cart')}
+                  className="w-full bg-black text-white font-semibold text-sm rounded-xl py-3 hover:bg-black/85 transition-colors active:scale-[0.98]"
+                >
+                  查看完整選課清單 →
                 </button>
               </div>
             )}

@@ -28,16 +28,13 @@ export function earnedCredits(courses: CourseRecord[]): number {
   return courses.filter(c => isPassed(c.score)).reduce((s, c) => s + c.credits, 0);
 }
 
-// Re-derive category when the backend's audit label is too broad for placement.
+// Re-derive category for non-passed courses (backend marks them all "不及格/停修")
 export function getEffectiveCategory(r: CourseRecord): string {
-  const auditCategory = r.audit_category?.trim() || '未分類';
-  const shouldDeriveFromRawCategory = ['不及格/停修', '未分類', '其他'].includes(auditCategory);
-
-  if (!shouldDeriveFromRawCategory) {
+  if (r.audit_category !== '不及格/停修') {
     // Normalize "通識-自然 (NT歷史與文化)" → "通識-自然" so it matches DOMAIN_AUDIT_PREFIX keys
-    const tMatch = auditCategory.match(/^(通識-[^\s(]+)/);
+    const tMatch = r.audit_category.match(/^(通識-[^\s(]+)/);
     if (tMatch) return tMatch[1];
-    return auditCategory;
+    return r.audit_category;
   }
   const n = r.course_name;
   const c = r.category;

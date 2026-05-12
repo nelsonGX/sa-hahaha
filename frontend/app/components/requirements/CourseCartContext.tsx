@@ -1,10 +1,10 @@
 'use client';
 
-import { createContext, useContext, useState, useCallback } from 'react';
+import { createContext, useContext, useState, useCallback, useEffect } from 'react';
 import type { RecommendedCourse } from './fakeRecommendationsApi';
 
 export interface CartItem extends RecommendedCourse {
-  addedFor: string; // category / area label
+  addedFor: string;
 }
 
 interface CourseCartCtx {
@@ -14,10 +14,23 @@ interface CourseCartCtx {
   has: (code: string) => boolean;
 }
 
+const STORAGE_KEY = 'course-cart';
 const Ctx = createContext<CourseCartCtx | null>(null);
 
 export function CourseCartProvider({ children }: { children: React.ReactNode }) {
-  const [items, setItems] = useState<CartItem[]>([]);
+  const [items, setItems] = useState<CartItem[]>(() => {
+    if (typeof window === 'undefined') return [];
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      return raw ? JSON.parse(raw) : [];
+    } catch {
+      return [];
+    }
+  });
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+  }, [items]);
 
   const add = useCallback((course: RecommendedCourse, addedFor: string) => {
     setItems(prev => prev.some(i => i.code === course.code) ? prev : [...prev, { ...course, addedFor }]);

@@ -357,5 +357,3 @@ class FjuScraperService:
             student_id=student_id, department_name="資訊管理學系", enrollment_year=113,
             course_records=records, credit_summary=summary, warnings=warnings
         )
-mary=summary, warnings=warnings
-        )
