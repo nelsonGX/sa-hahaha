@@ -28,13 +28,16 @@ export function earnedCredits(courses: CourseRecord[]): number {
   return courses.filter(c => isPassed(c.score)).reduce((s, c) => s + c.credits, 0);
 }
 
-// Re-derive category for non-passed courses (backend marks them all "不及格/停修")
+// Re-derive category when the backend's audit label is too broad for placement.
 export function getEffectiveCategory(r: CourseRecord): string {
-  if (r.audit_category !== '不及格/停修') {
+  const auditCategory = r.audit_category?.trim() || '未分類';
+  const shouldDeriveFromRawCategory = ['不及格/停修', '未分類', '其他'].includes(auditCategory);
+
+  if (!shouldDeriveFromRawCategory) {
     // Normalize "通識-自然 (NT歷史與文化)" → "通識-自然" so it matches DOMAIN_AUDIT_PREFIX keys
-    const tMatch = r.audit_category.match(/^(通識-[^\s(]+)/);
+    const tMatch = auditCategory.match(/^(通識-[^\s(]+)/);
     if (tMatch) return tMatch[1];
-    return r.audit_category;
+    return auditCategory;
   }
   const n = r.course_name;
   const c = r.category;
@@ -54,25 +57,26 @@ export function getEffectiveCategory(r: CourseRecord): string {
 
 // Build course slots for a category, appending ??? for remaining credit shortfall.
 // Studying courses count against the shortfall (likely to complete) but don't count as earned.
-export function buildSlots(courses: CourseRecord[], targetCredits: number, prefix: string): CourseSlot[] {
+export function buildSlots(courses: CourseRecord[], targetCredits: number, prefix: string, category?: string): CourseSlot[] {
   const slots: CourseSlot[] = courses.map((c, i) => ({
     id: `${prefix}-${i}`,
     status: slotStatus(c.score),
     name: c.course_name,
     credits: c.credits,
     record: c,
+    category,
   }));
   const committed = courses
     .filter(c => isPassed(c.score) || isStudying(c.score))
     .reduce((s, c) => s + c.credits, 0);
   const remaining = targetCredits - committed;
-  if (remaining > 0) slots.push({ id: `${prefix}-unknown`, status: 'unknown', name: '???', credits: remaining });
+  if (remaining > 0) slots.push({ id: `${prefix}-unknown`, status: 'unknown', name: '???', credits: remaining, category });
   return slots;
 }
 
 // Build a slot for a single fixed required course (e.g. 大學入門, 人生哲學)
-export function buildFixedSlot(keywords: string[], credits: number, pool: CourseRecord[], id: string): CourseSlot {
+export function buildFixedSlot(keywords: string[], credits: number, pool: CourseRecord[], id: string, category?: string): CourseSlot {
   const found = pool.find(c => keywords.some(k => c.course_name.includes(k)));
-  if (found) return { id, status: slotStatus(found.score), name: found.course_name, credits: found.credits, record: found };
-  return { id, status: 'unknown', name: keywords[0], credits };
+  if (found) return { id, status: slotStatus(found.score), name: found.course_name, credits: found.credits, record: found, category };
+  return { id, status: 'unknown', name: keywords[0], credits, category };
 }

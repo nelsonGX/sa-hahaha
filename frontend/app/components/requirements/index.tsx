@@ -37,18 +37,18 @@ export default function RequirementsTree({ details, records }: RequirementsTreeP
   const electiveRecords = byCategory['選修'] ?? [];
 
   const coreSlots: CourseSlot[] = [
-    buildFixedSlot(['大學入門'], 2, coreRecords, 'core-intro'),
-    buildFixedSlot(['人生哲學'], 4, coreRecords, 'core-philosophy'),
-    buildFixedSlot(['專業倫理', '企業倫理'], 2, coreRecords, 'core-ethics'),
+    buildFixedSlot(['大學入門'], 2, coreRecords, 'core-intro', '核心課程'),
+    buildFixedSlot(['人生哲學'], 4, coreRecords, 'core-philosophy', '核心課程'),
+    buildFixedSlot(['專業倫理', '企業倫理'], 2, coreRecords, 'core-ethics', '核心課程'),
   ];
 
   const chineseRecords = basicRecords.filter(r => r.course_name.includes('國文'));
   const foreignRecords = basicRecords.filter(r => !r.course_name.includes('國文'));
-  const chineseSlots   = buildSlots(chineseRecords, 4, 'zh');
-  const foreignSlots   = buildSlots(foreignRecords, 8, 'fl');
+  const chineseSlots   = buildSlots(chineseRecords, 4, 'zh', '國文');
+  const foreignSlots   = buildSlots(foreignRecords, 8, 'fl', '外語');
 
-  const requiredSlots = buildSlots(requiredRecords, details.required_courses.target, 'req');
-  const electiveSlots = buildSlots(electiveRecords, details.elective_courses.target, 'ele');
+  const requiredSlots = buildSlots(requiredRecords, details.required_courses.target, 'req', '必修');
+  const electiveSlots = buildSlots(electiveRecords, details.elective_courses.target, 'ele', '選修');
 
   return (
     <>
@@ -80,7 +80,7 @@ export default function RequirementsTree({ details, records }: RequirementsTreeP
             {Object.entries(details.general_ed.domains).map(([domainKey, domain]) => {
               const auditPrefix  = DOMAIN_AUDIT_PREFIX[domainKey] ?? `通識-${domainKey.slice(0, 2)}`;
               const domainRecords = byCategory[auditPrefix] ?? [];
-              const domainSlots  = buildSlots(domainRecords, domain.target, `ge-${domainKey}`);
+              const domainSlots  = buildSlots(domainRecords, domain.target, `ge-${domainKey}`, auditPrefix);
               return (
                 <SubAccordion
                   key={domainKey}

@@ -35,6 +35,50 @@ class FjuScraperService:
             "58": "人工智慧與資訊安全學士學位學程"
         }
 
+    def _normalize_course_name(self, name: str) -> str:
+        return name.replace("英-專業", "").replace("英-專", "").replace(" ", "").strip()
+
+    def _is_enrolled_score(self, score: str) -> bool:
+        return score.strip() in ["", "未評定成績"]
+
+    def _more_specific_category(self, current: str, candidate: str) -> str:
+        current = current.strip()
+        candidate = candidate.strip()
+        if not current:
+            return candidate
+        if not candidate:
+            return current
+        if "通識-" in candidate and "通識-" not in current:
+            return candidate
+        if "通識-" in current and "通識-" not in candidate:
+            return current
+        if len(candidate) > len(current):
+            return candidate
+        return current
+
+    def _deduplicate_enrolled_records(self, records: list[CourseRecord]) -> list[CourseRecord]:
+        seen_enrolled: dict[str, CourseRecord] = {}
+        deduped: list[CourseRecord] = []
+
+        for record in records:
+            if not self._is_enrolled_score(record.score):
+                deduped.append(record)
+                continue
+
+            key = self._normalize_course_name(record.course_name)
+            existing = seen_enrolled.get(key)
+            if not existing:
+                seen_enrolled[key] = record
+                deduped.append(record)
+                continue
+
+            existing.category = self._more_specific_category(existing.category, record.category)
+            existing.course_name = record.course_name or existing.course_name
+            if not existing.score.strip():
+                existing.score = record.score
+
+        return deduped
+
     def scrape_student_data(self, student_id: str, password: str, use_mock: bool = True) -> StudentData:
         if use_mock:
             return self._get_mock_data(student_id)
@@ -84,17 +128,18 @@ class FjuScraperService:
                 estu_scraper = EstuScraper()
                 enrolled_courses = estu_scraper.get_enrolled_courses(student_id, password)
                 
-                def normalize_name(name):
-                    return name.replace("英-專業", "").replace("英-專", "").replace(" ", "").strip()
-                    
-                existing_records_map = {normalize_name(r.course_name): r for r in records if r.score.strip() in ["", "未評定成績"]}
+                existing_records_map = {
+                    self._normalize_course_name(r.course_name): r
+                    for r in records
+                    if self._is_enrolled_score(r.score)
+                }
                 
                 for course in enrolled_courses:
                     course_name = course.get("科目名稱")
                     if not course_name:
                         continue
                         
-                    norm_name = normalize_name(course_name)
+                    norm_name = self._normalize_course_name(course_name)
                     
                     # 判斷分類，選課系統有通識領域欄位
                     domain = course.get("通識領域", "").strip()
@@ -141,6 +186,8 @@ class FjuScraperService:
             except Exception as estu_e:
                 print(f"⚠️ 選課系統爬取失敗，但不影響主成績單: {estu_e}")
             
+            records = self._deduplicate_enrolled_records(records)
+
             estimated_enrollment_year = 100 + int(student_id[1:3]) if len(student_id) >= 3 and student_id.startswith('4') else 0
             department_name = self.DEPARTMENT_MAP.get(student_id[3:5], "未知系所") if len(student_id) >= 5 else "未知系所"
 
@@ -164,9 +211,10 @@ class FjuScraperService:
         warnings = []
         
         def get_status(score: str):
-            if not score or score.strip() == "" or score.strip() == "未評定成績": return "enrolled"
-            if score.isdigit(): return "passed" if int(score) >= 60 else "failed"
-            if score in ["抵免", "及格", "通過"]: return "passed"
+            normalized_score = score.strip()
+            if not normalized_score or normalized_score == "未評定成績": return "enrolled"
+            if normalized_score.isdigit(): return "passed" if int(normalized_score) >= 60 else "failed"
+            if normalized_score in ["抵免", "及格", "通過"]: return "passed"
             return "failed"
 
         # 計數器

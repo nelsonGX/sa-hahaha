@@ -6,6 +6,8 @@ import LoginForm from './LoginForm';
 import Navbar from './Navbar';
 import WarningBanner from './WarningBanner';
 import RequirementsTree from './RequirementsTree';
+import { CourseCartProvider } from './requirements/CourseCartContext';
+import CourseCartPanel from './CourseCartPanel';
 
 export default function Dashboard() {
   const [data, setData] = useState<StudentData | null>(null);
@@ -17,7 +19,7 @@ export default function Dashboard() {
   const { student_id, department_name, enrollment_year, credit_summary, course_records, warnings } = data;
 
   return (
-    <>
+    <CourseCartProvider>
       <Navbar
         studentId={student_id}
         departmentName={department_name}
@@ -65,9 +67,10 @@ export default function Dashboard() {
               enrollmentYear={enrollment_year}
             />
           )}
-
         </div>
       </main>
-    </>
+
+      <CourseCartPanel />
+    </CourseCartProvider>
   );
 }

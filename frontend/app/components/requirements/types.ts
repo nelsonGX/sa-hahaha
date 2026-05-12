@@ -8,4 +8,5 @@ export interface CourseSlot {
   name: string;
   credits: number;
   record?: CourseRecord;
+  category?: string;
 }

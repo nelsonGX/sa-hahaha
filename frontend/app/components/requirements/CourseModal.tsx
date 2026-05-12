@@ -1,45 +1,99 @@
-import type { CourseSlot } from './types';
+'use client';
 
-interface MockCourse {
-  code: string;
-  name: string;
-  credits: number;
-  teacher: string;
-  time: string;
+import { useState, useEffect, useMemo } from 'react';
+import type { CourseSlot } from './types';
+import { fetchRecommendations, type RecommendedCourse } from './fakeRecommendationsApi';
+import { useCourseCart } from './CourseCartContext';
+
+function SeatBadge({ remaining, seats }: { remaining: number; seats: number }) {
+  const pct = remaining / seats;
+  const color = pct < 0.1 ? 'text-[#dd5b00] bg-[#fff4ee]' : pct < 0.3 ? 'text-[#9d6b00] bg-[#fffbf0]' : 'text-[#2a9d99] bg-[#f0faf9]';
+  return (
+    <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full shrink-0 ${color}`}>
+      剩 {remaining} 名
+    </span>
+  );
 }
 
-// Mock recommendations — replace with real API data later
-const MOCK_COURSES: MockCourse[] = [
-  { code: 'GE1001', name: '生活中的科學', credits: 2, teacher: '陳明義', time: '週二 3-4' },
-  { code: 'GE1023', name: '環境科學概論', credits: 2, teacher: '林佳慧', time: '週四 5-6' },
-  { code: 'GE1045', name: '宇宙與人類', credits: 2, teacher: '黃宇翔', time: '週一 7-8' },
-  { code: 'GE2010', name: '經濟學與生活', credits: 2, teacher: '王建中', time: '週三 1-2' },
-  { code: 'GE2031', name: '法律與人權', credits: 2, teacher: '李玉萍', time: '週五 3-4' },
-  { code: 'CS3201', name: '機器學習', credits: 3, teacher: '張博文', time: '週二 1-3' },
-];
+function RecommendedCourseCard({ course, addedFor }: { course: RecommendedCourse; addedFor: string }) {
+  const { add, remove, has } = useCourseCart();
+  const inCart = has(course.code);
 
-function RecommendedCourseCard({ course }: { course: MockCourse }) {
   return (
-    <div className="flex items-center justify-between gap-3 bg-[#f6f5f4] hover:bg-[#f0efee] rounded-xl px-4 py-3 transition-colors">
+    <div className="flex items-center gap-3 bg-[#f6f5f4] hover:bg-[#f0efee] rounded-xl px-4 py-3 transition-colors group">
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 mb-0.5">
           <span className="text-[10px] font-mono text-[#a39e98]">{course.code}</span>
           <span className="text-[10px] font-semibold text-[#615d59]">{course.credits} 學分</span>
+          <SeatBadge remaining={course.remaining} seats={course.seats} />
         </div>
         <p className="text-sm font-semibold text-black/85 leading-tight truncate">{course.name}</p>
         <p className="text-xs text-[#a39e98] mt-0.5">{course.teacher} · {course.time}</p>
       </div>
-      <button className="shrink-0 text-xs font-semibold text-[#0075de] hover:text-[#0055b3] transition-colors whitespace-nowrap">
-        + 加入
+      <button
+        onClick={() => inCart ? remove(course.code) : add(course, addedFor)}
+        className={`shrink-0 text-xs font-semibold px-3 py-1.5 rounded-lg transition-all active:scale-95 ${
+          inCart
+            ? 'bg-[#2a9d99]/12 text-[#1d7572] hover:bg-[#dd5b00]/10 hover:text-[#dd5b00]'
+            : 'bg-black/6 text-[#615d59] hover:bg-black hover:text-white'
+        }`}
+      >
+        {inCart ? '已加入' : '+ 加入'}
       </button>
     </div>
   );
 }
 
-export default function CourseModal({ slot, onClose }: { slot: CourseSlot | null; onClose: () => void }) {
-  if (!slot) return null;
+function SkeletonCard() {
+  return (
+    <div className="bg-[#f6f5f4] rounded-xl px-4 py-3 flex flex-col gap-2 animate-pulse">
+      <div className="flex gap-2">
+        <div className="h-3 w-14 bg-black/10 rounded" />
+        <div className="h-3 w-10 bg-black/10 rounded" />
+      </div>
+      <div className="h-4 w-3/4 bg-black/10 rounded" />
+      <div className="h-3 w-1/2 bg-black/8 rounded" />
+    </div>
+  );
+}
 
-  const showRecommendations = slot.status === 'unknown' || slot.status === 'failed';
+export default function CourseModal({ slot, onClose }: { slot: CourseSlot | null; onClose: () => void }) {
+  const [courses, setCourses] = useState<RecommendedCourse[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [search, setSearch] = useState('');
+  const [filterCredits, setFilterCredits] = useState<number | null>(null);
+
+  const showRecommendations = slot?.status === 'unknown' || slot?.status === 'failed';
+  const addedFor = slot?.category ?? slot?.name ?? '課程';
+
+  useEffect(() => {
+    if (!slot || !showRecommendations) return;
+    setLoading(true);
+    setCourses([]);
+    setSearch('');
+    setFilterCredits(null);
+    fetchRecommendations(slot.category ?? '', slot.credits)
+      .then(setCourses)
+      .finally(() => setLoading(false));
+  }, [slot?.id]);
+
+  const filtered = useMemo(() => {
+    let list = courses;
+    if (filterCredits !== null) list = list.filter(c => c.credits === filterCredits);
+    if (search.trim()) {
+      const q = search.toLowerCase();
+      list = list.filter(c =>
+        c.name.toLowerCase().includes(q) ||
+        c.code.toLowerCase().includes(q) ||
+        c.teacher.toLowerCase().includes(q)
+      );
+    }
+    return list;
+  }, [courses, search, filterCredits]);
+
+  const creditOptions = useMemo(() => [...new Set(courses.map(c => c.credits))].sort(), [courses]);
+
+  if (!slot) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={onClose}>
@@ -91,18 +145,63 @@ export default function CourseModal({ slot, onClose }: { slot: CourseSlot | null
               {slot.name === '???' ? '待選課程' : slot.name}
             </h3>
             {slot.status === 'failed' && slot.record && (
-              <p className="text-sm text-[#dd5b00] mb-1">成績 {slot.record.score} · {slot.record.semester}</p>
+              <p className="text-sm text-[#dd5b00] mb-0.5">成績 {slot.record.score} · {slot.record.semester}</p>
             )}
             <p className="text-sm text-[#615d59] mb-5">尚需修習 {slot.credits} 學分</p>
 
+            {/* Recommendations header */}
             <div className="flex items-center justify-between mb-3">
               <p className="text-sm font-semibold text-black/80">選課建議</p>
               <span className="text-[10px] bg-[#fff4ee] text-[#dd5b00] border border-[#dd5b00]/20 font-semibold px-2 py-0.5 rounded-full">測試版</span>
             </div>
-            <div className="flex flex-col gap-2 max-h-64 overflow-y-auto">
-              {MOCK_COURSES.map(c => (
-                <RecommendedCourseCard key={c.code} course={c} />
-              ))}
+
+            {/* Search + filter */}
+            {!loading && courses.length > 0 && (
+              <div className="flex gap-2 mb-3">
+                <input
+                  type="text"
+                  value={search}
+                  onChange={e => setSearch(e.target.value)}
+                  placeholder="搜尋課程名稱、老師…"
+                  className="flex-1 text-sm bg-[#f6f5f4] border border-black/8 rounded-lg px-3 py-2 outline-none focus:border-black/25 placeholder:text-[#c4bfba] transition-colors"
+                />
+                <div className="flex gap-1">
+                  <button
+                    onClick={() => setFilterCredits(null)}
+                    className={`text-xs font-semibold px-2.5 py-1.5 rounded-lg transition-colors ${filterCredits === null ? 'bg-black text-white' : 'bg-[#f6f5f4] text-[#615d59] hover:bg-[#eeeceb]'}`}
+                  >
+                    全部
+                  </button>
+                  {creditOptions.map(cr => (
+                    <button
+                      key={cr}
+                      onClick={() => setFilterCredits(filterCredits === cr ? null : cr)}
+                      className={`text-xs font-semibold px-2.5 py-1.5 rounded-lg transition-colors ${filterCredits === cr ? 'bg-black text-white' : 'bg-[#f6f5f4] text-[#615d59] hover:bg-[#eeeceb]'}`}
+                    >
+                      {cr}學分
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Course list */}
+            <div className="flex flex-col gap-2 max-h-72 overflow-y-auto -mx-1 px-1">
+              {loading ? (
+                <>
+                  <SkeletonCard />
+                  <SkeletonCard />
+                  <SkeletonCard />
+                </>
+              ) : filtered.length === 0 ? (
+                <div className="text-center py-8 text-sm text-[#a39e98]">
+                  {search ? '找不到符合的課程' : '目前無推薦課程'}
+                </div>
+              ) : (
+                filtered.map(c => (
+                  <RecommendedCourseCard key={c.code} course={c} addedFor={addedFor} />
+                ))
+              )}
             </div>
           </>
         )}
