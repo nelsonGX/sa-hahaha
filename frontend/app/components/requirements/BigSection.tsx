@@ -42,9 +42,9 @@ export default function BigSection({
           <div className="flex items-baseline gap-2 mb-1.5">
             <h2 className="font-bold text-base text-black/95 tracking-[-0.25px]">{subtitle}</h2>
             <span className={`text-sm font-semibold tabular-nums ${done ? 'text-[#2a9d99]' : 'text-[#615d59]'}`}>
-              {earned} / {target}
+              {earned} {target > 0 ? `/ ${target}` : ''}
             </span>
-            {done && (
+            {done && target > 0 && (
               <span className="text-xs font-semibold text-[#2a9d99] bg-[#f0faf9] px-2 py-0.5 rounded-full">已達標</span>
             )}
           </div>

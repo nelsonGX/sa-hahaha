@@ -6,6 +6,8 @@ import LoginForm from './LoginForm';
 import Navbar from './Navbar';
 import WarningBanner from './WarningBanner';
 import RequirementsTree from './RequirementsTree';
+import SummaryCards from './SummaryCards';
+import CourseTable from './CourseTable';
 import { CourseCartProvider } from './requirements/CourseCartContext';
 import CourseCartPanel from './CourseCartPanel';
 
@@ -57,15 +59,27 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <div className="max-w-6xl mx-auto px-6 py-10 flex flex-col gap-6">
+        <div className="max-w-6xl mx-auto px-6 py-10 flex flex-col gap-10">
           <WarningBanner warnings={warnings} />
 
           {credit_summary.details && (
-            <RequirementsTree
-              details={credit_summary.details}
-              records={course_records}
-              enrollmentYear={enrollment_year}
-            />
+            <>
+              <SummaryCards details={credit_summary.details} records={course_records} />
+              
+              <div className="space-y-4">
+                <h2 className="text-2xl font-bold tracking-tight text-black/95 flex items-center gap-2">
+                  <span className="w-1.5 h-6 bg-[#213183] rounded-full" />
+                  畢業學分達成詳情
+                </h2>
+                <RequirementsTree
+                  details={credit_summary.details}
+                  records={course_records}
+                  enrollmentYear={enrollment_year}
+                />
+              </div>
+
+              <CourseTable records={course_records} />
+            </>
           )}
         </div>
       </main>

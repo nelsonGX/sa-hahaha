@@ -38,7 +38,7 @@ export default function SubAccordion({
         >▶</span>
         <span className="flex-1 text-sm font-semibold text-black/85">{title}</span>
         <span className={`text-xs font-semibold tabular-nums shrink-0 ${done ? 'text-[#2a9d99]' : 'text-[#615d59]'}`}>
-          {earned}/{target} {unitLabel}
+          {earned}{target > 0 ? `/${target}` : ''} {unitLabel}
         </span>
         <div className="w-16 shrink-0">
           <ProgressBar earned={earned} target={target} />
