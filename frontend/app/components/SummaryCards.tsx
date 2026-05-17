@@ -143,7 +143,7 @@ export default function SummaryCards({ details, records }: SummaryCardsProps) {
         return (
           <div
             key={idx}
-            className="rounded-xl p-5 bg-white border border-black/10 shadow-[var(--shadow-card)] flex flex-col"
+            className="rounded-xl p-5 bg-white border border-black/10 shadow-[var(--shadow-card)] flex flex-col transition-all duration-300 hover:border-[#213183]/30 hover:scale-[1.05] hover:shadow-lg origin-center cursor-default z-0 hover:z-10"
           >
             <p className="font-semibold mb-3 text-[11px] text-[#615d59] tracking-[0.125px] uppercase h-8 flex items-start">
               {p.label}
