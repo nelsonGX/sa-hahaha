@@ -6,35 +6,12 @@ import { isPassed } from './requirements/helpers';
 
 interface CourseTableProps {
   records: CourseRecord[];
+  enrollmentYear: number;
 }
 
 type SortKey = 'semester' | 'audit_category';
 
-interface SortChipProps {
-  id: 'semester' | 'audit_category';
-  label: string;
-  active: boolean;
-  sortAsc: boolean;
-  onToggleSort: (key: 'semester' | 'audit_category') => void;
-}
-
-function SortChip({ id, label, active, sortAsc, onToggleSort }: SortChipProps) {
-  return (
-    <button
-      onClick={() => onToggleSort(id)}
-      className={`px-2.5 py-0.75 rounded-full text-xs font-semibold tracking-[0.125px] border cursor-pointer transition-colors inline-flex items-center gap-1 ${
-        active
-          ? 'bg-(--notion-blue) text-white border-transparent'
-          : 'bg-transparent text-[#615d59] border-black/10 hover:bg-black/4'
-      }`}
-    >
-      {label}
-      <span className={`text-[10px] ${active ? 'opacity-100' : 'opacity-40'}`}>
-        {active && !sortAsc ? '▲' : '▼'}
-      </span>
-    </button>
-  );
-}
+const TABS = ['all', '必修', '選修', '通識', '核心/能力'] as const;
 
 function CategoryBadge({ cat }: { cat: string }) {
   let cls = 'bg-[#f2f9ff] text-[#097fe8]';
@@ -52,28 +29,33 @@ function CategoryBadge({ cat }: { cat: string }) {
 
 function ScoreBadge({ score }: { score: string }) {
   const passed = isPassed(score);
+  const cls = passed ? 'bg-[rgba(26,174,57,0.1)] text-[#1aae39]' : 'bg-[rgba(221,91,0,0.08)] text-[#dd5b00]';
   return (
-    <span className={`rounded px-1.5 py-0.5 text-xs font-semibold ${passed ? 'bg-[rgba(26,174,57,0.1)] text-[#1aae39]' : 'bg-[rgba(221,91,0,0.08)] text-[#dd5b00]'}`}>
+    <span className={`rounded px-1.5 py-0.5 text-xs font-semibold ${cls}`}>
       {score}
     </span>
   );
 }
 
-export default function CourseTable({ records }: CourseTableProps) {
+export default function CourseTable({ records, enrollmentYear }: CourseTableProps) {
   const [sortKey, setSortKey] = useState<SortKey>('semester');
-  const [sortAsc, setSortAsc] = useState(false); // Default to newest first
+  const [sortAsc, setSortAsc] = useState(false);
   const [search, setSearch] = useState('');
-  const [activeTab, setActiveTab] = useState<'all' | '必修' | '選修' | '通識' | '核心/能力'>('all');
+  const [activeTab, setActiveTab] = useState<typeof TABS[number]>('all');
   const [selectedSemester, setSelectedSemester] = useState<string | null>(null);
 
-  function toggleSort(key: SortKey) {
-    if (sortKey === key) {
-      setSortAsc((prev) => !prev);
-    } else {
-      setSortKey(key);
-      setSortAsc(true);
+  const semesters = useMemo(() => {
+    const currentYear = 114;
+    const currentSem = 2;
+    const list: string[] = [];
+    for (let y = enrollmentYear; y <= currentYear; y++) {
+      for (let s = 1; s <= 2; s++) {
+        if (y === currentYear && s > currentSem) break;
+        list.push(`${y}-${s}`);
+      }
     }
-  }
+    return list.reverse();
+  }, [enrollmentYear]);
 
   const filtered = useMemo(() => {
     return records.filter(r => {
@@ -90,7 +72,8 @@ export default function CourseTable({ records }: CourseTableProps) {
     return [...filtered].sort((a, b) => {
       const va = a[sortKey];
       const vb = b[sortKey];
-      return sortAsc ? va.localeCompare(vb) : vb.localeCompare(va);
+      if (sortAsc) return va.localeCompare(vb);
+      return vb.localeCompare(va);
     });
   }, [filtered, sortKey, sortAsc]);
 
@@ -111,47 +94,65 @@ export default function CourseTable({ records }: CourseTableProps) {
                 onClick={() => setSelectedSemester(null)}
                 className="inline-flex items-center gap-1.5 px-2 py-0.5 bg-(--notion-blue)/10 text-(--notion-blue) rounded text-[11px] font-bold hover:bg-(--notion-blue)/20 transition-colors"
               >
-                學期: {selectedSemester} ✕
+                學期: {selectedSemester} x
               </button>
             )}
           </div>
           <div className="flex flex-wrap gap-2">
-            <SortChip id="semester" label="按學期" active={sortKey === 'semester'} sortAsc={sortAsc} onToggleSort={toggleSort} />
-            <SortChip id="audit_category" label="按分類" active={sortKey === 'audit_category'} sortAsc={sortAsc} onToggleSort={toggleSort} />
+            <button
+              onClick={() => { setSortKey('semester'); setSortAsc(!sortAsc); }}
+              className={`px-2.5 py-0.75 rounded-full text-xs font-semibold border transition-colors ${sortKey === 'semester' ? 'bg-(--notion-blue) text-white border-transparent' : 'bg-transparent text-[#615d59] border-black/10'}`}
+            >
+              按學期 {sortKey === 'semester' ? (sortAsc ? '▲' : '▼') : ''}
+            </button>
+            <button
+              onClick={() => { setSortKey('audit_category'); setSortAsc(!sortAsc); }}
+              className={`px-2.5 py-0.75 rounded-full text-xs font-semibold border transition-colors ${sortKey === 'audit_category' ? 'bg-(--notion-blue) text-white border-transparent' : 'bg-transparent text-[#615d59] border-black/10'}`}
+            >
+              按分類 {sortKey === 'audit_category' ? (sortAsc ? '▲' : '▼') : ''}
+            </button>
           </div>
         </div>
 
         <div className="mt-6 flex flex-col sm:flex-row gap-4">
           <div className="relative flex-1">
-            <svg 
-              className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#615d59] opacity-50 overflow-visible"
-              fill="currentColor" 
-              viewBox="0 0 16 16"
-            >
-              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-            </svg>
             <input
               type="text"
               placeholder="搜尋課程名稱或學期..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 bg-[#f6f5f4] border-none rounded-lg text-sm placeholder:text-[#a39e98] outline-none focus:ring-2 focus:ring-(--notion-blue)/20 transition-all"
+              className="w-full pl-4 pr-4 py-2 bg-[#f6f5f4] border-none rounded-lg text-sm placeholder:text-[#a39e98] outline-none focus:ring-2 focus:ring-(--notion-blue)/20 transition-all"
             />
           </div>
-          <div className="flex bg-[#f6f5f4] p-1 rounded-lg gap-1 overflow-x-auto no-scrollbar">
-            {(['all', '必修', '選修', '通識', '核心/能力'] as const).map(tab => (
-              <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                className={`px-3 py-1 rounded-md text-xs font-medium whitespace-nowrap transition-colors ${
-                  activeTab === tab 
-                    ? 'bg-white text-black shadow-sm' 
-                    : 'text-[#615d59] hover:bg-black/5'
-                }`}
+          
+          <div className="flex gap-2">
+            <div className="relative">
+              <select
+                value={selectedSemester || ''}
+                onChange={(e) => setSelectedSemester(e.target.value || null)}
+                className="appearance-none px-3 py-2 bg-[#f6f5f4] border-none rounded-lg text-xs font-medium text-[#615d59] outline-none focus:ring-2 focus:ring-(--notion-blue)/20 transition-all cursor-pointer pr-8"
               >
-                {tab === 'all' ? '全部' : tab}
-              </button>
-            ))}
+                <option value="">所有學期</option>
+                {semesters.map(s => <option key={s} value={s}>{s}</option>)}
+              </select>
+              <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-[#615d59] opacity-50">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
+            </div>
+
+            <div className="flex bg-[#f6f5f4] p-1 rounded-lg gap-1 overflow-x-auto no-scrollbar">
+              {TABS.map(tab => (
+                <button
+                  key={tab}
+                  onClick={() => setActiveTab(tab)}
+                  className={`px-3 py-1 rounded-md text-xs font-medium whitespace-nowrap transition-colors ${activeTab === tab ? 'bg-white text-black shadow-sm' : 'text-[#615d59] hover:bg-black/5'}`}
+                >
+                  {tab === 'all' ? '全部' : tab}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -160,14 +161,11 @@ export default function CourseTable({ records }: CourseTableProps) {
         <table className="w-full text-left">
           <thead>
             <tr className="bg-[#f6f5f4]">
-              {['學期', '課程名稱', '學分', '成績', '審查標籤'].map((h, i) => (
-                <th
-                  key={h}
-                  className={`px-5 py-3 text-[11px] font-bold text-[#615d59] tracking-[0.05em] uppercase border-b border-black/10 ${i >= 2 && i <= 3 ? 'text-center' : 'text-left'}`}
-                >
-                  {h}
-                </th>
-              ))}
+              <th className="px-5 py-3 text-[11px] font-bold text-[#615d59] tracking-[0.05em] uppercase border-b border-black/10">學期</th>
+              <th className="px-5 py-3 text-[11px] font-bold text-[#615d59] tracking-[0.05em] uppercase border-b border-black/10">課程名稱</th>
+              <th className="px-5 py-3 text-[11px] font-bold text-[#615d59] tracking-[0.05em] uppercase border-b border-black/10 text-center">學分</th>
+              <th className="px-5 py-3 text-[11px] font-bold text-[#615d59] tracking-[0.05em] uppercase border-b border-black/10 text-center">成績</th>
+              <th className="px-5 py-3 text-[11px] font-bold text-[#615d59] tracking-[0.05em] uppercase border-b border-black/10">審查標籤</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-black/5">
@@ -177,12 +175,7 @@ export default function CourseTable({ records }: CourseTableProps) {
                   <td className="px-5 py-4 whitespace-nowrap">
                     <button
                       onClick={() => setSelectedSemester(r.semester)}
-                      className={`font-mono text-xs px-2 py-1 rounded transition-colors ${
-                        selectedSemester === r.semester 
-                          ? 'bg-(--notion-blue) text-white font-bold' 
-                          : 'text-[#615d59] hover:bg-black/5 hover:text-black'
-                      }`}
-                      title={`只顯示 ${r.semester} 學期`}
+                      className={`font-mono text-xs px-2 py-1 rounded transition-colors ${selectedSemester === r.semester ? 'bg-(--notion-blue) text-white font-bold' : 'text-[#615d59] hover:bg-black/5 hover:text-black'}`}
                     >
                       {r.semester}
                     </button>
@@ -195,7 +188,11 @@ export default function CourseTable({ records }: CourseTableProps) {
                     {r.credits}
                   </td>
                   <td className="px-5 py-4 text-center">
-                    <ScoreBadge score={r.score} />
+                    {r.course_name.includes('導師時間') ? (
+                      <span className="text-[#a39e98]">-</span>
+                    ) : (
+                      <ScoreBadge score={r.score} />
+                    )}
                   </td>
                   <td className="px-5 py-4">
                     <CategoryBadge cat={r.audit_category} />
@@ -214,9 +211,7 @@ export default function CourseTable({ records }: CourseTableProps) {
       </div>
 
       <div className="px-6 py-4 bg-[#f6f5f4]/30 border-t border-black/10 flex justify-between items-center">
-        <p className="text-xs text-[#a39e98]">
-          顯示 {sorted.length} 門課程
-        </p>
+        <p className="text-xs text-[#a39e98]">顯示 {sorted.length} 門課程</p>
         <p className="text-sm font-bold text-black/90">
           篩選總學分：<span className="text-(--notion-blue)">{totalFilteredCredits}</span>
         </p>

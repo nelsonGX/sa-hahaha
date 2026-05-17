@@ -181,15 +181,25 @@ class FjuScraperService:
                             course_name=course_name,
                             credits=credits_val,
                             score="", # 空字串代表正在修 (enrolled)
-                            category=category
+                            category=category,
+                            offering_dept=course.get("開課單位名稱", "")
                         ))
             except Exception as estu_e:
                 print(f"⚠️ 選課系統爬取失敗，但不影響主成績單: {estu_e}")
             
             records = self._deduplicate_enrolled_records(records)
 
-            estimated_enrollment_year = 100 + int(student_id[1:3]) if len(student_id) >= 3 and student_id.startswith('4') else 0
-            department_name = self.DEPARTMENT_MAP.get(student_id[3:5], "未知系所") if len(student_id) >= 5 else "未知系所"
+            # 修正入學年計算：支援日間部(4)與進修部(5)
+            # 輔大學號格式：[部別][學年度][系所代碼][序號]
+            # 例如 413... (日間部113入學), 512... (進修部112入學)
+            prefix = student_id[0]
+            if len(student_id) >= 3 and prefix in ['4', '5']:
+                estimated_enrollment_year = 100 + int(student_id[1:3])
+            else:
+                estimated_enrollment_year = 0
+            
+            department_code = student_id[3:5] if len(student_id) >= 5 else ""
+            department_name = self.DEPARTMENT_MAP.get(department_code, "未知系所")
 
             summary, warnings = self._calculate_credit_summary(records, department_name, estimated_enrollment_year)
 
@@ -236,7 +246,12 @@ class FjuScraperService:
         # 關鍵字清單
         HOLISTIC_CORE_KEYWORDS = ["大學入門", "人生哲學", "專業倫理", "企業倫理"]
         BASIC_SKILLS_KEYWORDS = ["國文", "外語", "外國語文", "英語", "英文", "法文", "德文", "日文", "西班牙文", "韓文"]
-        PE_KEYWORDS = ["體育", "羽球", "桌球", "游泳", "網球", "排球", "籃球"]
+        PE_KEYWORDS = [
+            "體育", "羽球", "桌球", "游泳", "網球", "排球", "籃球", 
+            "瑜珈", "高爾夫", "重量訓練", "慢跑", "太極拳", "防身術", 
+            "柔道", "流行舞蹈", "國標舞", "保齡球", "壘球", "足球",
+            "肌力", "體能", "皮拉提斯", "飛輪", "潛水", "TRX", "體適能", "有氧"
+        ]
 
         passed_courses = {r.course_name for r in records if get_status(r.score) == "passed"}
         enrolled_courses = {r.course_name for r in records if get_status(r.score) == "enrolled"}

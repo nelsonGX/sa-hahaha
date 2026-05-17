@@ -78,7 +78,7 @@ export default function Dashboard() {
                 />
               </div>
 
-              <CourseTable records={course_records} />
+              <CourseTable records={course_records} enrollmentYear={enrollment_year} />
             </>
           )}
         </div>
