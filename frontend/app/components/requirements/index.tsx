@@ -53,30 +53,48 @@ export default function RequirementsTree({ details, records }: RequirementsTreeP
   return (
     <>
       <div className="flex flex-col gap-4">
-        {/* ── 全人教育 ── */}
+        {/* ── 1. 全人/核心課程 ── */}
         <BigSection
-          title="全人"
-          subtitle="全人教育"
-          earned={details.holistic_education.earned}
-          target={details.holistic_education.target}
-          accent="#213183"
+          title="核心"
+          subtitle="全人/核心課程"
+          earned={details.holistic_core.earned}
+          target={details.holistic_core.target}
+          accent="#615d59"
           defaultOpen
         >
-          <SubAccordion title="核心課程" earned={details.holistic_core.earned} target={details.holistic_core.target} defaultOpen>
+          <div className="flex flex-col gap-2 pt-1">
             {coreSlots.map(s => <CourseChip key={s.id} slot={s} onClick={setModalSlot} />)}
             <PESlots peCourses={peRecords} peTarget={details.pe_semesters.target} onSlotClick={setModalSlot} />
-          </SubAccordion>
+          </div>
+        </BigSection>
 
-          <SubAccordion title="基本能力(語言)" earned={details.basic_skills.earned} target={details.basic_skills.target}>
-            <SubAccordion title="國文" earned={earnedCredits(chineseRecords)} target={4} indent>
+        {/* ── 2. 全人/基本能力課程 ── */}
+        <BigSection
+          title="能力"
+          subtitle="全人/基本能力課程"
+          earned={details.basic_skills.earned}
+          target={details.basic_skills.target}
+          accent="#4a5568"
+        >
+          <div className="flex flex-col gap-4 pt-1">
+            <SubAccordion title="國文" earned={earnedCredits(chineseRecords)} target={4} defaultOpen>
               {chineseSlots.map(s => <CourseChip key={s.id} slot={s} onClick={setModalSlot} />)}
             </SubAccordion>
-            <SubAccordion title="外國語文" earned={earnedCredits(foreignRecords)} target={8} indent>
+            <SubAccordion title="外國語文" earned={earnedCredits(foreignRecords)} target={8} defaultOpen>
               {foreignSlots.map(s => <CourseChip key={s.id} slot={s} onClick={setModalSlot} />)}
             </SubAccordion>
-          </SubAccordion>
+          </div>
+        </BigSection>
 
-          <SubAccordion title="通識涵養" earned={details.general_ed.earned} target={details.general_ed.target}>
+        {/* ── 3. 通識涵養課程 ── */}
+        <BigSection
+          title="通識"
+          subtitle="通識涵養課程"
+          earned={details.general_ed.earned}
+          target={details.general_ed.target}
+          accent="#9b6fb3"
+        >
+          <div className="flex flex-col gap-2 pt-1">
             {Object.entries(details.general_ed.domains).map(([domainKey, domain]) => {
               const auditPrefix  = DOMAIN_AUDIT_PREFIX[domainKey] ?? `通識-${domainKey.slice(0, 2)}`;
               const domainRecords = byCategory[auditPrefix] ?? [];
@@ -87,24 +105,23 @@ export default function RequirementsTree({ details, records }: RequirementsTreeP
                   title={DOMAIN_DISPLAY[domainKey] ?? domainKey}
                   earned={domain.earned}
                   target={domain.target}
-                  indent
                 >
                   {domainSlots.map(s => <CourseChip key={s.id} slot={s} onClick={setModalSlot} />)}
                 </SubAccordion>
               );
             })}
             {(byCategory['通識課程'] ?? []).length > 0 && (
-              <SubAccordion title="通識（未分域）" earned={earnedCredits(byCategory['通識課程'] ?? [])} target={0} indent>
+              <SubAccordion title="通識（未分域）" earned={earnedCredits(byCategory['通識課程'] ?? [])} target={0}>
                 {(byCategory['通識課程'] ?? []).map((c, i) => {
                   const slot: CourseSlot = { id: `ge-other-${i}`, status: isPassed(c.score) ? 'passed' : 'failed', name: c.course_name, credits: c.credits, record: c };
                   return <CourseChip key={i} slot={slot} onClick={setModalSlot} />;
                 })}
               </SubAccordion>
             )}
-          </SubAccordion>
+          </div>
         </BigSection>
 
-        {/* ── 必修 ── */}
+        {/* ── 4. 必修 ── */}
         <BigSection
           title="必修"
           subtitle="系所必修"
@@ -117,7 +134,7 @@ export default function RequirementsTree({ details, records }: RequirementsTreeP
           </div>
         </BigSection>
 
-        {/* ── 選修 ── */}
+        {/* ── 5. 選修 ── */}
         <BigSection
           title="選修"
           subtitle="系所選修"
