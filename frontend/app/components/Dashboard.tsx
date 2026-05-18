@@ -22,10 +22,12 @@ export default function Dashboard() {
     const savedProf = localStorage.getItem(`prof_data_${freshData.student_id}`);
     if (savedProf && freshData.credit_summary.details) {
       const { english, computer } = JSON.parse(savedProf);
+      const currentComputer = freshData.credit_summary.details.computer_proficiency;
       freshData.credit_summary.details.english_proficiency = english;
       freshData.credit_summary.details.computer_proficiency = {
-        ...freshData.credit_summary.details.computer_proficiency,
-        passed_count: computer.passed_count
+        passed_count: computer.passed_count,
+        target_count: currentComputer?.target_count ?? computer.target_count ?? 5,
+        has_programming_elective: currentComputer?.has_programming_elective ?? computer.has_programming_elective ?? false
       };
       freshData.is_first_time = false;
 
