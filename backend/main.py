@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
-from app.api.endpoints import credits
+from app.api.endpoints import credits, courses
 import os
 
 app = FastAPI(
@@ -21,6 +21,7 @@ app.add_middleware(
 
 # 註冊 API 路由
 app.include_router(credits.router, prefix="/api", tags=["學分系統"])
+app.include_router(courses.router, prefix="/api", tags=["課程目錄"])
 
 # 健康檢查路由
 @app.get("/health")

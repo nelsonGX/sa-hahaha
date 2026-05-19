@@ -15,9 +15,10 @@ interface RequirementsTreeProps {
   details: DetailedRequirements;
   records: CourseRecord[];
   enrollmentYear: number;
+  departmentName?: string;
 }
 
-export default function RequirementsTree({ details, records }: RequirementsTreeProps) {
+export default function RequirementsTree({ details, records, departmentName }: RequirementsTreeProps) {
   const [modalSlot, setModalSlot] = useState<CourseSlot | null>(null);
 
   const byCategory = useMemo(() => {
@@ -148,7 +149,7 @@ export default function RequirementsTree({ details, records }: RequirementsTreeP
         </BigSection>
       </div>
 
-      <CourseModal slot={modalSlot} onClose={() => setModalSlot(null)} />
+      <CourseModal slot={modalSlot} onClose={() => setModalSlot(null)} departmentName={departmentName} />
     </>
   );
 }

@@ -57,7 +57,7 @@ function SkeletonCard() {
   );
 }
 
-export default function CourseModal({ slot, onClose }: { slot: CourseSlot | null; onClose: () => void }) {
+export default function CourseModal({ slot, onClose, departmentName }: { slot: CourseSlot | null; onClose: () => void; departmentName?: string }) {
   const [courses, setCourses] = useState<RecommendedCourse[]>([]);
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState('');
@@ -72,7 +72,7 @@ export default function CourseModal({ slot, onClose }: { slot: CourseSlot | null
     setCourses([]);
     setSearch('');
     setFilterCredits(null);
-    fetchRecommendations(slot.category ?? '', slot.credits)
+    fetchRecommendations(slot.category ?? '', slot.credits, departmentName)
       .then(setCourses)
       .finally(() => setLoading(false));
   }, [slot?.id]);
@@ -152,7 +152,7 @@ export default function CourseModal({ slot, onClose }: { slot: CourseSlot | null
             {/* Recommendations header */}
             <div className="flex items-center justify-between mb-3">
               <p className="text-sm font-semibold text-black/80">選課建議</p>
-              <span className="text-[10px] bg-[#fff4ee] text-[#dd5b00] border border-[#dd5b00]/20 font-semibold px-2 py-0.5 rounded-full">測試版</span>
+              <span className="text-[10px] bg-[#f0f5ff] text-[#0055b3] border border-[#0075de]/20 font-semibold px-2 py-0.5 rounded-full" title="名額數為課程公告容量，非即時剩餘名額">容量僅供參考</span>
             </div>
 
             {/* Search + filter */}
