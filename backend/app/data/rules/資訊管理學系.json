@@ -1,0 +1,30 @@
+{
+    "department_name": "資訊管理學系",
+    "required_credits": 64,
+    "elective_credits": 32,
+    "holistic_total_credits": 32,
+    "holistic_core_credits": 8,
+    "basic_skills_credits": 12,
+    "general_education_credits": 12,
+    "general_education_domains": {
+        "人文藝術領域": 4,
+        "自然科技領域": 4,
+        "社會科學領域": 4
+    },
+    "pe_semesters": 4,
+    "holistic_core_keywords": ["大學入門", "人生哲學", "專業倫理", "企業倫理"],
+    "basic_skills_keywords": ["國文", "外語", "外國語文", "英語", "英文", "法文", "德文", "日文", "西班牙文", "韓文"],
+    "pe_keywords": ["體育", "羽球", "桌球", "游泳", "網球", "排球", "籃球"],
+    "prerequisites": [
+        {
+            "target": "資訊系統專題一",
+            "required_passed": ["系統分析與設計"],
+            "warning_not_taken": "⚠️ 您尚未通過『系統分析與設計』(且未正在修課)，這將擋修『資訊系統專題一』。",
+            "warning_enrolled": "📝 您正在修習『系統分析與設計』，請確保及格以免擋修『資訊系統專題一』。"
+        },
+        {
+            "target": "資訊系統專題二",
+            "fail_consequence": "🚨 您的『資訊系統專題二』不及格，依規定需重修『專題一』與『專題二』。"
+        }
+    ]
+}

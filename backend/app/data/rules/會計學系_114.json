@@ -1,0 +1,23 @@
+{
+    "department_name": "會計學系",
+    "required_credits": 72,
+    "elective_credits": 30,
+    "total_graduation_credits": 134,
+    "holistic_total_credits": 32,
+    "holistic_core_credits": 10,
+    "basic_skills_credits": 12,
+    "general_education_credits": 10,
+    "general_education_domains": {
+        "人文與藝術通識領域": 2,
+        "自然與科技通識領域": 2,
+        "社會科學通識領域": 2,
+        "永續素養通識領域": 2
+    },
+    "pe_semesters": 4,
+    "emi_course_minimum": 5,
+    "other_requirements": [
+        "英語能力須達 CEFR B2 高階級",
+        "大四上學期須參加會計系會考，需達 60 分",
+        "須通過校方規定之資訊學科學習能力檢測"
+    ]
+}

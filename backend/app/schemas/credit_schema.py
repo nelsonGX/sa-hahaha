@@ -32,6 +32,7 @@ class DetailedRequirements(BaseModel):
     basic_skills: CreditCategory          # 2. 基本能力課程 (12學分，含國文/外語)
     general_ed: GeneralEducationCredit    # 3. 通識 (12學分，含人文/自然/社會)
     pe_semesters: CreditCategory          # 體育及格學期數 (4學期)
+    emi_courses: Optional[CreditCategory] = None # EMI 門檻 (以門數或學分數計算，看各系定義，此處先用數值紀錄)
 
 # 整體學分統計
 class CreditSummary(BaseModel):
