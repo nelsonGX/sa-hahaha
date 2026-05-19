@@ -220,10 +220,10 @@ export default function Dashboard() {
 
       <CourseCartPanel />
 
-      {showOnboarding && credit_summary.details && (
-        <ProficiencyOnboarding 
-          initialComputer={credit_summary.details.computer_proficiency!}
-          initialEnglish={credit_summary.details.english_proficiency!}
+      {showOnboarding && credit_summary.details?.computer_proficiency && credit_summary.details?.english_proficiency && (
+        <ProficiencyOnboarding
+          initialComputer={credit_summary.details.computer_proficiency}
+          initialEnglish={credit_summary.details.english_proficiency}
           onComplete={handleOnboardingComplete}
         />
       )}
