@@ -32,32 +32,16 @@ def generate_rule_for_dept(dept_name, year="114"):
 
     print(f"\n--- Processing: {dept_name} ({year}) ---")
     
-    # 1. Start Research (將資料加入主筆記本)
+    # 1. Start Research & Import (使用 --force 避免卡在確認，--auto-import 自動等待並匯入)
     topic = f"輔仁大學 {dept_name} {year}學年度 畢業學分 必修科目表 畢業門檻"
-    # 使用 --notebook-id 指定加入現有的筆記本，且使用 --mode fast
-    res_out = run_command(["nlm", "research", "start", topic, "--mode", "fast", "--notebook-id", MASTER_NOTEBOOK_ID])
+    print(f"Starting research and auto-import for {dept_name} in Master Notebook...")
+    res_out = run_command(["nlm", "research", "start", topic, "--mode", "fast", "--notebook-id", MASTER_NOTEBOOK_ID, "--force", "--auto-import"])
     
     if not res_out:
+        print("Research start/import failed.")
         return False
         
-    print(f"Research started for {dept_name} in Master Notebook {MASTER_NOTEBOOK_ID}")
-
-    # 2. Wait for completion
-    max_retries = 10
-    for i in range(max_retries):
-        print(f"Checking status ({i+1}/{max_retries})...")
-        status_out = run_command(["nlm", "research", "status", MASTER_NOTEBOOK_ID])
-        if "completed" in status_out.lower() or "finished" in status_out.lower() or "success" in status_out.lower():
-            print("Research completed.")
-            break
-        time.sleep(10)
-    else:
-        print("Research timed out. Proceeding anyway...")
-    
-    # 3. Import sources
-    print("Importing sources to Master Notebook...")
-    run_command(["nlm", "research", "import", MASTER_NOTEBOOK_ID])
-    time.sleep(2)
+    print("Research and import completed.")
 
     # 4. Query Master Notebook for structured data
     # 這裡我們加入一些校級的基礎規則提示，避免 AI 抓到舊資訊

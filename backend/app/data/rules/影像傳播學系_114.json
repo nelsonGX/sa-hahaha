@@ -1,0 +1,16 @@
+{
+  "department_name": "輔仁大學影像傳播學系",
+  "required_credits": 40,
+  "elective_credits": 56,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": 4,
+  "other_requirements": [
+    "英文能力畢業門檻（大二學年結束前成績應達多益550分以上或同等級標準）",
+    "資訊學科學習能力檢測（可修讀大一必修「電腦影像處理」替代）",
+    "畢業製作及校外成果展（大四須共同製作一項完整之作品，並共同對外公開展出）"
+  ]
+}

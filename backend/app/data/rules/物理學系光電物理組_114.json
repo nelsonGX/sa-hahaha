@@ -1,0 +1,15 @@
+{
+  "department_name": "輔仁大學物理學系光電物理組",
+  "required_credits": 69,
+  "elective_credits": 27,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": null,
+  "other_requirements": [
+    "選修課程 27 學分中需包含本系專業選修課程 16 學分",
+    "筆記本內容中未提供其他特定畢業門檻（如英文、資訊能力檢測）之詳細規定"
+  ]
+}

@@ -46,6 +46,12 @@ class AuditService:
         basic_skills_earned = 0
         pe_count = 0
         emi_passed_count = 0
+        distance_learning_credits = 0 # 遠距教學學分
+
+        # 用於檢查重複修習與學年課
+        passed_normalized_names = set()
+        enrolled_normalized_names = set()
+        year_course_terms = {} # dict[norm_name, set(term_type)] 追蹤學年課修習狀況
 
         # 初始化預設值
         HOLISTIC_CORE_KEYWORDS = rules.get("holistic_core_keywords", []) if rules else ["大學入門", "人生哲學", "專業倫理", "企業倫理"]
@@ -53,6 +59,12 @@ class AuditService:
         PE_KEYWORDS = rules.get("pe_keywords", []) if rules else ["體育"]
         DEPT_CODE = rules.get("dept_code", "40") # 資管系代碼預設 40
         
+        # 輔助函數：正規化課名 (與 ScraperService 邏輯一致)
+        import re
+        def _normalize_name(name: str) -> str:
+            n = name.replace("英-專業", "").replace("英-專", "").replace(" ", "").strip()
+            return re.sub(r"(-英-網|-網-英|-英|-網|\(EMI\)|EMI)$", "", n).strip()
+
         ge_domains_config = rules.get("general_education_domains", {
             "人文藝術領域": 4, "自然科技領域": 4, "社會科學領域": 4
         }) if rules else {
@@ -63,6 +75,20 @@ class AuditService:
             domain: CreditCategory(earned=0, target=target)
             for domain, target in ge_domains_config.items()
         }
+
+        # 預先掃描建立集合
+        for r in records:
+            norm_name = _normalize_name(r.course_name)
+            st = get_status(r.score)
+            if st == "passed":
+                passed_normalized_names.add(norm_name)
+                # 記錄學期/學年狀態
+                if "學年" in r.term_type:
+                    if norm_name not in year_course_terms:
+                        year_course_terms[norm_name] = set()
+                    year_course_terms[norm_name].add(r.term_type)
+            elif st == "enrolled":
+                enrolled_normalized_names.add(norm_name)
 
         passed_courses = {r.course_name for r in records if get_status(r.score) == "passed"}
         enrolled_courses = {r.course_name for r in records if get_status(r.score) == "enrolled"}
@@ -90,27 +116,54 @@ class AuditService:
             "科技": "自然"
         }
 
+        # 用於追蹤本迴圈內已計入學分的課，避免同名課程重複計分
+        counted_normalized_names = set()
+
         for r in records:
             r.status = get_status(r.score)
             
             if r.status == "failed":
                 r.audit_category = "不及格/停修"
                 continue
-            
+                
+            norm_name = _normalize_name(r.course_name)
             is_passed_course = (r.status == "passed")
+
+            # A. 重複修習剔除
+            if is_passed_course:
+                if norm_name in counted_normalized_names:
+                    r.audit_category = "重複修習(不計學分)"
+                    continue
+                counted_normalized_names.add(norm_name)
+
+            # E. 檢查系排除通識
+            excluded_ge = rules.get("excluded_general_education", []) if rules else []
+            if any(k in r.course_name for k in excluded_ge):
+                if "通識" in r.category:
+                    # 被系排除的通識，可能視為一般選修或不計，此處預設轉為選修 (需視系所規定)
+                    r.category = r.category.replace("通識", "選修")
+
             is_pe_course = "體育" in (r.offering_dept or "") if r.offering_dept else any(k in r.course_name for k in PE_KEYWORDS)
 
-            # 軍訓/全民國防不計分
-            if any(k in r.course_name for k in ["軍訓", "全民國防", "操行"]):
+            # B. 排除軍訓與體育"選修"
+            is_military = any(k in r.course_name for k in ["軍訓", "全民國防", "操行"])
+            if is_military:
                 r.audit_category = "不計畢業學分"
                 continue
+                
+            if "選修" in r.category and (is_pe_course or is_military or "ATP3" in r.course_name):
+                r.audit_category = "不計畢業學分(體育/軍訓選修)"
+                continue
+
+            # 計入遠距教學學分
+            if getattr(r, 'is_distance_learning', False) and is_passed_course:
+                distance_learning_credits += r.credits
 
             if is_pe_course:
                 r.audit_category = "核心課程(體育)"
                 if is_passed_course:
                     pe_count += 1
                     holistic_core_earned += r.credits
-                    # 體育 0 學分不計入總數，但如果有人修有學分的體育（通常是選修），則計入
                     earned_total += r.credits
             elif any(k in r.course_name for k in HOLISTIC_CORE_KEYWORDS):
                 r.audit_category = "核心課程"
@@ -252,6 +305,16 @@ class AuditService:
                 if "fail_consequence" in pre_rule and any(target_course in c for c in failed_courses):
                     warnings.append(pre_rule["fail_consequence"])
 
+        # C. 遠距教學 (網修) 上限控管
+        if earned_total > 0 and distance_learning_credits > (earned_total / 2):
+            warnings.append(f"🚨 警告：您的遠距教學學分 ({distance_learning_credits}) 已超過畢業總學分 ({earned_total}) 之二分之一，超修部分將不計入畢業學分。")
+
+        # D. 學年課未完成防呆
+        for course_name, terms in year_course_terms.items():
+            if len(terms) == 1 and course_name not in enrolled_normalized_names:
+                # 只有 1(學年) 或 2(學年) 且目前沒在修
+                warnings.append(f"⚠️ 提醒：學年課『{course_name}』似乎未修畢上下學期，依規定學年課未完成不列計畢業學分。")
+
         details = None
         if rules:
             details = DetailedRequirements(
@@ -269,7 +332,8 @@ class AuditService:
                     domains=ge_domains
                 ),
                 pe_semesters=CreditCategory(earned=pe_count, target=rules.get("pe_semesters", 4)),
-                emi_courses=CreditCategory(earned=emi_passed_count, target=rules.get("emi_course_minimum", 0)) if "emi_course_minimum" in rules else None
+                emi_courses=CreditCategory(earned=emi_passed_count, target=rules.get("emi_course_minimum", 0)) if "emi_course_minimum" in rules else None,
+                distance_learning_credits=distance_learning_credits
             )
 
         summary = CreditSummary(

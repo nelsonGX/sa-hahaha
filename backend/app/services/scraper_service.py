@@ -40,8 +40,11 @@ class FjuScraperService:
         }
 
     def _normalize_course_name(self, name: str) -> str:
+        # 移除 (EMI) 或 英-專業 等標記，並處理後綴如 -英, -網, -英-網
         normalized = name.replace("英-專業", "").replace("英-專", "").replace(" ", "").strip()
-        return re.sub(r"(網|EMI)$", "", normalized).strip()
+        # 使用正則表示式移除結尾的 (EMI), -英, -網, -英-網
+        normalized = re.sub(r"(-英-網|-網-英|-英|-網|\(EMI\)|EMI)$", "", normalized).strip()
+        return normalized
 
     def _is_enrolled_score(self, score: str) -> bool:
         return score.strip() in ["", "未評定成績"]
@@ -114,12 +117,22 @@ class FjuScraperService:
                 semester_num = item.get("htPeriod", 0)
                 course_type = item.get("reqSelCNa", "")  
                 domain_info = item.get("gInfo", "") # 包含領域名稱與 PT/NT 代碼
+                term_na = item.get("termNa", "") # 學期課/學年課標記
                 
                 # 擷取所有課程標記 (如: 英-專業, 程, 網)
                 classify_marks = []
+                is_dist = False
                 for classify in item.get("couClassify", []):
                     mark = classify.get("couClassifyNoteCna", "")
-                    if mark: classify_marks.append(mark)
+                    if mark: 
+                        classify_marks.append(mark)
+                        if "網" in mark:
+                            is_dist = True
+                
+                # 如果課名包含 -網，也視為遠距
+                course_name = item.get("couCNa", "")
+                if "-網" in course_name:
+                    is_dist = True
                 
                 # 將標記串接至 category 供後續辨識
                 marks_str = ",".join(classify_marks)
@@ -129,14 +142,15 @@ class FjuScraperService:
 
                 score_str = item.get("scoreDisplay", "")
                 credits = item.get("credit", 0)
-                course_name = item.get("couCNa", "")
 
                 records.append(CourseRecord(
                     semester=f"{year}-{semester_num}",
                     course_name=course_name,
                     credits=credits,
                     score=score_str,
-                    category=category
+                    category=category,
+                    is_distance_learning=is_dist,
+                    term_type=term_na
                 ))
                 
             # 2. 同步爬取選課系統 (僅抓當期正在修的課以提升效能)

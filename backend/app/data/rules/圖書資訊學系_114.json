@@ -1,0 +1,15 @@
+{
+  "department_name": "輔仁大學圖書資訊學系",
+  "required_credits": 58,
+  "elective_credits": 38,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": 2,
+  "other_requirements": [
+    "英文能力畢業門檻（通過各類指定英文能力檢測，或修讀指定替代課程）",
+    "資訊學科學習能力檢測"
+  ]
+}

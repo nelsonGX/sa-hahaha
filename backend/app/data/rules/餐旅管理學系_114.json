@@ -1,0 +1,15 @@
+{
+  "department_name": "輔仁大學餐旅管理學系",
+  "required_credits": 70,
+  "elective_credits": null,
+  "total_graduation_credits": null,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": null,
+  "other_requirements": [
+    "進修學士班設有英文檢定畢業門檻（依規定參加英文檢定考試並達標準，或參與英語自學方案測驗及補考）",
+    "筆記本內容中未提供餐旅管理學系完整的畢業總學分、選修學分與 EMI 課程要求等詳細規定"
+  ]
+}

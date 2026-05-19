@@ -1,0 +1,14 @@
+{
+  "department_name": "輔仁大學數學系資訊數學組",
+  "required_credits": 68,
+  "elective_credits": 28,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": 4,
+  "other_requirements": [
+    "資訊基本能力檢定"
+  ]
+}
