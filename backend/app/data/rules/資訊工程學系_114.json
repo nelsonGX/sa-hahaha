@@ -1,0 +1,35 @@
+{
+    "department_name": "資訊工程學系",
+    "required_credits": 67,
+    "elective_credits": 29,
+    "total_graduation_credits": 128,
+    "holistic_total_credits": 32,
+    "holistic_core_credits": 10,
+    "basic_skills_credits": 12,
+    "general_education_credits": 10,
+    "general_education_domains": {
+        "人文與藝術通識領域": 2,
+        "自然與科技通識領域": 2,
+        "社會科學通識領域": 2,
+        "永續素養通識領域": 2
+    },
+    "pe_semesters": 4,
+    "emi_course_minimum_credits": 4,
+    "department_elective_minimum": 19,
+    "other_requirements": [
+        "英文門檻：需通過 CEFR B2 標準 (如 TOEIC 785 分以上)",
+        "外系選修至多承認 10 學分"
+    ],
+    "prerequisites": [
+        {
+            "target": "資料結構",
+            "required_passed": ["程式設計 (二)"],
+            "warning_not_taken": "⚠️ 您尚未通過『程式設計 (二)』，這將擋修『資料結構』。"
+        },
+        {
+            "target": "演算法",
+            "required_passed": ["程式設計 (二)"],
+            "warning_not_taken": "⚠️ 您尚未通過『程式設計 (二)』，這將擋修『演算法』。"
+        }
+    ]
+}

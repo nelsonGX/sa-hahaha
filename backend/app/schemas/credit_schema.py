@@ -55,6 +55,7 @@ class DetailedRequirements(BaseModel):
     english_proficiency: Optional[EnglishProficiency] = None  # 英文畢業門檻
     computer_proficiency: Optional[ComputerProficiency] = None # 機測門檻
     emi_proficiency: Optional[EMIProficiency] = None           # EMI 門檻
+    emi_courses: Optional[CreditCategory] = None # 保留相容性
 
 # 整體學分統計
 class CreditSummary(BaseModel):
