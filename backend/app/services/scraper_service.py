@@ -2,7 +2,8 @@ import requests
 import re
 from app.schemas.credit_schema import (
     StudentData, CourseRecord, CreditSummary, 
-    CreditCategory, GeneralEducationCredit, DetailedRequirements
+    CreditCategory, GeneralEducationCredit, DetailedRequirements,
+    EnglishProficiency, ComputerProficiency, EMIProficiency
 )
 from app.services.estu_scraper import EstuScraper
 from app.services.audit_service import AuditService
@@ -169,7 +170,7 @@ class FjuScraperService:
                         
                     if norm_name in existing_enrolled:
                         r = existing_enrolled[norm_name]
-                        # 補全開課單位 (包含 PT/NT 標記)
+                        # 補全開課單位
                         if offering_dept: r.offering_dept = offering_dept
                         # 合併分類資訊
                         r.category = self._more_specific_category(r.category, category)
@@ -192,8 +193,15 @@ class FjuScraperService:
             
             records = self._deduplicate_enrolled_records(records)
 
-            estimated_enrollment_year = 100 + int(student_id[1:3]) if len(student_id) >= 3 and student_id.startswith('4') else 0
-            department_name = self.DEPARTMENT_MAP.get(student_id[3:5], "未知系所") if len(student_id) >= 5 else "未知系所"
+            # 修正入學年計算：支援日間部(4)與進修部(5)
+            prefix = student_id[0]
+            if len(student_id) >= 3 and prefix in ['4', '5']:
+                estimated_enrollment_year = 100 + int(student_id[1:3])
+            else:
+                estimated_enrollment_year = 0
+            
+            department_code = student_id[3:5] if len(student_id) >= 5 else ""
+            department_name = self.DEPARTMENT_MAP.get(department_code, "未知系所")
 
             summary, warnings = self.audit_service.calculate_credit_summary(records, department_name, estimated_enrollment_year)
 
@@ -203,7 +211,8 @@ class FjuScraperService:
                 enrollment_year=estimated_enrollment_year,
                 course_records=records,
                 credit_summary=summary,
-                warnings=warnings
+                warnings=warnings,
+                is_first_time=True
             )
 
         except Exception as e:

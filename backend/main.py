@@ -13,7 +13,7 @@ app = FastAPI(
 # 設定 CORS 允許前端 (localhost:3000) 存取 API
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], # 測試階段允許所有來源
+    allow_origins=["http://localhost:3000"], # 開發階段限制只能由本地前端發出請求
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

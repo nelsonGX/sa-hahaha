@@ -36,9 +36,13 @@ async def sync_grades(request: LoginRequest):
         )
     except Exception as e:
         # 網路連線或程式邏輯等非預期錯誤
+        import traceback
         error_msg = str(e)
-        print(f"[{timestamp}] 🔥 系統錯誤: {error_msg}") 
+        print(f"[{timestamp}] 🔥 系統錯誤: {error_msg}")
+        print(traceback.format_exc()) # 內部記錄詳細錯誤軌跡
+        
         raise HTTPException(
             status_code=500, 
-            detail={"message": f"系統爬取失敗: {error_msg}", "timestamp": timestamp, "code": "SYSTEM_ERROR"}
+            # 遮蔽真實錯誤訊息，保護系統路徑與敏感資訊不外洩
+            detail={"message": "系統忙碌中，無法與學校伺服器建立連線，請稍後再試", "timestamp": timestamp, "code": "SYSTEM_ERROR"}
         )
