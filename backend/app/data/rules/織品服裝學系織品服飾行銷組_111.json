@@ -1,0 +1,15 @@
+{
+  "department_name": "織品服裝學系織品服飾行銷組",
+  "required_credits": 69,
+  "elective_credits": 27,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "至少1門",
+  "other_requirements": [
+    "畢業前須通過資訊能力畢業門檻",
+    "畢業前須依本系規定參與英文檢定考試始具備畢業資格（如多益 600 分、托福 iBT 71 分、全民英檢中高級初試等）"
+  ]
+}

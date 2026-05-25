@@ -1,0 +1,16 @@
+{
+  "department_name": "輔仁大學資訊工程學系",
+  "required_credits": 67,
+  "elective_credits": 29,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "無",
+  "other_requirements": [
+    "資訊學科學習能力採修課通過制",
+    "選修課程 29 學分中，本系承認外系日間部選修課程或本系(外系日間部)自主學習課程，兩者合計至多 10 學分",
+    "須修畢完整五學期且「程式設計(一)」、「程式設計(二)」、「程式設計(三)」任一學期修習通過者，才具修習「專題(一)」課程資格"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "department_name": "輔仁大學兒童與家庭學系",
+  "required_credits": 64,
+  "elective_credits": 32,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "無",
+  "other_requirements": [
+    "資訊素養採修課通過制",
+    "英語能力須符合下列四項條件之一：1.修習2學分本系開設之全英語課程且及格；2.參與本校英語自主學習活動至少取得36點；3.修讀全人教育課程以外之英語課程且成績合格；4.取得英國語文學系輔系或雙主修",
+    "選修課程32學分中，應含本系專業選修課程10學分(含)以上"
+  ]
+}

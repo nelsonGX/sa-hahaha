@@ -1,0 +1,17 @@
+{
+  "department_name": "輔仁大學營養科學系",
+  "required_credits": 69,
+  "elective_credits": 27,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "4學分",
+  "other_requirements": [
+    "選修課程中須包含本系專業選修課程至少17學分",
+    "須通過資訊學科學習能力檢測（依輔仁大學學生基本素養培育與檢測實施辦法辦理）",
+    "有嚴格之先修與擋修規定（如：修習「營養學III」前，「營養學I、II」成績均應達50分以上；修習「膳食療養學」及「營養評估」前，生化、生理、營養(I、II、III)、團膳(含實驗)學期總成績應達50分以上等）",
+    "若安排醫院實習，實習前須修畢營養師先修科目"
+  ]
+}

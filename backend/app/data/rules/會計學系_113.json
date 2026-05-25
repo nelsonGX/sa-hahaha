@@ -1,0 +1,18 @@
+{
+  "department_name": "輔仁大學會計學系",
+  "required_credits": 72,
+  "elective_credits": 30,
+  "total_graduation_credits": 134,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "5門(或15學分)",
+  "other_requirements": [
+    "須通過資訊學科學習能力檢測",
+    "須於畢業前至少參加一次英文檢定考試，且成績應達 CEFR 之 B2 高階級，未達標者有補救或補考措施",
+    "須於大四學年上學期參加會計系會考，成績未達 60 分者，須於大四學年結束前補考一次",
+    "選修課程中包含本系必選課程",
+    "具有相關先修及擋修規定（如中級會計學、審計學等）"
+  ]
+}

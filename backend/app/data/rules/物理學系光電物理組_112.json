@@ -1,0 +1,17 @@
+{
+  "department_name": "輔仁大學物理學系光電物理組",
+  "required_credits": 72,
+  "elective_credits": 24,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "無",
+  "other_requirements": [
+    "選修課程中須包含本系專業選修課程至少13學分",
+    "擋修規定：「普通物理(二)」或「微積分(下)」擋修「電磁學(一)」。四年級學生不受此限；兩科皆達50分以上者可請授課教師同意修課",
+    "先修規定：未修習「電磁學(一)」者，不得先修「電磁學(二)」。「電磁學(一)」成績達50分(含)以上者得續修；50分以下者應經任課教師同意及系主管核可始得續修",
+    "須通過本校資訊基本能力檢定（採認證或修讀相關課程方式抵免）"
+  ]
+}

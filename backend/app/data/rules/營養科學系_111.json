@@ -1,0 +1,15 @@
+{
+  "department_name": "輔仁大學營養科學系",
+  "required_credits": 69,
+  "elective_credits": 27,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "4學分",
+  "other_requirements": [
+    "學士班學生須於畢業前修畢全英語專業課程至少4學分",
+    "依考選部規定，以學歷報考營養師證照者，須檢附504小時醫院實習證明；申請實習者，須修畢本系及醫院規定之營養師實習先修科目"
+  ]
+}

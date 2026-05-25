@@ -1,0 +1,16 @@
+{
+  "department_name": "社會學系",
+  "required_credits": 30,
+  "elective_credits": 66,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "無特別規定",
+  "other_requirements": [
+    "選修課程中包含本系所開設之選修課程至少選修40學分",
+    "須通過資訊學科學習能力檢測",
+    "英文學科能力採多元認證，須滿足下列任一條件始得畢業：1.通過本校開設之外國語文課程(大一英文4學分)、2.通過本校開設之全英文課程、3.符合英文免修標準、4.修習英文輔系或英文雙主修、5.學士論文以英文寫作並發表"
+  ]
+}

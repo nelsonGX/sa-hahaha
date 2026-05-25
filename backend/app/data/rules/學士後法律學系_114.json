@@ -1,0 +1,18 @@
+{
+  "department_name": "學士後法律學系",
+  "required_credits": 0,
+  "elective_credits": 82,
+  "total_graduation_credits": 82,
+  "holistic_total_credits": 0,
+  "holistic_core_credits": 0,
+  "basic_skills_credits": 0,
+  "general_education_credits": 0,
+  "emi_course_minimum": "無",
+  "other_requirements": [
+    "除必修之導師時間外，應修習法律學院開設之專業選修課程至少 82 學分（課程全選修）。",
+    "不再修讀共同科目及通識課程（學士後學系排除於 114 學年度全人教育課程公版規定外，且免除中文、英文、資訊三項基本能力檢測）。",
+    "學生須於畢業前達到法律學院學生學習護照之學習認證標準，始具有畢業資格。",
+    "修課有先後擋修規定（例如須已修習民法總則，始得修習民法債編總論等）。",
+    "入學後不得轉系，但輔系及雙主修不受影響。"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "department_name": "化學系",
+  "required_credits": 0,
+  "elective_credits": 0,
+  "total_graduation_credits": 0,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": 0,
+  "other_requirements": [
+    "設有擋修規定：如「普通化學(一)及(二)」成績均及格方能修「無機化學(一)」及「無機化學(二)」；「無機化學(一)及(二)」及格方能修「高等無機化學」、「無機合成與分析」、「金屬錯鹽系統的進階原理與理論」；「有機化學(一)」及格方能修「生物有機化學(一)及(二)」；「高分子化學」及格方能修「高分子物性」",
+    "註：因筆記本中缺乏本學系之詳細「課程學分架構表」、「修業規則」或明確的畢業總學分數規定，故無法提供確切之專業必修、選修、畢業總學分數、EMI 要求及其他特定畢業門檻，請另行查證"
+  ]
+}

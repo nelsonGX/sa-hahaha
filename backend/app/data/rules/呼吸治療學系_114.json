@@ -1,0 +1,18 @@
+{
+  "department_name": "呼吸治療學系",
+  "required_credits": 80,
+  "elective_credits": 16,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "無",
+  "other_requirements": [
+    "學生需通過本校資訊基本能力檢定（採認證或修讀相關課程方式抵免為畢業條件）。",
+    "學生需通過本校英文學科學習能力檢測。",
+    "畢業應修選修課程16學分中，必須包含本系專業選修課程至少10學分。",
+    "各項臨床實習課程設有嚴格的先修課程擋修規定（先修課程須達60分及格），且 CPR 證書有效日期須涵蓋各科實習期間。",
+    "課程學習過程及畢業後臨床工作，需具有適當之視覺、聽覺、口語表達溝通、情緒管理及肢體活動能力。"
+  ]
+}

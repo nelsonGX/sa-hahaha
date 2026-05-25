@@ -1,0 +1,17 @@
+{
+  "department_name": "景觀設計學系",
+  "required_credits": 72,
+  "elective_credits": 24,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "無",
+  "other_requirements": [
+    "學生須通過資訊學科學習能力檢測。",
+    "畢業應修選修課程 24 學分中，必須包含本系專業選修課程至少 10 學分。",
+    "核心課程（設計課：基本設計及景觀設計一至六）必須依序修習，且有嚴格擋修規定，前一階段修畢且成績及格（60分）者，方得修習下一階段。",
+    "學生須修畢大一英文 4 學分及大二主題英文 4 學分。符合免修標準者得申請免修，但仍須以其他外國語文課程補足規定學分。"
+  ]
+}

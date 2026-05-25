@@ -1,0 +1,17 @@
+{
+  "department_name": "輔仁大學生命科學系",
+  "required_credits": 66,
+  "elective_credits": 30,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "4學分",
+  "other_requirements": [
+    "須通過資訊學科學習能力檢測",
+    "畢業前至少需完成一學群（生物醫學學群或生物資源學群）課程之修課要求",
+    "實驗課程應與正課同時修習，或有修習正課之紀錄（不含停修），實驗課程方得承認為畢業學分",
+    "「生物化學實驗」課程需「生物化學(一)」達60分才能選修"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "department_name": "輔仁大學廣告傳播學系",
+  "required_credits": 54,
+  "elective_credits": 42,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": 4,
+  "other_requirements": [
+    "選修課程中須包含本系專業選修課程至少15學分",
+    "通過英文能力檢測（大二學年結束前成績達多益測驗650分以上或同等級標準）",
+    "通過資訊學科學習能力檢測",
+    "三年級須參加一項全國廣告策略競賽",
+    "大四須完成「專業實務製作」（畢業展）",
+    "修畢導師時間（0學分，共8學期）",
+    "修畢軍訓課程（0學分，共2學期）"
+  ]
+}

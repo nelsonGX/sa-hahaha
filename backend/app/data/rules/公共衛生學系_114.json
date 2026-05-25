@@ -1,0 +1,17 @@
+{
+  "department_name": "公共衛生學系",
+  "required_credits": 68,
+  "elective_credits": 28,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "無",
+  "other_requirements": [
+    "選修課程 28 學分中，包含系訂專業選修至少 20 學分（外系學分至多承認 8 學分）。",
+    "畢業需通過學科學習能力檢測：資訊學科學習能力採修課通過制，以修畢並通過「醫學資料處理與統計分析」列為校訂畢業門檻。",
+    "畢業需通過英文學科學習能力檢測，須至少完成下列二選項之一：(1) 達 CEF 語言能力參考指標「A2 (基礎級) Waystage」之所對應各類型英文能力測驗分數或等級；(2) 修習本校大學部全英語課程，學期成績達 70 分(含)以上。",
+    "修習大四「公共衛生實習」課程前，須修畢一至三年級上學期之系訂必修學分數至少 30 學分。"
+  ]
+}

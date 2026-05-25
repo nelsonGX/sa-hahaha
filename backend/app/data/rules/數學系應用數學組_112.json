@@ -1,0 +1,18 @@
+{
+  "department_name": "數學系應用數學組",
+  "required_credits": 64,
+  "elective_credits": 32,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "4學分",
+  "other_requirements": [
+    "選修課程至少 32 學分中，須包含本系專業選修課程至少 10 學分",
+    "須通過資訊學科學習能力檢測",
+    "外國語文須修滿 8 學分（含大一英文 4 學分及大二主題英文 4 學分），或提具符合標準之相關英語能力檢測證明申請免修",
+    "設有擋修規定：如「微積分(一)」及格方可修「微積分(二)」；「微積分(一)及(二)」及格方可修「高等微積分(一)」及「微分方程」；「線性代數(一)」及格方可修「線性代數(二)」；「機率論」及格方可修「統計學」；「統計學」及格方可修「數理統計」等",
+    "校訂必修課程須完成導師時間（0 學分，共 8 學期）及全民國防教育軍事訓練（0 學分，共 2 學期）"
+  ]
+}

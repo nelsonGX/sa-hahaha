@@ -1,0 +1,18 @@
+{
+  "department_name": "新聞傳播學系",
+  "required_credits": 68,
+  "elective_credits": null,
+  "total_graduation_credits": null,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "未知",
+  "other_requirements": [
+    "注意：此筆記本資料庫中並未收錄「新聞傳播學系」113 學年度完整的修業規則，因此畢業應修選修學分總數、畢業總學分與 EMI 課程要求等具體數值目前無法完整提供。",
+    "本系開設「政治學」、「社會學」、「心理學」、「經濟學」、「文化人類學」，須選修三門並及格。",
+    "本系開設「傳播研究專題」、「媒體研發專題」、「新聞報導專題」，須選修一門並及格。",
+    "擋修與先修規定：如「攝影原理與實務」不及格者，不得選修「新聞攝影」；「媒介實務」、「進階媒介實務」不及格者，不得選修「專業實習」等。",
+    "本系所開設之必修課程須於本系修讀，但情況特殊經系主任同意者不在此限。"
+  ]
+}

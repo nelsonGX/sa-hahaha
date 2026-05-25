@@ -1,0 +1,20 @@
+{
+  "department_name": "輔仁大學企業管理學系",
+  "required_credits": 65,
+  "elective_credits": 37,
+  "total_graduation_credits": 134,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "5門或15學分",
+  "other_requirements": [
+    "選修課程中包含本系專業選修課程至少15學分（畢業前須通過模組2科、核心課程3科）",
+    "須於畢業前至少參加一次英文檢定考試，且成績應達CEFR之B2高階級（大三上未達標準者，須於大四參加管理學院8次英語自學測驗或再次檢定達標）",
+    "須通過資訊學科學習能力檢測",
+    "擋修規定：修「企業政策」前必須曾修讀「管理學」或「管理學-英」",
+    "修讀「企業管理專題（一）」、「企業管理專題（二）」需符合各領域企管專業之修課規定",
+    "大一至大三每學期修課學分至少12學分，大四每學期修課學分至少9學分",
+    "通識涵養課程中排除資訊科技學群(NTI8)與管理學群(STM8)"
+  ]
+}

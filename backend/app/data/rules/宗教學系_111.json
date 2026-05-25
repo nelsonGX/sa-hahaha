@@ -1,0 +1,19 @@
+{
+  "department_name": "輔仁大學宗教學系",
+  "required_credits": 66,
+  "elective_credits": 30,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": 0,
+  "other_requirements": [
+    "專業必選18學分規定：在基督宗教、道教、佛教三組課群中擇一組主修（12學分），另於其他兩組中擇一組修習初階課程（6學分）",
+    "宗教倫理學、宗教哲學二擇一必修",
+    "宗教心理學、宗教社會學、宗教人類學三擇二必修",
+    "宗教與創作系列課程（報導評論、批判性思考、小說創作、圖文書創作、影音創作、論文寫作）六擇一必修",
+    "須通過本校資訊基本能力檢定（採認證或修讀相關課程方式抵免）",
+    "須通過本校英文基本能力門檻（達免修標準或修畢相關規定課程）"
+  ]
+}

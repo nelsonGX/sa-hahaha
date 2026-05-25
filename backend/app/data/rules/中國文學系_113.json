@@ -1,0 +1,16 @@
+{
+  "department_name": "中國文學系",
+  "required_credits": null,
+  "elective_credits": null,
+  "total_graduation_credits": null,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "未知",
+  "other_requirements": [
+    "注意：此筆記本資料庫中並未收錄「中國文學系」113或114學年度學士班的完整修業規則與必修科目表，因此專業必修學分、選修學分、畢業總學分與 EMI 課程要求等具體門檻數值目前無法提供。",
+    "為鼓勵學士班學生繼續攻讀碩士學位，本系開放成績優秀者申請提前選修碩士班課程繼續深造。",
+    "本系配合「應用中文學分學程」、「跨界敘事人文力微學程」，積極推動「產業人文」、「企業實習」新概念，以培育跨領域應用中文人才。"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "department_name": "企業管理學系",
+  "required_credits": 65,
+  "elective_credits": 37,
+  "total_graduation_credits": 134,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "3學分",
+  "other_requirements": [
+    "專業選修規定：畢業前須通過模組2科、核心課程3科",
+    "須於畢業前至少參加一次英文檢定考試，且成績應達 CEFR 之 B2 高階級（大三上未達標準者大四須參加英語自學方案測驗或再次檢定）",
+    "須通過資訊學科學習能力檢測",
+    "管理學未過者，不得修讀企業政策",
+    "大一至大三每學期修課學分至少12學分，大四每學期修課學分至少9學分"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "department_name": "西班牙語文學系",
+  "required_credits": 65,
+  "elective_credits": 27,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": 0,
+  "other_requirements": [
+    "選修課程 27 學分中，可包含至多 12 學分之系外選修學分",
+    "修滿院訂英語必修課程 4 學分（大一英文修讀高級班或符合免修大一英文者，得以修習全英/EMI課程、全校進階英文課程或英文系選修課程替代）",
+    "須通過資訊學科學習能力檢測",
+    "學生（含雙主修）須於畢業前通過等同 CEFR B1 級(含)以上之各類西語檢定考試；於大四上學期結束前尚未通過者，須出示兩次未通過之成績證明，始得補修大四相關課程作為替代",
+    "本系設有擋修規定：各年級「文法/會話/閱讀與寫作/全方位西語：聽說讀寫」等課程，若其中一學期不及格且未達 50 分，須重修補齊學分後始得續修進階年級之相關課程（若達 50 分則可同時重補修並續修）"
+  ]
+}

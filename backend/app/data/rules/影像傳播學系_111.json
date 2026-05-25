@@ -1,0 +1,20 @@
+{
+  "department_name": "輔仁大學影像傳播學系",
+  "required_credits": 38,
+  "elective_credits": 54,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": 4,
+  "other_requirements": [
+    "修畢導師時間（0學分，共8學期）",
+    "修畢軍訓課程/全民國防教育軍事訓練（0學分，共2學期）",
+    "選修課程中包含本系專業選修課程至少34學分",
+    "修滿以英語授課之專業課程至少4學分",
+    "通過資訊學科學習能力檢測",
+    "通過英文能力檢測（大二結束前成績達TOEIC多益測驗550分以上或同等級標準）",
+    "須於大四當年度完成畢業製作並對外公開展出"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "department_name": "輔仁大學心理學系",
+  "required_credits": 64,
+  "elective_credits": 32,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "無",
+  "other_requirements": [
+    "須通過資訊學科學習能力檢測"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "department_name": "輔仁大學體育學系運動競技組",
+  "required_credits": 72,
+  "elective_credits": 24,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": 0,
+  "other_requirements": [
+    "修畢導師時間（0學分，共8學期）",
+    "修畢全民國防教育軍事訓練課程（0學分，共2學期）",
+    "通過資訊能力檢測",
+    "通過英文能力檢測",
+    "取得2張運動專業相關證照，以及1張心肺復甦術證照(CPR證)",
+    "選修課程至少24學分，其中應包含本系專業選修課程至少10學分"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "department_name": "體育學系體育學組",
+  "required_credits": null,
+  "elective_credits": null,
+  "total_graduation_credits": null,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "未知",
+  "other_requirements": [
+    "注意：此筆記本資料庫中並未收錄「體育學系體育學組」學士班完整的修業規則與必修科目表，因此專業必修學分、選修學分、畢業總學分與 EMI 課程要求等具體門檻數值目前無法提供。",
+    "本資料庫僅收錄該組之輔系相關規定：若申請「體育學系體育學組」為輔系，前一學期學業成績總平均須達 75 分(含)，體育成績達 85 分(含)或現任本校代表隊選手，且輔系應修總學分為 34 學分（學科 18 學分、術科 16 學分）。"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "department_name": "輔仁大學財經法律學系",
+  "required_credits": 70,
+  "elective_credits": 26,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "1門2學分",
+  "other_requirements": [
+    "專業必選課群47學分中必選31學分以上",
+    "案例研習必選課群20學分中必選2學分",
+    "選修課程26學分中，應含本系專業選修課程至少10學分",
+    "須於畢業前符合法律學院學生學習護照實施辦法所定學習認證標準（累計達20次認證始得畢業）",
+    "須通過資訊基本能力檢定"
+  ]
+}

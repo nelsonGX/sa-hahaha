@@ -1,0 +1,16 @@
+{
+  "department_name": "輔仁大學資訊工程學系",
+  "required_credits": 67,
+  "elective_credits": 29,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": 0,
+  "other_requirements": [
+    "選修課程29學分中，包含專業選修課程與外系選修，本系承認外系日間部選修課程或本系(外系日間部)自主學習課程，兩者合計至多10學分",
+    "擋修規定：「數位邏輯設計」成績及格方能修「數位系統導論」",
+    "須通過學科學習能力檢測（依全校規定）"
+  ]
+}

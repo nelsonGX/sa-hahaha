@@ -1,0 +1,16 @@
+{
+  "department_name": "輔仁大學臨床心理學系",
+  "required_credits": null,
+  "elective_credits": null,
+  "total_graduation_credits": null,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": null,
+  "other_requirements": [
+    "提供之參考資料中未收錄『臨床心理學系』學士班的修業規則或必修科目表，故無法確認專業必修、選修、畢業總學分及 EMI 課程的確切要求。",
+    "修讀輔系應修學分為 27 學分（含普通心理學、統計學、心理測驗、變態心理學、臨床心理學必修，及性格心理學/發展心理學二擇一）。",
+    "「助人專業實務實習」課程以安排本系學生至醫療及相關助人單位實習為主，若雙主修或輔系學生欲選修此課程，需經授課教師同意且符合系上相關規定。"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "department_name": "輔仁大學食品科學系",
+  "required_credits": 70,
+  "elective_credits": 26,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "無",
+  "other_requirements": [
+    "選修課程中須包含本系專業選修課程至少10學分",
+    "學生須於「微生物學」及「微生物學-英」兩門課程中擇一修習",
+    "學生須於「生物化學」及「生物化學-網」兩門課程中擇一修習",
+    "須通過本校資訊基本能力檢定（採認證或修讀相關課程方式抵免）",
+    "英文至少4學分，但入學考試或經檢定達一定標準者得免修英文，逕選修讀第二外語課程"
+  ]
+}

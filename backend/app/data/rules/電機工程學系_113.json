@@ -1,0 +1,16 @@
+{
+  "department_name": "輔仁大學電機工程學系",
+  "required_credits": 56,
+  "elective_credits": 23,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "4學分",
+  "other_requirements": [
+    "須通過資訊學科學習能力檢測",
+    "須修滿必選課程 17 學分：含必選課程(A)四選二(6學分)、必選課程(B)八選三(9學分)及必選實驗課程(C)八選二(2學分)",
+    "專業選修 23 學分中，必須包含本系專業選修課程至少 18 學分，承認外系專業課程至多 5 學分"
+  ]
+}

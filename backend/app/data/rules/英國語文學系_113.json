@@ -1,0 +1,17 @@
+{
+  "department_name": "輔仁大學英國語文學系",
+  "required_credits": 43,
+  "elective_credits": 53,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "無",
+  "other_requirements": [
+    "通過本校中文及英文學科學習能力檢測",
+    "資訊學科學習能力採修課通過制（通過本校資訊基本能力檢定）",
+    "英語能力檢定考試：達到CEFR B2（高階級）或其他程度相當之英語檢定標準（未通過者須選修補救課程或參加指定活動）",
+    "學習成果展現（須以英文呈現並擇一公開發表）：1.大三研究論文寫作與發表（成績83分以上）；2.畢業公演或系刊(出版品)；3.特定課程（如畢業專題製作、學術英語、中英翻譯等）之期末報告或公開發表"
+  ]
+}

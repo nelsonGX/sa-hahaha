@@ -1,0 +1,16 @@
+{
+  "department_name": "輔仁大學會計學系",
+  "required_credits": null,
+  "elective_credits": null,
+  "total_graduation_credits": null,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "5門或15學分",
+  "other_requirements": [
+    "須於畢業前至少參加一次英文檢定考試，且成績應達 CEFR 之 B2 高階級（大三上學期結束前未達標準者，須於大四參加管理學院舉辦之 8 次英語自學方案測驗或再次參測達標）",
+    "擋修規定：必修課程「稅務法規」擋修「國際租稅」（大四學生或經任課教師同意及系主管核可者，不受此限）",
+    "須通過資訊學科學習能力檢測"
+  ]
+}

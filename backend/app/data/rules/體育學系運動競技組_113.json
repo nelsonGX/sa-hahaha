@@ -1,0 +1,17 @@
+{
+  "department_name": "體育學系運動競技組",
+  "required_credits": 72,
+  "elective_credits": 24,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "無",
+  "other_requirements": [
+    "學生須通過本校資訊基本能力檢定為畢業條件，檢定方式採認證或修讀相關課程方式抵免。",
+    "專長項目術科必修（32學分）：學生須依個人專長擇一修讀，且其他一般術科必修課程（16學分）亦均須修讀。",
+    "畢業應修選修學分 24 學分中，必須包含「選修學科至少 8 學分（含跨組/系）」以及「選修術科至少 16 學分（含跨組）」。",
+    "全民國防教育軍事訓練課程為校選修課程，僅使用兵役折抵，不得列計畢業學分。"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "department_name": "輔仁大學統計資訊學系",
+  "required_credits": 72,
+  "elective_credits": 24,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "5門或15學分",
+  "other_requirements": [
+    "選修課程中包含本系至少一模組之選修課程，不得低於10學分",
+    "須通過資訊學科學習能力檢測（採修課通過制）",
+    "須於畢業前至少參加一次英文檢定考試，成績應達 CEFR 之 B2 高階級（大三上未達標準者，須於大四參加管理學院舉辦之8次英語自學方案測驗或再次參加檢定達標）",
+    "大四學生未達到 TOEIC 成績 650 分（或同等級）者，除應符合「畢業學分中應包含英語課程 8 學分」規定外，須補修一門全校英文課程（至少 2 學分），但不得包含「以英語授課之專業課程」",
+    "大四學生每學期應於本系修讀至少3學分",
+    "擋修規定：「統計學」擋修「數理統計」；「程式設計」擋修「進階程式設計」（大四學生不受擋修限制，可同時修讀）"
+  ]
+}

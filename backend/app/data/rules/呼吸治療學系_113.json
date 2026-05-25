@@ -1,0 +1,20 @@
+{
+  "department_name": "輔仁大學呼吸治療學系",
+  "required_credits": 80,
+  "elective_credits": 16,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": 0,
+  "other_requirements": [
+    "選修課程須修16學分中，必須包含本系開設之專業選修科目至少10學分",
+    "「有機化學」、「內科學概論」、「外科學概論」、「呼吸治療服務學習」等課程為必選修之選修課程",
+    "學科學習能力檢測：須通過本校英文學科學習能力檢測，資訊學科學習能力採修課通過制",
+    "體育課程須修讀4學期（依全校公版為大一體育每學期0學分2小時、大二體育每學期1學分2小時）",
+    "專業課程具嚴格擋修規定，各臨床實習之前置先修課程成績須達60分方得修習",
+    "CPR證書有效日期須涵蓋各科實習期間",
+    "導師時間為校訂必修（0學分）"
+  ]
+}

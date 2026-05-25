@@ -1,0 +1,19 @@
+{
+  "department_name": "輔仁大學法律學系",
+  "required_credits": 61,
+  "elective_credits": 25,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "1門2學分",
+  "other_requirements": [
+    "本系專業必選課程應修8學分",
+    "本系案例研習課程必選2學分",
+    "選修課程25學分中，應含本系專業選修課程至少10學分",
+    "須於畢業前符合本院學生學習護照實施辦法所定學習認證標準（大一新生須完成20次認證）",
+    "須通過資訊學科學習能力檢測（採修課、證照或校內檢測擇一通過）",
+    "有嚴格之先修與擋修規定（如：修習「民法債編總論(一)」前須已修習「民法總則」；修習「刑法分則(一)」前須已修習「刑法總則(一)、(二)」等）"
+  ]
+}

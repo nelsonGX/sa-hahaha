@@ -1,0 +1,20 @@
+{
+  "department_name": "音樂學系",
+  "required_credits": null,
+  "elective_credits": null,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "無",
+  "other_requirements": [
+    "專業必修學分數依各組別有所不同（應用音樂組65、鋼琴組68、作曲/古典吉他組69、弦樂/豎琴組70、敲擊樂組71、聲樂/管樂/爵士音樂組72學分），應修選修學分亦隨之變動。",
+    "選修課程中必須包含本系專業選修課程至少 24 學分。",
+    "學生須通過資訊基本能力畢業門檻（資訊學科學習能力檢測）。",
+    "學生須於畢業結束前「音樂基礎訓練課程」達到 B 組之程度，始有畢業資格。",
+    "學生須於畢業術科考前舉行一場至少 30 分鐘之畢業獨奏會，並於音樂會後二星期內繳交節目單及影音資料，始可參加畢業考試。",
+    "擋修規定：「主修」課程必須成績及格方能修讀下一個階段（主修一擋主修二，依此類推）。",
+    "每學期術科授課次數缺課達三次以上（含），即主修予以扣考。"
+  ]
+}

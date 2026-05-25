@@ -1,0 +1,18 @@
+{
+  "department_name": "財經法律學系",
+  "required_credits": 37,
+  "elective_credits": 26,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "1門2學分",
+  "other_requirements": [
+    "專業必選課程至少修習31學分",
+    "案例研習課程必選2學分",
+    "選修學分26學分中，應含本系專業選修課程至少10學分",
+    "須通過資訊學科學習能力檢測",
+    "畢業前須符合法律學院學生學習護照實施辦法所定學習認證標準（參與學習認證累計須達20次，且LAWSHIP認證項目至少參與三大項）"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "department_name": "輔仁大學社會工作學系",
+  "required_credits": 67,
+  "elective_credits": 29,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "無",
+  "other_requirements": [
+    "須通過資訊學科學習能力檢測",
+    "須於大二學年度結束前參加英文檢定考試，成績達 CEFR B1 級(含)以上標準，未達標者須依規定重考或於大四修讀規定之英語課程",
+    "選修課程 29 學分中，應含本系專業選修課程至少 10 學分",
+    "學生實習前須修畢七門必修課程（社會工作概論、社會個案工作、人類行為與社會環境、社會團體工作、社區工作、社會工作實習：導論及社會工作管理）及兩個實習領域之先修課程"
+  ]
+}

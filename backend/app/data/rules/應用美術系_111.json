@@ -1,0 +1,14 @@
+{
+  "department_name": "應用美術學系",
+  "required_credits": null,
+  "elective_credits": null,
+  "total_graduation_credits": null,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "筆記本中無相關資料",
+  "other_requirements": [
+    "筆記本中未包含『應用美術學系』完整的修業規則或必修科目表，因此專業必修、選修、畢業總學分及EMI課程等特定門檻資料從缺。"
+  ]
+}

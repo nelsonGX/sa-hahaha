@@ -1,0 +1,18 @@
+{
+  "department_name": "法律學系",
+  "required_credits": 61,
+  "elective_credits": 25,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "1門2學分",
+  "other_requirements": [
+    "本系專業必選課程8學分",
+    "本系案例研習課程必選2學分",
+    "選修課程25學分中，應含本系專業選修課程至少10學分",
+    "須通過本校資訊學科學習能力檢測",
+    "畢業前須符合法律學院學生學習護照實施辦法所定學習認證標準（參與學習認證累計須達20次，LAWSHIP認證項目至少三大項）"
+  ]
+}

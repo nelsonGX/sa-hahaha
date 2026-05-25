@@ -1,0 +1,17 @@
+{
+  "department_name": "輔仁大學心理學系",
+  "required_credits": 64,
+  "elective_credits": 32,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": 0,
+  "other_requirements": [
+    "專業必修及必選學分規定：核心課程共計16科54學分中，學生應自其中必選42學分作為必修科目；此外應自本系開設課程中至少另選修22學分作為必選學分（合計系訂必修必選64學分）",
+    "核心課程中，「社會學」與「經濟學」須擇一認列",
+    "須通過本校資訊基本能力檢定為畢業條件（採認證或修讀相關課程方式抵免）",
+    "外國語文規定：英文至少4學分，但語言能力達 CEFR B2 等級（如通過全民英檢中高級複試者），得申請免修英文，逕選修讀第二外語課程"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "department_name": "輔仁大學食品科學系",
+  "required_credits": 70,
+  "elective_credits": 26,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "4學分",
+  "other_requirements": [
+    "選修26學分中，必須包含本系專業選修至少10學分",
+    "必須通過本校資訊基本能力檢定（資訊素養0學分）",
+    "體育必修2學分/8小時（大一體育每學期必修1門0學分2小時、大二體育每學期必修1門1學分2小時）",
+    "導師時間為校訂必修（0學分，直至畢業學期為止）",
+    "本系開授正課及實驗課之科目，必須正課及實驗課皆修畢及格，始取得學分",
+    "選修「食品科技專業實習」之學生，必須先修過「食品科技專業實習講座」"
+  ]
+}

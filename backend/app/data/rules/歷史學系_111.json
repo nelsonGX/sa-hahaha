@@ -1,0 +1,19 @@
+{
+  "department_name": "輔仁大學歷史學系",
+  "required_credits": 24,
+  "elective_credits": 72,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": 0,
+  "other_requirements": [
+    "修畢導師時間（0學分，共8學期）",
+    "修畢全民國防教育軍事訓練課程（0學分，共2學期）",
+    "通過資訊能力（資訊學科學習能力檢測）",
+    "通過英文能力",
+    "專業必選課程修滿46學分（含中西斷代史8學分、區域與國別史4學分、史學史與應用史學4學分、臺灣史4學分、專史8學分、自由選修18學分）",
+    "一般選修課程修滿26學分，其中本系專業選修課程至少10學分"
+  ]
+}

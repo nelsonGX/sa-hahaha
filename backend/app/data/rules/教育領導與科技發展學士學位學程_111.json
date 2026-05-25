@@ -1,0 +1,17 @@
+{
+  "department_name": "輔仁大學教育領導與科技發展學士學位學程",
+  "required_credits": 50,
+  "elective_credits": 46,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": 0,
+  "other_requirements": [
+    "專業選修課程須修滿20學分，且各領域至少應修學分數為：教育領域2學分、領導管理領域6學分、科技發展領域4學分",
+    "其他選修課程須修滿26學分，其中至少須有10學分來自本學程外之其他單一學系、學位學程或學分學程；若欲自由選修26學分，則畢業前須修畢輔系、雙主修或教育學程",
+    "須通過資訊學科學習能力檢測",
+    "須通過英文學科學習能力條件（達免修標準，或修畢相關規定英文課程/全英語課程，或通過校外檢定達TOEIC 550分以上或同等級標準）"
+  ]
+}

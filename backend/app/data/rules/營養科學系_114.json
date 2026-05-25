@@ -1,0 +1,16 @@
+{
+  "department_name": "營養科學系",
+  "required_credits": 69,
+  "elective_credits": 27,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": 4,
+  "other_requirements": [
+    "應修其他選修 27 學分中，須含本系專業選修課程至少 17 學分",
+    "須通過資訊學科學習能力檢測",
+    "所修之輔系、雙主修課程及超修之通識課、選修體育及全民國防教育軍事訓練等課程，不計入畢業 128 學分"
+  ]
+}

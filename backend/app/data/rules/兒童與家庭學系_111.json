@@ -1,0 +1,16 @@
+{
+  "department_name": "兒童與家庭學系",
+  "required_credits": 64,
+  "elective_credits": 32,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "2學分",
+  "other_requirements": [
+    "選修課程 32 學分中，應含本系專業選修課程 10 學分（含）以上",
+    "須通過資訊素養（採認證或修讀相關課程方式抵免）",
+    "英語能力須符合四項條件之一：1.修習2學分由本系開設之全英語課程；2.英語自主學習至少取得36點；3.修讀全人教育課程以外之英語課程且合格；4.取得英國語文學系輔系或雙主修"
+  ]
+}

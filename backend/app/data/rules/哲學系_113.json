@@ -1,0 +1,16 @@
+{
+  "department_name": "哲學系",
+  "required_credits": null,
+  "elective_credits": null,
+  "total_graduation_credits": null,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "未知",
+  "other_requirements": [
+    "注意：此筆記本資料庫中並未收錄「哲學系」113或114學年度學士班完整的修業規則與必修科目表，因此專業必修學分、選修學分、畢業總學分與 EMI 課程要求等具體門檻數值目前無法提供。",
+    "依據招生簡章資訊，本系所有選修課程分為西洋哲學課群、中國哲學課群以及應用哲學課群，每一課群皆有多門專業課程開課，並配合哲學諮商學程規劃相關課程。",
+    "本系設有五年一貫直升研究所辦法鼓勵學生繼續深造，亦可申請赴海外姊妹校短期交換。"
+  ]
+}
