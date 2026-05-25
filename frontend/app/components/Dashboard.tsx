@@ -209,6 +209,7 @@ export default function Dashboard() {
                   details={credit_summary.details}
                   records={course_records}
                   enrollmentYear={enrollment_year}
+                  departmentName={department_name}
                 />
               </div>
 
