@@ -122,17 +122,18 @@
                 <div class="bg-white p-8 rounded-xl shadow-sm border border-slate-200" x-show="data.credit_summary.details">
                     <h2 class="text-2xl font-bold mb-6 flex items-center">
                         <span class="w-2 h-8 bg-blue-600 rounded mr-3"></span>
-                        資管系畢業初審細項
+                        系所畢業進度細項
                     </h2>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
                         <template x-for="(val, key) in data.credit_summary.details">
-                            <div class="space-y-1" x-show="typeof val === 'object' && val !== null">
+                            <div class="space-y-1" x-show="typeof val === 'object' && val !== null && val.target !== undefined">
                                 <div class="flex justify-between text-sm">
-                                    <span class="font-medium text-slate-600" x-text="formatKey(key)"></span>
+                                    <span class="font-medium text-slate-600" x-text="formatKey(key, val.target)"></span>
                                     <span class="text-slate-400" x-text="val.earned + ' / ' + val.target"></span>
                                 </div>
                                 <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
-                                    <div class="h-full bg-blue-500" :style="`width: ${Math.min(100, (val.earned/val.target)*100)}%`"></div>
+                                    <div class="h-full bg-blue-500 transition-all duration-700" :style="`width: ${Math.min(100, (val.earned/val.target)*100)}%`"
+                                        :class="val.earned >= val.target ? 'bg-emerald-500' : 'bg-blue-500'"></div>
                                 </div>
                             </div>
                         </template>
@@ -156,7 +157,7 @@
                                     <th class="px-6 py-4 border-b">課程名稱</th>
                                     <th class="px-6 py-4 border-b text-center">學分</th>
                                     <th class="px-6 py-4 border-b text-center">成績</th>
-                                    <th class="px-6 py-4 border-b">審查標籤</th>
+                                    <th class="px-6 py-4 border-b">審查狀態</th>
                                 </tr>
                             </thead>
                             <tbody class="text-sm divide-y divide-slate-100">
@@ -164,19 +165,29 @@
                                     <tr class="hover:bg-slate-50 transition-colors">
                                         <td class="px-6 py-4 font-mono text-slate-500" x-text="r.semester"></td>
                                         <td class="px-6 py-4">
-                                            <div class="font-medium text-slate-800" x-text="r.course_name"></div>
-                                            <div class="text-[10px] text-slate-400" x-text="r.category"></div>
+                                            <div class="font-bold text-slate-800" x-text="r.course_name"></div>
+                                            <div class="text-[10px] text-slate-400 mt-0.5" x-text="r.category"></div>
                                         </td>
-                                        <td class="px-6 py-4 text-center" x-text="r.credits"></td>
+                                        <td class="px-6 py-4 text-center font-mono" x-text="r.credits"></td>
                                         <td class="px-6 py-4 text-center">
                                             <span class="px-2 py-0.5 rounded text-[10px] font-bold" 
                                                 :class="r.status === 'passed' ? 'bg-emerald-100 text-emerald-700' : (r.status === 'enrolled' ? 'bg-blue-100 text-blue-700' : 'bg-rose-100 text-rose-700')"
-                                                x-text="r.status === 'enrolled' ? '修課中' : r.score"></span>
+                                                x-text="r.status === 'enrolled' ? '修課中' : (r.score || '無')"></span>
                                         </td>
                                         <td class="px-6 py-4">
-                                            <span class="px-2 py-1 rounded text-[10px] font-medium border"
-                                                :class="getCategoryStyle(r.audit_category)"
-                                                x-text="r.audit_category"></span>
+                                            <div class="flex flex-wrap gap-1">
+                                                <span class="px-2 py-0.5 rounded text-[10px] font-medium border"
+                                                    :class="getCategoryStyle(r.audit_category)"
+                                                    x-text="r.audit_category.split(' (')[0]"></span>
+                                                
+                                                <!-- Extra Tags -->
+                                                <template x-if="r.audit_category.includes('(EMI)')">
+                                                    <span class="bg-blue-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold">EMI</span>
+                                                </template>
+                                                <template x-if="r.audit_category.includes('(程式)')">
+                                                    <span class="bg-indigo-500 text-white px-1.5 py-0.5 rounded text-[9px] font-bold">程式</span>
+                                                </template>
+                                            </div>
                                         </td>
                                     </tr>
                                 </template>
@@ -228,26 +239,27 @@
                 sortRecords(key) {
                     this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
                     this.data.course_records.sort((a, b) => {
-                        let va = a[key], vb = b[key];
+                        let va = a[key] || '', vb = b[key] || '';
                         return this.sortOrder === 'asc' ? va.localeCompare(vb) : vb.localeCompare(va);
                     });
                 },
-                formatKey(key) {
+                formatKey(key, target) {
                     const map = {
-                        required_courses: '必修 (64)',
-                        elective_courses: '選修 (32)',
-                        holistic_education: '全人教育 (32)',
-                        holistic_core: '全人核心 (8)',
-                        basic_skills: '基本能力 (12)',
-                        general_ed: '通識 (12)',
-                        pe_semesters: '體育學期數 (4)'
+                        required_courses: '必修課程',
+                        elective_courses: '選修課程',
+                        holistic_education: '全人教育總計',
+                        holistic_core: '全人核心',
+                        basic_skills: '基本能力',
+                        general_ed: '通識涵養',
+                        pe_semesters: '體育學期數',
+                        emi_courses: 'EMI 專業課程'
                     };
-                    return map[key] || key;
+                    return `${map[key] || key} (${target})`;
                 },
                 getCategoryStyle(cat) {
                     if (cat.includes('必修')) return 'bg-blue-50 text-blue-600 border-blue-200';
                     if (cat.includes('選修')) return 'bg-emerald-50 text-emerald-600 border-emerald-200';
-                    if (cat.includes('核心') || cat.includes('能力')) return 'bg-slate-50 text-slate-600 border-slate-200';
+                    if (cat.includes('核心') || cat.includes('能力')) return 'bg-slate-100 text-slate-600 border-slate-300';
                     if (cat.includes('通識')) return 'bg-purple-50 text-purple-600 border-purple-200';
                     if (cat.includes('體育')) return 'bg-rose-50 text-rose-600 border-rose-200';
                     return 'bg-slate-50 text-slate-400 border-slate-100';
