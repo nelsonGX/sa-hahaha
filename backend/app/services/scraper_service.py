@@ -1,5 +1,6 @@
 import requests
 import re
+import urllib3
 from app.schemas.credit_schema import (
     StudentData, CourseRecord, CreditSummary, 
     CreditCategory, GeneralEducationCredit, DetailedRequirements,
@@ -7,6 +8,9 @@ from app.schemas.credit_schema import (
 )
 from app.services.estu_scraper import EstuScraper
 from app.services.audit_service import AuditService
+
+# 關閉 SSL 安全警告
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 class FjuScraperService:
     def __init__(self):
