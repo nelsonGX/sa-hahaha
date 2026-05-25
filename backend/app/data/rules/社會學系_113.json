@@ -1,0 +1,18 @@
+{
+  "department_name": "輔仁大學社會學系",
+  "required_credits": 30,
+  "elective_credits": 66,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "無",
+  "other_requirements": [
+    "須通過資訊學科學習能力檢測",
+    "英文學科能力採多元認證，滿足任一條件始得畢業：1.通過大一英文4學分；2.通過全英文課程；3.符合免修並以外國語文(非英文)替代；4.修習英文輔系或英文雙主修；5.學士論文以英文寫作並發表",
+    "本系必修課程（社會學概論、社會統計、社會研究法、社會學理論、學士論文）須於本系修讀，欲跨系選修須報請課程委員會核可",
+    "擋修規定：「學士論文（一）」擋修「學士論文（二）」",
+    "畢業應修選修學分(66學分)中，須包含本系所開設之選修課程至少40學分，其餘26學分為自由選修"
+  ]
+}

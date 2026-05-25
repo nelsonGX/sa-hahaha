@@ -1,0 +1,17 @@
+{
+  "department_name": "心理學系",
+  "required_credits": 64,
+  "elective_credits": 32,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": 0,
+  "other_requirements": [
+    "院系必修必選共 64 學分：含必修 42 學分（須自核心課程 16 科 54 學分中選修滿 42 學分，且「社會學」與「經濟學」須擇一認列）及必選 22 學分",
+    "選修課程 32 學分中，須包含本系專業選修至少 10 學分，其餘 22 學分為其他自由選修",
+    "須通過資訊學科學習能力檢測（不開設全校性必修課程，採認證或修讀相關課程方式抵免）",
+    "外國語文須修滿 8 學分（含英文至少 4 學分）；若通過全民英檢中高級複試（CEFR B2 等級）者，得免修英文，逕選修讀第二外語課程"
+  ]
+}

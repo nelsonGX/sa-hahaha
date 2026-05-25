@@ -1,0 +1,19 @@
+{
+  "department_name": "輔仁大學新聞傳播學系",
+  "required_credits": 68,
+  "elective_credits": 28,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": 0,
+  "other_requirements": [
+    "必選社會人文課程（政治學、社會學、心理學、經濟學、文化人類學）五選二並及格",
+    "必選進階專題課程（傳播研究專題、媒體研發專題、新聞報導專題）三選一並及格",
+    "通過學科學習能力檢測",
+    "修畢導師時間（0學分，共8學期）",
+    "修畢體育課程（0學分，共4學期）",
+    "修畢全民國防教育軍事訓練課程（0學分，共2學期）"
+  ]
+}

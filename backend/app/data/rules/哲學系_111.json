@@ -1,0 +1,19 @@
+{
+  "department_name": "輔仁大學哲學系",
+  "required_credits": 48,
+  "elective_credits": 48,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": 0,
+  "other_requirements": [
+    "系必選課程修滿24學分（須包含「中國哲學課群」至少8學分、「西洋哲學課群」至少8學分、「應用哲學課群」至少8學分）",
+    "通過英文能力檢測畢業門檻",
+    "通過資訊學科學習能力檢測",
+    "修畢導師時間（0學分，共8學期）",
+    "修畢體育課程（0學分，共4學期）",
+    "修畢全民國防教育軍事訓練課程（0學分，共2學期）"
+  ]
+}

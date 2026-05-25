@@ -1,0 +1,16 @@
+{
+  "department_name": "經濟學系",
+  "required_credits": 48,
+  "elective_credits": 48,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "無特別規定",
+  "other_requirements": [
+    "選修課程（48學分）中，須包含本系專業選修課程至少26學分",
+    "須通過資訊學科學習能力檢測",
+    "須於大二學年結束前參加英文檢定考試，成績並應達 CEF 之 B1 進階級或其他測驗相對應之同等級標準（未達標準者須於大三結束前補考，仍未達標準者大四須修讀規定之英語課程且及格）"
+  ]
+}

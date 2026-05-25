@@ -1,0 +1,15 @@
+{
+  "department_name": "護理學系",
+  "required_credits": null,
+  "elective_credits": null,
+  "total_graduation_credits": null,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "未知",
+  "other_requirements": [
+    "注意：此筆記本資料庫中並未收錄「護理學系」114 學年度學士班的完整修業規則與必修科目表，因此專業必修學分、選修學分、畢業總學分與 EMI 課程要求等具體門檻數值目前無法提供。",
+    "實習要求：依護理師國考應考須知，各項實習（基本護理學、內外科、產科、兒科、社區衛生、精神衛生及綜合實習等）加總需達總時數 1,016 小時（依考選部規定，此為報考護理師之必備條件）。"
+  ]
+}

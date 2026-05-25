@@ -1,0 +1,15 @@
+{
+  "department_name": "資訊工程學系",
+  "required_credits": 70,
+  "elective_credits": 26,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "4學分",
+  "other_requirements": [
+    "須通過資訊學科學習能力檢測（採修課通過）",
+    "學生必須修畢完整五學期且程式設計(一)、(二)、(三)任一學期修習通過者，才具修習「專題(一)」課程資格"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "department_name": "輔仁大學織品服裝學系織品設計組",
+  "required_credits": 67,
+  "elective_credits": 29,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "1門",
+  "other_requirements": [
+    "選修學分中至少須修讀本系所開選修課程10學分以上",
+    "須通過資訊能力畢業門檻（採修課或考證照通過制）",
+    "須通過本系英文檢定畢業門檻（如：IBT TOEFL 57分以上、TOEIC 550分以上、全民英檢(GEPT)中級複試或 IELTS 4.0以上），且大三學年結束前至少需參加英檢一次"
+  ]
+}

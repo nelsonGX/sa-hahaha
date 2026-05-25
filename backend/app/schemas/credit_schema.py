@@ -11,6 +11,8 @@ class CourseRecord(BaseModel):
     audit_category: str = "未分類"  # 系統審查後的精確分類
     status: str = "passed"          # 狀態: passed (通過), failed (不及格/停修), enrolled (正在修課)
     offering_dept: str = ""         # 開課單位 (主要由 ESTU 選課系統提供)
+    is_distance_learning: bool = False # 是否為遠距教學 (-網)
+    term_type: str = ""             # 學期課/學年課標記 (e.g., "1(學年)")
 
 # 學分進度分類
 class CreditCategory(BaseModel):
@@ -56,6 +58,7 @@ class DetailedRequirements(BaseModel):
     computer_proficiency: Optional[ComputerProficiency] = None # 機測門檻
     emi_proficiency: Optional[EMIProficiency] = None           # EMI 門檻
     emi_courses: Optional[CreditCategory] = None # 保留相容性
+    distance_learning_credits: int = 0    # 遠距教學學分總數 (不得超過畢業總學分 1/2)
 
 # 整體學分統計
 class CreditSummary(BaseModel):

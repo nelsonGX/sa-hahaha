@@ -1,0 +1,17 @@
+{
+  "department_name": "金融與國際企業學系",
+  "required_credits": 65,
+  "elective_credits": 31,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "5門或15學分",
+  "other_requirements": [
+    "選修課程中須包含本系專業選修課程至少 10 學分",
+    "須通過資訊學科學習能力檢測",
+    "須於畢業前至少參加一次英文檢定考試，且成績應達 CEFR 之 B2 高階級（相當於 TOEIC 750 分或 785 分以上等同等級測驗）；大三上學期結束前未達標準者，須於大四參加管理學院舉辦之英語自學方案測驗或再次檢定",
+    "須於畢業前報考相關專業證照至少一項（如：證券商普通業務員等 11 項指定證照之一，附成績單證明到考），否則不予辦理離校手續"
+  ]
+}

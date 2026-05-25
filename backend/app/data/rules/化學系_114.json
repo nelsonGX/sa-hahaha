@@ -1,0 +1,15 @@
+{
+  "department_name": "輔仁大學化學系",
+  "required_credits": 67,
+  "elective_credits": 29,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": 0,
+  "other_requirements": [
+    "英文畢業門檻（修讀大二英文及格或通過各類指定英文能力檢定測驗達等同 CEFR B1 級以上）",
+    "資訊學科學習能力檢測"
+  ]
+}

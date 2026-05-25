@@ -1,0 +1,17 @@
+{
+  "department_name": "輔仁大學天主教研修學士學位學程",
+  "required_credits": 66,
+  "elective_credits": 30,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": 0,
+  "other_requirements": [
+    "選修課程中包含本系專業選修課程至少10學分",
+    "須通過資訊基本能力（採修課通過制或相關證照抵免）",
+    "須通過英文基本能力（達CEF B1程度，或修讀英文聖經選讀課程2學分、修讀宗教英文課程2學分、修讀全人大二英文4學分、修讀全英語課程及格等規定之一）",
+    "二年級以上之學生須於每學期結束前，向所屬的課諮老師提出下一學期之選課計畫書，按其選課計畫書進行修課"
+  ]
+}

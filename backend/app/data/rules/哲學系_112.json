@@ -1,0 +1,17 @@
+{
+  "department_name": "哲學系",
+  "required_credits": 48,
+  "elective_credits": 48,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": 0,
+  "other_requirements": [
+    "必選課程至少修習 24 學分，其中必須包含「中國哲學課群」至少 8 學分、「西洋哲學課群」至少 8 學分、「應用哲學課群」至少 8 學分",
+    "須通過資訊學科學習能力檢測",
+    "須通過英文能力畢業門檻（如：修讀本校大二英文通過、修讀本校全英文授課課程共 4 學分、具英文系輔系/雙主修/英語菁英學程資格，或達多益 TOEIC 450 分以上等同等級測驗）",
+    "雙主修、輔系、教育學程學分不包含在畢業 128 學分內計算"
+  ]
+}

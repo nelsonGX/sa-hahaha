@@ -1,0 +1,17 @@
+{
+  "department_name": "輔仁大學織品服裝學系織品設計組",
+  "required_credits": null,
+  "elective_credits": null,
+  "total_graduation_credits": null,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": null,
+  "other_requirements": [
+    "學生於大二下學期課程結束後，須依辦法由針織、梭織、毛衣中，確認至少一個主修方向",
+    "大三須修畢（及格）主修方向之指定課程，始得以該主修方向進行畢業專題",
+    "須依修讀學年度之畢業專題企劃書規定進行，修畢「畢業專題」",
+    "筆記本內容中未提供織品服裝學系完整的專業必修、選修與畢業總學分資訊"
+  ]
+}

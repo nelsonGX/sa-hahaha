@@ -1,0 +1,16 @@
+{
+  "department_name": "輔仁大學護理學系",
+  "required_credits": null,
+  "elective_credits": null,
+  "total_graduation_credits": null,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "無",
+  "other_requirements": [
+    "二年制護理學系畢業總學分76學分（含必修64學分、通識6學分、選修4學分），須於核心科目（成人精神衛生護理學等五科含實習）中選修三科",
+    "二年制在職專班英語能力畢業門檻：需通過英語能力要求（如完成英語自主學習活動達CEF之A2基礎級等），未達標準者須於四年級下學期末本系英語成果發表會中完成5-10分鐘口頭報告",
+    "實習與臨床工作規定：需在醫院從事醫護工作，具有與人直接互動之特性，須具備適當之視覺、聽覺、口語表達及肢體迅速反應與移動能力，並能管控自身情緒與具備相當之抗壓能力"
+  ]
+}

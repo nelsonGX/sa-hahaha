@@ -1,0 +1,19 @@
+{
+  "department_name": "廣告傳播學系",
+  "required_credits": 64,
+  "elective_credits": 32,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "4學分",
+  "other_requirements": [
+    "選修課程 32 學分中，須包含本系專業選修課程至少 10 學分",
+    "須通過資訊學科學習能力檢測（本系大一課程「電腦繪圖」、「電腦影像處理」為認可課程）",
+    "須於大三學年結束前參加英語能力測驗檢定考試，成績應達多益 650 分以上或同等級標準；未達標者須依規定補考",
+    "三年級須參加一項全國廣告策略競賽（如：TAA校園創意策略提案競賽等），始具有續修四年級「專業實務製作」資格",
+    "大四學生須修讀「專業實務製作」必修學年課程完成畢業展",
+    "校訂必修課程須完成導師時間（0學分，共8學期）"
+  ]
+}

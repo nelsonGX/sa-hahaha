@@ -1,0 +1,19 @@
+{
+  "department_name": "輔仁大學圖書資訊學系",
+  "required_credits": 0,
+  "elective_credits": 0,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": 0,
+  "other_requirements": [
+    "本系畢業英檢條件審查通過",
+    "完成產業實習回饋核心能力自我評量",
+    "完成系館輪值服務時數（111學年度免審核）",
+    "修畢導師時間（0學分，共8學期）",
+    "修畢體育課程（0學分，共4學期）",
+    "修畢全民國防教育軍事訓練課程（0學分，共2學期）"
+  ]
+}

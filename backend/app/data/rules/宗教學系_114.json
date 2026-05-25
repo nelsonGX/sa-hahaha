@@ -1,0 +1,16 @@
+{
+  "department_name": "宗教學系",
+  "required_credits": 66,
+  "elective_credits": 30,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "無",
+  "other_requirements": [
+    "選修課程中必須包含本系專業選修課程至少 10 學分。",
+    "學生須通過英文基本能力，應至少符合下列規定之一：(1)修讀本系指定宗教英文課程2學分。(2)修讀全人大二英文4學分。(3)取得本校英文輔系、英文系雙學位或英語菁英學程資格並依規定修畢相關學分。(4)通過英語CEF語言能力參考指標B1程度之等級。",
+    "擋修與上修規定：上修必修課程者，須符合本系「上修規定」；上修必選課程者，須完成一年級之三個宗教概論課程及前一學期學業平均成績須達 85 分，並取得教師、系主任核可。"
+  ]
+}

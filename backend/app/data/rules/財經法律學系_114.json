@@ -1,0 +1,18 @@
+{
+  "department_name": "財經法律學系",
+  "required_credits": 70,
+  "elective_credits": 26,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "1門(2學分)",
+  "other_requirements": [
+    "學生需通過本校資訊基本能力檢定為畢業條件。",
+    "院系必修及必選學分共70學分，其中包含專業必選課群47學分中須必選31學分以上，以及案例研習必選課群20學分中須必選2學分。",
+    "畢業應修選修課程26學分中，必須包含本系專業選修課程至少10學分。",
+    "學生須於畢業前完成法律學院學習護照認證（需完成三大項共20次）才符合畢業條件。",
+    "大一外國語文(英文)至少4學分，但入學考試或經檢定達一定標準者得免修英文，逕選修讀第二外語課程。"
+  ]
+}

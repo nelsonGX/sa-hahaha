@@ -1,0 +1,16 @@
+{
+  "department_name": "輔仁大學德語語文學系",
+  "required_credits": null,
+  "elective_credits": 26,
+  "total_graduation_credits": null,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": null,
+  "other_requirements": [
+    "院訂英語必修課程 4 學分",
+    "畢業前需依本系「學習成果展示實施辦法」完成學習成果展示",
+    "筆記本內容中未提供德語語文學系完整的專業必修與畢業總學分資訊"
+  ]
+}

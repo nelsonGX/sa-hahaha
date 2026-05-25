@@ -1,0 +1,17 @@
+{
+  "department_name": "法國語文學系",
+  "required_credits": 65,
+  "elective_credits": 27,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": 0,
+  "other_requirements": [
+    "專業選修課程 27 學分中，含外系選修課程至多 6 學分",
+    "修滿院訂英語必修課程 4 學分（大一英文修讀高級班或符合免修大一英文者，得以修習全英專業(EMI)課程等替代）",
+    "須通過資訊學科學習能力檢測",
+    "學生(含雙主修學生)須於畢業前通過法語鑑定文憑(DELF) B1(含)以上，或提出相當程度之法語檢定成績證明（如 TCF B1、FLPT 特定標準、BULATS B1）；若大四上學期結束前仍未通過，始得補修大四相關課程且修習成績及格視同通過"
+  ]
+}

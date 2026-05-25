@@ -1,0 +1,18 @@
+{
+  "department_name": "影像傳播學系",
+  "required_credits": 40,
+  "elective_credits": 56,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "4學分",
+  "other_requirements": [
+    "選修課程中須包含本系專業選修課程至少 32 學分",
+    "須通過資訊學科學習能力檢測",
+    "須於大二年結束前參加英語能力測驗檢定考試，成績應達 TOEIC 多益測驗 550 分以上或同等級標準；未達標準者，須於大四學年結束前補考一次（成績不計是否達到標準），始有畢業資格",
+    "須於大四當年度以所學專業知識為基礎完成畢業製作（個人或團體作品），且作品必須共同對外公開展出方可取得畢業資格",
+    "超修之全人通識、大一及大二外文、選修軍訓、選修體育不計入畢業學分"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "department_name": "德語語文學系",
+  "required_credits": 0,
+  "elective_credits": 24,
+  "total_graduation_credits": 0,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": 0,
+  "other_requirements": [
+    "專業選修課程 24 學分中，含領域核心選修 10 學分，外系選修課程至多 12 學分",
+    "須通過資訊學科學習能力檢測以滿足資訊素養 0 學分之要求",
+    "於畢業前需依本系「學習成果展示實施辦法」完成學習成果展示，始有畢業資格",
+    "註：因筆記本中缺乏本學系之詳細「課程學分架構表」、「必修科目表」或明確的畢業總學分規定，故無法提供確切之專業必修與畢業總學分數，請另行查證"
+  ]
+}

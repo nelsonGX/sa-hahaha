@@ -1,0 +1,16 @@
+{
+  "department_name": "輔仁大學織品服裝學系織品服飾行銷組",
+  "required_credits": 69,
+  "elective_credits": 27,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "1門",
+  "other_requirements": [
+    "須通過資訊能力畢業門檻（採修課或考證照通過制）",
+    "英文畢業門檻：IBT TOEFL 71、TOEIC 600、GEPT 中高級初試(含)以上或 IELTS 5.5（大三學年結束前至少考一次，若成績未達標準須再考一次始具畢業資格）",
+    "專業選修須包含本系所開選修課程至少10學分"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "department_name": "統計資訊學系",
+  "required_credits": null,
+  "elective_credits": null,
+  "total_graduation_credits": null,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "3學分",
+  "other_requirements": [
+    "英語學分須達8學分",
+    "畢業前至少參加一次英文檢定考試，且成績應達 CEFR 之 B2 高階級（相當於 TOEIC 750 分）；未達標準者，須於大四參加管理學院舉辦之 8 次英語自學方案測驗或再次檢定",
+    "本系英檢門檻規範：若英文檢定未達 TOEIC 650 分，須補修一門（至少 2 學分以上）英語課程",
+    "筆記本中未包含『統計資訊學系』完整的修業規則或必修科目表，因此專業必修、選修及畢業總學分等資料從缺"
+  ]
+}

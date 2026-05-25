@@ -1,0 +1,17 @@
+{
+  "department_name": "教育領導與科技發展學士學位學程",
+  "required_credits": 50,
+  "elective_credits": 46,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "無",
+  "other_requirements": [
+    "學生須通過資訊學科學習能力檢測。",
+    "學生須通過下列任一項英文畢業條件：(1)入學時已達到本校英文免修標準；(2)通過大一英文4學分，並再修讀大二英文4學分、或英文系/英語菁英學程專業必選修至少2學分、或全英語專業課程至少2學分；(3)入學前三年或就學期間，通過校外英文能力檢測達多益(TOEIC)550分以上或同等級標準。",
+    "專業選修課程須修滿20學分，且各領域至少應修學分數為：教育領域2學分、領導管理領域6學分、科技發展領域5學分。",
+    "其他選修課程須修滿26學分，其中至少須有10學分來自本學程外之其他單位。"
+  ]
+}

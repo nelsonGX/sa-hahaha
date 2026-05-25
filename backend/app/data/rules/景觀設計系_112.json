@@ -1,0 +1,17 @@
+{
+  "department_name": "輔仁大學景觀設計學系",
+  "required_credits": 76,
+  "elective_credits": 24,
+  "total_graduation_credits": 132,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "無",
+  "other_requirements": [
+    "選修課程 24 學分中，須包含本系專業選修課程至少 10 學分",
+    "須通過資訊學科學習能力檢測（依「輔仁大學學生基本素養培育與檢測實施辦法」辦理）",
+    "本系核心課程（設計課）分為基本設計及景觀設計(一)至(六)，有嚴格擋修規定，學生應依序修習，且前一階段學期成績均及格（60分）者，方得修習下一階段",
+    "符合相關英文能力檢測免修標準者得申請免修大一英文或大二主題英文，但仍須修讀同等學分之外國語文(非英文)課程"
+  ]
+}

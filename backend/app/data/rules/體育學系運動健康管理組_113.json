@@ -1,0 +1,17 @@
+{
+  "department_name": "輔仁大學體育學系運動健康管理組",
+  "required_credits": 72,
+  "elective_credits": 24,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "無",
+  "other_requirements": [
+    "畢業前須通過資訊能力檢測（採修課通過制或相關證照抵認）",
+    "畢業前須通過英文能力檢測",
+    "取得2張運動專業相關證照",
+    "取得1張心肺復甦術證照(CPR證)"
+  ]
+}

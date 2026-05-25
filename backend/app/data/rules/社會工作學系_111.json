@@ -1,0 +1,17 @@
+{
+  "department_name": "社會工作學系",
+  "required_credits": 69,
+  "elective_credits": 27,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "無特別規定",
+  "other_requirements": [
+    "選修課程27學分中，且應含本系專業選修課程至少10學分",
+    "須通過資訊學科學習能力檢測",
+    "須於大二學年度結束前，參加英文檢定考試且成績達CEF之B1進階級或其他測驗相對應之同等級標準",
+    "學生實習前須修畢七門必修課程（社會工作概論、社會個案工作、人類行為與社會環境、社會團體工作、社區工作、社會工作實習：導論及社會工作管理）及兩個實習領域的先修課程"
+  ]
+}

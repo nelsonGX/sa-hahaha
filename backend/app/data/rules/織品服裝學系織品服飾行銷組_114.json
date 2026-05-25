@@ -1,0 +1,18 @@
+{
+  "department_name": "輔仁大學織品服裝學系織品服飾行銷組",
+  "required_credits": null,
+  "elective_credits": null,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": 1,
+  "other_requirements": [
+    "英文檢定畢業門檻（大三學年結束前成績應達 TOEIC 600 分、全民英檢中高級初試等同等級標準）",
+    "資訊能力畢業門檻（採修課或考證照通過制）",
+    "選修課程中須至少修讀本系所開設選修課程 10 學分以上",
+    "畢業前須修畢 4 門體育課程（大一兩門各 1 學分，大二兩門各 0 學分）",
+    "筆記本內容中 114 學年度織品服飾行銷組的必修科目表因文件誤植為服飾設計組，故未提供專業必修與選修學分之確切總數"
+  ]
+}

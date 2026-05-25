@@ -1,0 +1,16 @@
+{
+  "department_name": "人工智慧與資訊安全學士學位學程",
+  "required_credits": null,
+  "elective_credits": null,
+  "total_graduation_credits": null,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "未知",
+  "other_requirements": [
+    "注意：此筆記本資料庫中並未收錄「人工智慧與資訊安全學士學位學程」114 學年度的完整修業規則與必修科目表，因此專業必修學分、選修學分、畢業總學分與 EMI 課程要求等具體門檻數值目前無法提供。",
+    "本學程特別強調專題製作與產業實習，設有「專題(一)」、「專題(二)」及「產業實習」等大三大四必修課程，建立完整產學合作管道。",
+    "鼓勵同學參加校外資安競賽及教育部先進資通安全人才培育計畫，以獲得完整實戰經驗。"
+  ]
+}

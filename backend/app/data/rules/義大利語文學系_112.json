@@ -1,0 +1,20 @@
+{
+  "department_name": "義大利語文學系",
+  "required_credits": 68,
+  "elective_credits": 24,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": 0,
+  "other_requirements": [
+    "專業選修課程 24 學分中，須包含領域必選修 10 學分，外系選修課程至多 12 學分",
+    "院訂英語必修課程 4 學分（大一英文修讀高級班或免修大一英文者，得以修習全英/EMI課程、進階英文或英文系選修課程替代）",
+    "須通過資訊學科學習能力檢測",
+    "學生（含雙主修）須於畢業前通過等同 CEFR B1 級(含)以上之義語檢定考試（如 CILS Uno B1、CELI 2 B1、PLIDA B1、ele.IT B1）始得畢業",
+    "於大四上學期結束前尚未通過義語檢定考試者，須出示兩次未通過之成績證明，經系務會議審查得另行舉辦筆試及口試；及格者視同通過",
+    "設有擋修規定：文法、會話、閱讀與寫作等課程，若上、下任一學期不及格，即不得修讀進階課程。惟通過義語檢定 CILS A2 或修畢簽約義大利學校 A2(含)以上語言課程 160 小時之學生不受此限",
+    "校訂必修課程須完成導師時間（0 學分，共 8 學期）及全民國防教育軍事訓練（0 學分，共 2 學期）"
+  ]
+}

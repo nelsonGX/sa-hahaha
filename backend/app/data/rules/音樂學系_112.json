@@ -1,0 +1,20 @@
+{
+  "department_name": "輔仁大學音樂學系",
+  "required_credits": null,
+  "elective_credits": null,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "無",
+  "other_requirements": [
+    "專業必修學分數依各組別規定而異：聲樂組 72 學分、鋼琴組 68 學分、管樂組 72 學分、敲擊樂組 71 學分、爵士音樂組 72 學分、弦樂組 70 學分、豎琴組 70 學分、古典吉他組 69 學分、應用音樂組 65 學分、作曲組 69 學分",
+    "選修課程中須包含本系專業選修課程至少 24 學分",
+    "學生須於畢業結束前「音樂基礎訓練課程」達到 B 組之程度，始有畢業資格",
+    "學生須於畢業術科考前舉行一場至少 30 分鐘之畢業獨奏會，並於音樂會後二星期內繳交節目單及影音資料，始可參加畢業考試",
+    "擋修規定：「主修（一）」必須成績及格方能修「主修（二）」；以此類推至「主修（四）」",
+    "每學期術科授課次數缺課達三次以上（含），即主修予以扣考",
+    "須通過本校資訊學科學習能力檢測"
+  ]
+}

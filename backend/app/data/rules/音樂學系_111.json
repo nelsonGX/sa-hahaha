@@ -1,0 +1,16 @@
+{
+  "department_name": "音樂學系",
+  "required_credits": 70,
+  "elective_credits": 26,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "無特別規定",
+  "other_requirements": [
+    "筆記本中僅包含『弦樂組』之必修科目表，故學分數與相關規定以弦樂組為例",
+    "須通過本校資訊基本能力檢定（檢定方式採認證或修讀相關課程方式抵免）",
+    "英文至少4學分，但入學考試或經檢定達一定標準者，得免修英文，逕選修讀第二外語"
+  ]
+}

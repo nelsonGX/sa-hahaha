@@ -1,0 +1,16 @@
+{
+  "department_name": "職能治療學系",
+  "required_credits": 96,
+  "elective_credits": null,
+  "total_graduation_credits": null,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "未知",
+  "other_requirements": [
+    "注意：此筆記本資料庫中並未收錄「職能治療學系」114 學年度學士班的完整修業規則與必修科目表，因此選修學分、畢業總學分與 EMI 課程要求等具體門檻數值目前無法完整提供。",
+    "修課限制：本系課程不得上修。",
+    "擋修規定：「研究方法導論」擋修「職能治療期刊導讀-全英語」；「職能評估與職業復健」及「職能評估與職業復健實務與應用」擋修「生理職能治療臨床實習（1）」；「職能科學概論」擋修「職能治療臨床見習二」；「普通生物學」及「心理健康與社會學」擋修「職能治療臨床見習一」。"
+  ]
+}

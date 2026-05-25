@@ -5,25 +5,72 @@ from app.schemas.credit_schema import (
     CourseRecord, CreditSummary, 
     CreditCategory, GeneralEducationCredit, DetailedRequirements
 )
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from app.db.models import Department, GraduationRule, GEExclusion
+
+DB_PATH = "sqlite:///app/data/sa_hahaha.db"
 
 class AuditService:
     def __init__(self):
+        self.engine = create_engine(DB_PATH)
+        self.SessionLocal = sessionmaker(bind=self.engine)
         self.rules_dir = Path(__file__).parent.parent / "data" / "rules"
         
     def _load_rules(self, department_name: str, enrollment_year: int = None) -> dict:
-        # 優先尋找帶年份的規則，如果沒有則找系所通用規則
-        year_rule_path = self.rules_dir / f"{department_name}_{enrollment_year}.json"
-        if enrollment_year and year_rule_path.exists():
-            with open(year_rule_path, "r", encoding="utf-8") as f:
-                return json.load(f)
-                
-        general_rule_path = self.rules_dir / f"{department_name}.json"
-        if general_rule_path.exists():
-            with open(general_rule_path, "r", encoding="utf-8") as f:
-                return json.load(f)
-                
-        # 如果找不到規則，回傳預設的空規則或拋出例外
-        return None
+        session = self.SessionLocal()
+        try:
+            # 找到對應系所
+            dept = session.query(Department).filter_by(name=department_name).first()
+            if not dept:
+                # 嘗試模糊比對 (例如 "資訊管理" 找到 "資訊管理學系")
+                dept = session.query(Department).filter(Department.name.like(f"%{department_name}%")).first()
+                if not dept:
+                    return None
+            
+            # 尋找該學年度的規則，若無則降級找最近的一年，或隨便抓一年當預設
+            rule = session.query(GraduationRule).filter_by(department_id=dept.id, year=enrollment_year).first()
+            if not rule:
+                 rule = session.query(GraduationRule).filter_by(department_id=dept.id).order_by(GraduationRule.year.desc()).first()
+            
+            if not rule:
+                 return None
+                 
+            # 將 ORM Object 轉回 Dict 格式，相容後面的舊邏輯
+            other_reqs = []
+            if rule.other_requirements:
+                try:
+                    other_reqs = json.loads(rule.other_requirements)
+                except:
+                    pass
+            
+            return {
+                "dept_code": dept.code or "",
+                "department_name": dept.name,
+                "required_credits": rule.required_credits,
+                "elective_credits": rule.elective_credits,
+                "total_graduation_credits": rule.total_graduation_credits,
+                "holistic_total_credits": rule.holistic_total_credits,
+                "holistic_core_credits": rule.holistic_core_credits,
+                "basic_skills_credits": rule.basic_skills_credits,
+                "general_education_credits": rule.general_education_credits,
+                "emi_course_minimum": rule.emi_course_minimum,
+                "other_requirements": other_reqs
+            }
+        finally:
+            session.close()
+            
+    def _load_ge_exclusions(self, department_name: str) -> list[str]:
+        """從資料庫讀取該系所的通識排除名單"""
+        session = self.SessionLocal()
+        try:
+            dept = session.query(Department).filter(Department.name.like(f"%{department_name}%")).first()
+            if not dept: return []
+            
+            exclusions = session.query(GEExclusion).filter_by(department_id=dept.id).all()
+            return [ex.course_name for ex in exclusions]
+        finally:
+            session.close()
 
     def calculate_credit_summary(self, records: list[CourseRecord], department_name: str, enrollment_year: int) -> tuple[CreditSummary, list[str]]:
         warnings = []
@@ -46,13 +93,25 @@ class AuditService:
         basic_skills_earned = 0
         pe_count = 0
         emi_passed_count = 0
+        distance_learning_credits = 0 # 遠距教學學分
+
+        # 用於檢查重複修習與學年課
+        passed_normalized_names = set()
+        enrolled_normalized_names = set()
+        year_course_terms = {} # dict[norm_name, set(term_type)] 追蹤學年課修習狀況
 
         # 初始化預設值
-        HOLISTIC_CORE_KEYWORDS = rules.get("holistic_core_keywords", []) if rules else ["大學入門", "人生哲學", "專業倫理", "企業倫理"]
-        BASIC_SKILLS_KEYWORDS = rules.get("basic_skills_keywords", []) if rules else ["國文", "外語", "外國語文"]
-        PE_KEYWORDS = rules.get("pe_keywords", []) if rules else ["體育"]
-        DEPT_CODE = rules.get("dept_code", "40") # 資管系代碼預設 40
+        HOLISTIC_CORE_KEYWORDS = rules.get("holistic_core_keywords") or ["大學入門", "人生哲學", "專業倫理", "企業倫理"]
+        BASIC_SKILLS_KEYWORDS = rules.get("basic_skills_keywords") or ["國文", "外語", "外國語文"]
+        PE_KEYWORDS = rules.get("pe_keywords") or ["體育"]
+        DEPT_CODE = rules.get("dept_code") or "40" # 資管系代碼預設 40
         
+        # 輔助函數：正規化課名 (與 ScraperService 邏輯一致)
+        import re
+        def _normalize_name(name: str) -> str:
+            n = name.replace("英-專業", "").replace("英-專", "").replace(" ", "").strip()
+            return re.sub(r"(-英-網|-網-英|-英|-網|\(EMI\)|EMI)$", "", n).strip()
+
         ge_domains_config = rules.get("general_education_domains", {
             "人文藝術領域": 4, "自然科技領域": 4, "社會科學領域": 4
         }) if rules else {
@@ -64,9 +123,36 @@ class AuditService:
             for domain, target in ge_domains_config.items()
         }
 
+        # 預先載入系選修白名單，避免在迴圈內重複讀取檔案造成效能瓶頸
+        im_elective_whitelist = set()
+        whitelist_path = self.rules_dir / "im_elective_whitelist.json"
+        if whitelist_path.exists():
+            try:
+                with open(whitelist_path, "r", encoding="utf-8") as f:
+                    im_elective_whitelist = set(json.load(f))
+            except:
+                pass
+
+        # 預先掃描建立集合
+        for r in records:
+            norm_name = _normalize_name(r.course_name)
+            st = get_status(r.score)
+            if st == "passed":
+                passed_normalized_names.add(norm_name)
+                # 記錄學期/學年狀態
+                if "學年" in r.term_type:
+                    if norm_name not in year_course_terms:
+                        year_course_terms[norm_name] = set()
+                    year_course_terms[norm_name].add(r.term_type)
+            elif st == "enrolled":
+                enrolled_normalized_names.add(norm_name)
+
         passed_courses = {r.course_name for r in records if get_status(r.score) == "passed"}
         enrolled_courses = {r.course_name for r in records if get_status(r.score) == "enrolled"}
         failed_courses = {r.course_name for r in records if get_status(r.score) == "failed" and r.score != "停修"}
+
+        # 讀取通識排除名單
+        ge_exclusions = self._load_ge_exclusions(department_name)
 
         # 前綴代碼對照表
         PREFIX_TO_DOMAIN_KEYWORD = {
@@ -90,27 +176,68 @@ class AuditService:
             "科技": "自然"
         }
 
+        # 用於追蹤本迴圈內已計入學分的課，避免同名同屬性的課程重複計分
+        counted_courses = set()
+
         for r in records:
             r.status = get_status(r.score)
             
             if r.status == "failed":
                 r.audit_category = "不及格/停修"
                 continue
-            
+                
+            norm_name = _normalize_name(r.course_name)
             is_passed_course = (r.status == "passed")
-            is_pe_course = "體育" in (r.offering_dept or "") if r.offering_dept else any(k in r.course_name for k in PE_KEYWORDS)
+            is_enrolled_course = (r.status == "enrolled")
 
-            # 軍訓/全民國防不計分
-            if any(k in r.course_name for k in ["軍訓", "全民國防", "操行"]):
+            # A. 重複修習剔除 (修訂：允許同名但不同學期，例如國文上下)
+            # 使用 (norm_name, semester) 作為唯一鍵值，防止同一學期抓到重複的紀錄
+            course_key = (norm_name, r.semester)
+            if is_passed_course or is_enrolled_course:
+                if course_key in counted_courses:
+                    r.audit_category = "重複修習(不計學分)"
+                    continue
+                counted_courses.add(course_key)
+
+            # E. 檢查系排除通識
+            excluded_ge = rules.get("excluded_general_education", []) if rules else []
+            # 合併 JSON 規則裡的排除名單和資料庫的排除名單
+            combined_exclusions = set(excluded_ge + ge_exclusions)
+            if any(k in r.course_name for k in combined_exclusions):
+                if "通識" in r.category:
+                    # 被系排除的通識，預設轉為一般選修
+                    r.category = r.category.replace("通識", "選修")
+                    warnings.append(f"ℹ️ 提醒：『{r.course_name}』為本系排除之通識，已自動轉為選修學分。")
+
+            # 判斷是否為體育課
+            is_pe_course = False
+            if r.offering_dept and "體育" in r.offering_dept:
+                is_pe_course = True
+            elif any(k in r.course_name for k in PE_KEYWORDS):
+                is_pe_course = True
+            elif r.credits == 0 and "必" in r.category and not any(k in r.course_name for k in ["導師", "班會", "週會", "軍訓", "國防", "操行"]):
+                # 防呆：SIS 歷年成績經常缺少 offering_dept，導致「羽球」、「籃球」等 0 學分必修無法被識別為體育
+                is_pe_course = True
+
+            # B. 排除軍訓與體育"選修"
+            is_military = any(k in r.course_name for k in ["軍訓", "全民國防", "操行"])
+            if is_military:
                 r.audit_category = "不計畢業學分"
                 continue
+                
+            if "選修" in r.category and (is_pe_course or is_military or "ATP3" in r.course_name):
+                r.audit_category = "不計畢業學分(體育/軍訓選修)"
+                continue
+
+            # 計入遠距教學學分
+            if getattr(r, 'is_distance_learning', False) and is_passed_course:
+                distance_learning_credits += r.credits
 
             if is_pe_course:
                 r.audit_category = "核心課程(體育)"
                 if is_passed_course:
                     pe_count += 1
                     holistic_core_earned += r.credits
-                    # 體育 0 學分不計入總數，但如果有人修有學分的體育（通常是選修），則計入
                     earned_total += r.credits
             elif any(k in r.course_name for k in HOLISTIC_CORE_KEYWORDS):
                 r.audit_category = "核心課程"
@@ -191,7 +318,15 @@ class AuditService:
             elif "選修" in r.category:
                 r.audit_category = "選修"
                 # 檢查是否為系選修 (開課單位包含系代碼或是系名)
-                if DEPT_CODE in (r.offering_dept or "") or "資訊管理" in (r.offering_dept or ""):
+                is_dept_elective = False
+                if r.offering_dept and (DEPT_CODE in r.offering_dept or "資訊管理" in r.offering_dept):
+                    is_dept_elective = True
+                else:
+                    # 使用預先載入的白名單回退機制 (Fallback)
+                    if norm_name in im_elective_whitelist:
+                        is_dept_elective = True
+
+                if is_dept_elective:
                     r.audit_category = "系選修"
                     if is_passed_course:
                         dept_ele_earned += r.credits
@@ -252,6 +387,16 @@ class AuditService:
                 if "fail_consequence" in pre_rule and any(target_course in c for c in failed_courses):
                     warnings.append(pre_rule["fail_consequence"])
 
+        # C. 遠距教學 (網修) 上限控管
+        if earned_total > 0 and distance_learning_credits > (earned_total / 2):
+            warnings.append(f"🚨 警告：您的遠距教學學分 ({distance_learning_credits}) 已超過畢業總學分 ({earned_total}) 之二分之一，超修部分將不計入畢業學分。")
+
+        # D. 學年課未完成防呆
+        for course_name, terms in year_course_terms.items():
+            if len(terms) == 1 and course_name not in enrolled_normalized_names:
+                # 只有 1(學年) 或 2(學年) 且目前沒在修
+                warnings.append(f"⚠️ 提醒：學年課『{course_name}』似乎未修畢上下學期，依規定學年課未完成不列計畢業學分。")
+
         details = None
         if rules:
             details = DetailedRequirements(
@@ -269,7 +414,8 @@ class AuditService:
                     domains=ge_domains
                 ),
                 pe_semesters=CreditCategory(earned=pe_count, target=rules.get("pe_semesters", 4)),
-                emi_courses=CreditCategory(earned=emi_passed_count, target=rules.get("emi_course_minimum", 0)) if "emi_course_minimum" in rules else None
+                emi_courses=CreditCategory(earned=emi_passed_count, target=rules.get("emi_course_minimum", 0)) if "emi_course_minimum" in rules else None,
+                distance_learning_credits=distance_learning_credits
             )
 
         summary = CreditSummary(

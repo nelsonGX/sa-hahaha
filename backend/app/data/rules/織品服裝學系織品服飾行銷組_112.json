@@ -1,0 +1,17 @@
+{
+  "department_name": "織品服裝學系織品服飾行銷組",
+  "required_credits": 69,
+  "elective_credits": 27,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "1門",
+  "other_requirements": [
+    "選修學分中，須至少修讀本系所開選修課程 10 學分",
+    "須通過資訊能力畢業門檻（可採修課或考證照通過制）",
+    "須依規定通過英文檢定畢業門檻（如：TOEIC 600分、GEPT 中高級初試(含)以上、iBT TOEFL 71分、IELTS 5.5 等等級）；大三學年結束前至少考英檢一次，若未達標準，須再考英檢一次（不論成績是否達標），始具備畢業資格",
+    "外系選修課程不得包含全人教育中心所開各類課程（如通識、外國語文等）、選修體育課程及選修軍訓課程"
+  ]
+}

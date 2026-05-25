@@ -1,0 +1,18 @@
+{
+  "department_name": "輔仁大學公共衛生學系",
+  "required_credits": 70,
+  "elective_credits": 26,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "無",
+  "other_requirements": [
+    "選修課程 26 學分（含外系 8 學分）",
+    "須通過資訊基本能力檢定（列為校訂畢業門檻）",
+    "英文畢業門檻須至少達 CEF 語言能力參考指標 A2 (基礎級) Waystage 之標準，或修習本校大學部全英語課程學期成績達 70 分(含)以上作為替代",
+    "修習「公共衛生實習」課程須修畢一至三年級上學期系訂必修學分數至少 30 學分",
+    "軍訓、體育之選修課程（有學分數者）不得列入畢業學分"
+  ]
+}

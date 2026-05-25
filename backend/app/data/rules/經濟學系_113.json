@@ -1,0 +1,16 @@
+{
+  "department_name": "輔仁大學經濟學系",
+  "required_credits": 48,
+  "elective_credits": 48,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "無",
+  "other_requirements": [
+    "須通過資訊學科學習能力檢測",
+    "須於大二學年結束前參加英文檢定考試，成績達 CEFR B1 級(含)以上標準，未達標者須於大三補考一次，若仍未達標者，大四必須修讀本系規定之英語課程且成績及格始具畢業資格",
+    "選修課程中須包含本系專業選修課程至少26學分"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "department_name": "輔仁大學醫學資訊與創新應用學士學位學程",
+  "required_credits": null,
+  "elective_credits": null,
+  "total_graduation_credits": null,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": null,
+  "other_requirements": [
+    "筆記本中未收錄『醫學資訊與創新應用學士學位學程』完整的學士班修業規則或必選修科目表，故無法確認專業必修、選修、畢業總學分及 EMI 課程的確切要求",
+    "申請雙主修門檻：一年級申請者前一學期學業成績名次須在該班50%且無不及格科目；二年級以上申請者前一學年每學期學業成績名次須在該班50%且無不及格科目。須附歷年成績單正本及讀書計畫等審查資料",
+    "申請輔系門檻：前一學期學業成績名次須在該班50%且無不及格科目。須附歷年成績單正本及讀書計畫等審查資料",
+    "修讀輔系應修總學分為21學分，包含必修9學分（程式設計(一)、程式設計(二)、醫學資訊概論/醫學資訊概論-英 二擇一），以及選修12學分（由本學程明定並主開之「院系必修課程」中排除微積分(一)(二)以外之科目選讀）"
+  ]
+}

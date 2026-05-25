@@ -1,0 +1,20 @@
+{
+  "department_name": "輔仁大學臨床心理學系",
+  "required_credits": 72,
+  "elective_credits": 24,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": 0,
+  "other_requirements": [
+    "選修課程中包含本系專業選修課程至少10學分",
+    "英文及資訊能力畢業條件：英文能力-外國語文8學分（大一英文必修4學分，大二外國語文4學分於「大二主題英文」或「大二非英文」二擇一）；資訊能力-採修課通過制",
+    "擋修規定：「統計學」3學分擋修「心理測驗」；「統計學」6學分擋修「資料分析與SPSS應用」；「生理學」3學分擋修「藥理學」",
+    "專業必修課程及選修課程，若與外系課程名稱相同，以修讀本系課程為原則",
+    "本系課程不得上修",
+    "體育、全民國防教育軍事訓練、通識課程均不列入本系畢業選修學分",
+    "進修部課程不列入本系畢業必選修學分"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "department_name": "輔仁大學數學系資訊數學組",
+  "required_credits": null,
+  "elective_credits": null,
+  "total_graduation_credits": null,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": null,
+  "other_requirements": [
+    "目前提供的筆記本資料中未包含『數學系資訊數學組』學士班 111 學年度完整的修業規則與畢業學分門檻詳細規定。",
+    "專業必選課程包含「微分方程」，依教務會議紀錄，該科目於資數組為必選修，並已由學期課3學分調整為學年課4學分（上2、下2）。",
+    "依據現有資料僅能得知輔系相關規定：申請輔系應修總學分為20學分（必修包含：線性代數6學分、高等微積分8學分、形式語言3學分、演算法3學分）。",
+    "另註：數學系『碩士班』自111學年度起調整為不分組招生（原分為資訊數學組及應用數學組），碩士班總畢業學分數為30學分（含論文6學分、必修4學分、選修20學分）。"
+  ]
+}

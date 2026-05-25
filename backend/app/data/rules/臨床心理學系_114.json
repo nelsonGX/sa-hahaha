@@ -1,0 +1,19 @@
+{
+  "department_name": "臨床心理學系",
+  "required_credits": 72,
+  "elective_credits": 24,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "無",
+  "other_requirements": [
+    "選修課程中必須包含本系專業選修課程至少 10 學分。",
+    "英文及資訊能力畢業條件：英文能力包含大一英文4學分與大二外國語文4學分；資訊能力採修課通過制。",
+    "擋修規定：「統計學」3學分擋修「心理測驗」（二學期中有一學期成績及格者方可修讀）；「統計學」6學分擋修「資料分析與 SPSS應用」；「生理學」3學分擋修「藥理學」。",
+    "專業必修課程及選修課程，若與外系課程名稱相同，以修讀本系課程為原則。",
+    "修課限制：本系課程不得上修。進修部課程不列入本系畢業必選修學分。",
+    "體育、通識課程均不列入本系畢業選修學分。若選讀 1 門 3 學分之系開初階課程，僅能視為修讀 1 門 2 學分之通識課程，不得將另 1 學分列入其畢業學分數。"
+  ]
+}

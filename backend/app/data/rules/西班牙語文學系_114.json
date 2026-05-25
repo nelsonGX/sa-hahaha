@@ -1,0 +1,16 @@
+{
+  "department_name": "輔仁大學西班牙語文學系",
+  "required_credits": 65,
+  "elective_credits": 27,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": 0,
+  "other_requirements": [
+    "資訊學科學習能力檢測",
+    "院訂英語必修課程 4 學分",
+    "畢業前通過等同 CEFR B1 級(含)以上之西語檢定考試（如 DELE B1 或 FLPT 等定標準）"
+  ]
+}

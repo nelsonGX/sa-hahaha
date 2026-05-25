@@ -1,0 +1,16 @@
+{
+  "department_name": "電機工程學系",
+  "required_credits": 56,
+  "elective_credits": 40,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "4學分",
+  "other_requirements": [
+    "須通過資訊學科學習能力檢測（資訊能力畢業門檻）",
+    "學生畢業前必須符合本校英語能力檢定之規定",
+    "專題實驗為必修，並須參加畢業成果展示"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "department_name": "圖書資訊學系",
+  "required_credits": 58,
+  "elective_credits": 38,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": 0,
+  "other_requirements": [
+    "院系必修共 58 學分，包含教育學院必修「教育概論」（2 學分，為全英語課程）及系訂專業必修 56 學分",
+    "選修課程共計 38 學分，至少需於本系修讀 26 學分；外系或跨校選修學分以 12 學分為上限",
+    "須通過資訊學科學習能力檢測",
+    "須通過本系英文畢業門檻（如：達本校免修英文標準、具英文輔系/雙主修/英語菁英學程資格並修讀專業課程達4學分以上、修畢本系「圖書館世界探索─英」全英語課程4學分、修畢大二英語課程4學分以上，或達多益 TOEIC 550 分以上及同等級檢定）",
+    "校訂必修課程須完成導師時間（0 學分，共 8 學期）及全民國防教育軍事訓練（0 學分，共 2 學期）",
+    "擋修規定：「計算機概論」擋修「資料庫系統概論」（大四生不受擋修規定限制）"
+  ]
+}

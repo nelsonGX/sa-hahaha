@@ -1,0 +1,18 @@
+{
+  "department_name": "中國文學系",
+  "required_credits": 64,
+  "elective_credits": 32,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": 0,
+  "other_requirements": [
+    "院系專業必修必選 64 學分：含必修 60 學分，必選義理思想 4 學分（須自本系開設之義理思想類課程中選修至少 4 學分）",
+    "選修課程 32 學分中，20 學分可自由選修外系學分作為畢業學分，其餘學分必須選修本系課程",
+    "須通過英文學科學習能力檢測（如：修讀本校大二英文通過、修讀本校全英文授課課程共 4 學分、具英文系輔系/雙學位/英語菁英學程資格，或達多益 TOEIC 450 分以上等同等級檢定標準）",
+    "須通過資訊學科學習能力檢測",
+    "學生選修校內學分學程、雙主修、輔系，修畢規定學分並取得資格，則該學分不得計入本系畢業學分；但畢業前放棄資格，所修畢之學分得列計為選修學分"
+  ]
+}

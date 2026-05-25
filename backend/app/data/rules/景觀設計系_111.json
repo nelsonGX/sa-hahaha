@@ -1,0 +1,17 @@
+{
+  "department_name": "輔仁大學景觀設計學系",
+  "required_credits": null,
+  "elective_credits": null,
+  "total_graduation_credits": null,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": null,
+  "other_requirements": [
+    "目前提供的筆記本資料中未包含『景觀設計學系』111 學年度完整的必選修畢業學分數與詳細規定。",
+    "英文能力畢業門檻：包含劍橋領思-職場英語檢測 Linguaskill Business B2(含)以上 160-179分等檢定標準。",
+    "核心課程擋修規定：大一修畢「基本設計(上學期)」，且學期成績均及格（60分）者，方得修習大一「基本設計(下學期)」。",
+    "核心課程擋修規定：大一修畢「基本設計(下學期)」，且學期成績均及格（60分）者，方得修習大二「景觀設計(一)」。"
+  ]
+}

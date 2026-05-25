@@ -1,0 +1,18 @@
+{
+  "department_name": "輔仁大學學士後法律學系",
+  "required_credits": 0,
+  "elective_credits": 82,
+  "total_graduation_credits": 82,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "無",
+  "other_requirements": [
+    "不再修讀共同科目及通識課程，課程全為選修",
+    "除必修之導師時間(0學分)外，應修習法律學院開設專業選修課程82學分",
+    "不必撰寫學位論文",
+    "修業年限以三年為原則",
+    "具有嚴格擋修規定（如：須已修習「民法總則」始得修習「民法債編總論(一)」等）"
+  ]
+}

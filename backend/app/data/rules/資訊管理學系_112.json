@@ -1,0 +1,19 @@
+{
+  "department_name": "輔仁大學資訊管理學系",
+  "required_credits": 64,
+  "elective_credits": 32,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 10,
+  "basic_skills_credits": 12,
+  "general_education_credits": 10,
+  "emi_course_minimum": "5門或15學分",
+  "other_requirements": [
+    "選修課程中包含本系專業選修課程至少10學分",
+    "須於畢業前至少參加一次英文檢定考試，且成績應達 CEFR 之 B2 高階級（大三上學期結束前未達標準者，須於大四參加管理學院舉辦之8次英語自學方案測驗或再次檢定達標）",
+    "須通過「程式語言機測」，未通過者若已累計通過3題機測題目，得修畢一門本系選修之程式設計相關課程，始有畢業資格",
+    "擋修規定：「系統分析與設計」擋修「資訊系統專題一」",
+    "擋修規定：「資訊系統專題二」成績不及格，需重修「資訊系統專題一」及「資訊系統專題二」",
+    "須通過資訊學科學習能力檢測"
+  ]
+}
