@@ -1,0 +1,16 @@
+{
+  "department_name": "資訊管理學系",
+  "required_credits": 64,
+  "elective_credits": 32,
+  "total_graduation_credits": 128,
+  "holistic_total_credits": 32,
+  "holistic_core_credits": 8,
+  "basic_skills_credits": 12,
+  "general_education_credits": 12,
+  "emi_course_minimum": 5,
+  "other_requirements": [
+    "需修10學分系上開的專業選修課",
+    "強制擋修：1、「系統分析與設計」擋修「資訊系統專題一」",
+    "強制擋修：2、「資訊系統專題二」成績不及格，需重修「資訊系統專題一」及「資訊系統專題二」"
+  ]
+}

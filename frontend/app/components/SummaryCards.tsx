@@ -73,10 +73,10 @@ export default function SummaryCards({ details, records }: SummaryCardsProps) {
 
     // Electives Breakdown
     const electiveRecords = records.filter(r => getEffectiveCategory(r) === '選修' && isPassed(r.score));
-    const extEarned = electiveRecords
-      .filter(r => r.category.includes('外系') || r.audit_category.includes('外系'))
+    const majEarned = electiveRecords
+      .filter(r => r.audit_category.includes('系選修'))
       .reduce((sum, r) => sum + r.credits, 0);
-    const majEarned = electiveRecords.reduce((sum, r) => sum + r.credits, 0) - extEarned;
+    const extEarned = electiveRecords.reduce((sum, r) => sum + r.credits, 0) - majEarned;
 
     return { 
       chineseEarned: cEarned, 

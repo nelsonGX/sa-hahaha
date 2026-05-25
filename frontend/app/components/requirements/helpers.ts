@@ -34,7 +34,10 @@ export function getEffectiveCategory(r: CourseRecord): string {
     // Normalize "通識-自然 (NT歷史與文化)" → "通識-自然" so it matches DOMAIN_AUDIT_PREFIX keys
     const tMatch = r.audit_category.match(/^(通識-[^\s(]+)/);
     if (tMatch) return tMatch[1];
-    return r.audit_category;
+    
+    const baseCategory = r.audit_category.split(' (')[0].trim();
+    if (baseCategory.includes('選修')) return '選修';
+    return baseCategory;
   }
   const n = r.course_name;
   const c = r.category;
