@@ -400,21 +400,21 @@ class AuditService:
         details = None
         if rules:
             details = DetailedRequirements(
-                required_courses=CreditCategory(earned=req_earned, target=rules.get("required_credits", 64)),
-                elective_courses=CreditCategory(earned=ele_earned, target=rules.get("elective_credits", 32)),
+                required_courses=CreditCategory(earned=req_earned, target=rules.get("required_credits") or 64),
+                elective_courses=CreditCategory(earned=ele_earned, target=rules.get("elective_credits") or 32),
                 holistic_education=CreditCategory(
                     earned=actual_holistic_valid, 
-                    target=rules.get("holistic_total_credits", 32)
+                    target=rules.get("holistic_total_credits") or 32
                 ),
-                holistic_core=CreditCategory(earned=holistic_core_earned, target=rules.get("holistic_core_credits", 8)),
-                basic_skills=CreditCategory(earned=basic_skills_earned, target=rules.get("basic_skills_credits", 12)),
+                holistic_core=CreditCategory(earned=holistic_core_earned, target=rules.get("holistic_core_credits") or 8),
+                basic_skills=CreditCategory(earned=basic_skills_earned, target=rules.get("basic_skills_credits") or 12),
                 general_ed=GeneralEducationCredit(
                     earned=ge_earned, 
-                    target=rules.get("general_education_credits", 12), 
+                    target=rules.get("general_education_credits") or 10, 
                     domains=ge_domains
                 ),
-                pe_semesters=CreditCategory(earned=pe_count, target=rules.get("pe_semesters", 4)),
-                emi_courses=CreditCategory(earned=emi_passed_count, target=rules.get("emi_course_minimum", 0)) if "emi_course_minimum" in rules else None,
+                pe_semesters=CreditCategory(earned=pe_count, target=rules.get("pe_semesters") or 4),
+                emi_courses=CreditCategory(earned=emi_passed_count, target=rules.get("emi_course_minimum") or 0) if "emi_course_minimum" in rules else None,
                 distance_learning_credits=distance_learning_credits
             )
 

@@ -222,8 +222,8 @@ export default function Dashboard() {
 
       {showOnboarding && credit_summary.details && (
         <ProficiencyOnboarding 
-          initialComputer={credit_summary.details.computer_proficiency!}
-          initialEnglish={credit_summary.details.english_proficiency!}
+          initialComputer={credit_summary.details.computer_proficiency || { passed_count: 0, target_count: 5, has_programming_elective: false }}
+          initialEnglish={credit_summary.details.english_proficiency || { status: '未通過', method: '', self_study_count: 0 }}
           onComplete={handleOnboardingComplete}
         />
       )}
