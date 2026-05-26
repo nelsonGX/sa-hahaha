@@ -2,7 +2,8 @@
 
 ## 📌 目前進度摘要 (Latest Update)
 
-後端「資管系畢業初審大腦」已完成核心架構實作與進階規則升級。具備極速雙系統爬取（SIS 歷年 + ESTU 當期）、智慧通識代碼判定、進階防呆機制（重複修習剔除、遠距上限、軍訓排除），並支援 NotebookLM 自動化批次生成全校系所畢業門檻規則。
+後端「資管系畢業初審大腦」已完成核心非同步架構升級 (httpx)，並實作了進階防呆機制（重複修習剔除、遠距上限、軍訓排除）與「資管系外系選修」動態拆分顯示。
+最新加入了「智慧選課推薦」系統，能透過比對全校課程 JSON，自動剔除學生已及格或衝堂的課程，並完美串接至前端 Next.js 儀表板，提供一鍵跨網域零死角的推薦體驗。
 
 ---
 
@@ -39,6 +40,17 @@
   - 內建 Rate Limit 防封鎖機制 (每個系停 15 秒，跨學年停 30 秒)。
   - 支援參數化斷點續傳 (指定起始 Index)。
 
+### 5. 智慧選課推薦 (Intelligent Course Recommendation)
+- [x] **POST API 實作**: 支援接收學生已及格與修課中名單，精準過濾推薦內容。
+- [x] **智慧剔除機制**: 透過課名正規化自動排除已修過（即便課名含英文）的課程。
+- [x] **衝堂過濾機制**: 自動反查學生當期課表，排除與現有課表重疊時段的課程。
+- [x] **推薦排序優化**: 優先顯示剩餘名額最多的課程，並過濾併班重複代碼。
+
+### 6. 前端與進階視覺化 (Frontend & UI)
+- [x] **資管系選修拆分**: 針對 IM 學生將 32 學分自動拆分為「系所選修 (10)」與「外系/自由選修 (22)」，提供雙進度條顯示。
+- [x] **推薦視窗串接**: 點擊任何缺失學分格子可立即獲得推薦課程，並支援一鍵加入「選課購物車」。
+- [x] **跨網域連線優化**: 修復 Next.js Proxy 設定，支援透過區網 IP (如手機) 遠端連線開發伺服器。
+
 ---
 
 ## 🛠️ 開發與維護操作指南
@@ -67,18 +79,23 @@ uv run fastapi dev
 
 ---
 
-## 🏗️ 後端架構檢討與未來優化 (Architecture Review)
+## 🏗️ 後端架構演進 (Architecture Evolution)
 
-目前的架構已經非常完整且具備高度精確性，但針對未來的大規模高併發上線，建議進行以下架構優化：
+目前的架構已完成核心現代化：
 
-1. **非同步 I/O (Async/Await)**
-   - **現狀**: 爬蟲服務使用同步的 `requests` 模組，這會在等待輔大伺服器回應時阻塞整個 FastAPI 的 Event Loop。
-   - **建議**: 將 `requests` 替換為 `httpx` 或 `aiohttp`，並將 `ScraperService` 改寫為 async 方法。這樣能讓後端同時處理數百個學生的登入請求而不卡頓。
+1. **非同步 I/O (Async/Await) [DONE]**
+   - **實作**: 已將 `requests` 全面替換為 `httpx`，並將所有爬蟲服務與 API 路由改寫為 `async/await`。
+   - **效益**: 大幅提升併發處理能力，即使學校伺服器回應緩慢也不會阻塞事件循環。
 
-2. **快取與資料庫層 (Caching Layer)**
-   - **現狀**: 每次呼叫 API 都會即時登入輔大系統爬取資料。
-   - **建議**: 引入 Redis 或 SQLite。當學生第二次開啟 APP 時，若距離上次更新不到 24 小時，直接從快取回傳 `StudentData` JSON，實現「零延遲」載入，同時大幅降低對輔大伺服器的請求壓力。
+2. **邏輯整合與工具化 (Logic Consolidation) [DONE]**
+   - **實作**: 建立 `app/utils/course_utils.py` 統一管理課名正規化與成績狀態判定；`app/constants.py` 管理系所對照表。
+   - **效益**: 減少重複代碼，確保審查邏輯在爬蟲端與審查端完全一致。
 
-3. **服務層解耦 (Service Separation)**
-   - **現狀**: `FjuScraperService` 負責了爬蟲登入、資料清理、以及呼叫 `AuditService`。
-   - **建議**: 建立獨立的 `DataTransformerService` 來專門處理課程名稱正規化與 `gInfo`/`couClassify` 的字串解析，讓爬蟲服務嚴格遵守單一職責原則 (Single Responsibility Principle)，只專心做 HTTP Request 與 Response 處理。
+3. **結構化異常處理 (Structured Exceptions) [DONE]**
+   - **實作**: 導入 `FjuAppError` 體系，區分驗證失敗、伺服器錯誤與資料處理錯誤。
+   - **效益**: 前端可根據錯誤代碼 (AUTH_FAILED, SCHOOL_SERVER_ERROR) 提供更精確的用戶回饋。
+
+4. **未來優化方向 (Future Roadmap)**
+   - **快取層 (Caching Layer)**: 引入 Redis 或 SQLite 快取，針對短時間內重複登入的學生實現零延遲載入。
+   - **服務解耦**: 進一步分離 `DataTransformerService`，讓 Scraper 只專注於原始資料抓取。
+

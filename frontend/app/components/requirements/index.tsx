@@ -138,18 +138,31 @@ export default function RequirementsTree({ details, records, departmentName }: R
         {/* ── 5. 選修 ── */}
         <BigSection
           title="選修"
-          subtitle="系所選修"
+          subtitle={details.dept_electives ? "系所選修與外系選修" : "系所選修"}
           earned={details.elective_courses.earned}
           target={details.elective_courses.target}
           accent="#2a9d99"
         >
           <div className="flex flex-col gap-2 pt-1">
-            {electiveSlots.map(s => <CourseChip key={s.id} slot={s} onClick={setModalSlot} />)}
+            {details.dept_electives && details.non_dept_electives ? (
+              <>
+                <SubAccordion title="系所選修" earned={details.dept_electives.earned} target={details.dept_electives.target} defaultOpen>
+                  {buildSlots(electiveRecords.filter(r => r.audit_category === '系選修'), details.dept_electives.target, 'ele-dept', '系選修')
+                    .map(s => <CourseChip key={s.id} slot={s} onClick={setModalSlot} />)}
+                </SubAccordion>
+                <SubAccordion title="外系/自由選修" earned={details.non_dept_electives.earned} target={details.non_dept_electives.target} defaultOpen>
+                  {buildSlots(electiveRecords.filter(r => r.audit_category === '選修'), details.non_dept_electives.target, 'ele-non-dept', '選修')
+                    .map(s => <CourseChip key={s.id} slot={s} onClick={setModalSlot} />)}
+                </SubAccordion>
+              </>
+            ) : (
+              electiveSlots.map(s => <CourseChip key={s.id} slot={s} onClick={setModalSlot} />)
+            )}
           </div>
         </BigSection>
       </div>
 
-      <CourseModal slot={modalSlot} onClose={() => setModalSlot(null)} departmentName={departmentName} />
+      <CourseModal slot={modalSlot} onClose={() => setModalSlot(null)} departmentName={departmentName} records={records} />
     </>
   );
 }

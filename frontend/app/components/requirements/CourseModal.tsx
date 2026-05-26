@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import type { CourseSlot } from './types';
+import type { CourseRecord } from '../../types';
 import { fetchRecommendations, type RecommendedCourse } from './fakeRecommendationsApi';
 import { useCourseCart } from './CourseCartContext';
 
@@ -57,9 +58,10 @@ function SkeletonCard() {
   );
 }
 
-export default function CourseModal({ slot, onClose, departmentName }: { slot: CourseSlot | null; onClose: () => void; departmentName?: string }) {
+export default function CourseModal({ slot, onClose, departmentName, records = [] }: { slot: CourseSlot | null; onClose: () => void; departmentName?: string; records?: CourseRecord[] }) {
   const [courses, setCourses] = useState<RecommendedCourse[]>([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [search, setSearch] = useState('');
   const [filterCredits, setFilterCredits] = useState<number | null>(null);
 
@@ -70,12 +72,27 @@ export default function CourseModal({ slot, onClose, departmentName }: { slot: C
     if (!slot || !showRecommendations) return;
     setLoading(true);
     setCourses([]);
+    setError(null);
     setSearch('');
     setFilterCredits(null);
-    fetchRecommendations(slot.category ?? '', slot.credits, departmentName)
+
+    const passed_courses = records.filter(r => r.status === 'passed').map(r => r.course_name);
+    const enrolled_courses = records.filter(r => r.status === 'enrolled').map(r => ({
+      name: r.course_name,
+      offering_dept: r.offering_dept || ''
+    }));
+
+    fetchRecommendations({
+      category: slot.category ?? '',
+      needed_credits: slot.credits,
+      department: departmentName || '',
+      passed_courses,
+      enrolled_courses
+    })
       .then(setCourses)
+      .catch((err) => setError("無法連接到伺服器。請確認後端 API 已啟動 (Port 8667)。"))
       .finally(() => setLoading(false));
-  }, [slot?.id]);
+  }, [slot?.id, records, departmentName]);
 
   const filtered = useMemo(() => {
     let list = courses;
@@ -187,7 +204,11 @@ export default function CourseModal({ slot, onClose, departmentName }: { slot: C
 
             {/* Course list */}
             <div className="flex flex-col gap-2 max-h-72 overflow-y-auto -mx-1 px-1">
-              {loading ? (
+              {error ? (
+                <div className="text-center py-8 text-sm text-[#dd5b00]">
+                  {error}
+                </div>
+              ) : loading ? (
                 <>
                   <SkeletonCard />
                   <SkeletonCard />

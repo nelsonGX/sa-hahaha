@@ -49,6 +49,8 @@ class EMIProficiency(BaseModel):
 class DetailedRequirements(BaseModel):
     required_courses: CreditCategory      # 必修 (64)
     elective_courses: CreditCategory      # 選修 (32)
+    dept_electives: Optional[CreditCategory] = None     # 系選修
+    non_dept_electives: Optional[CreditCategory] = None # 外系/一般選修
     holistic_education: CreditCategory    # 全人教育總計 (32)
     holistic_core: CreditCategory         # 1. 核心課程 (8學分，含大學入門/人哲/專倫)
     basic_skills: CreditCategory          # 2. 基本能力課程 (12學分，含國文/外語)

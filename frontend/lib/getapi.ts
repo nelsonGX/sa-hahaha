@@ -1,6 +1,6 @@
 import type { StudentData } from '../app/types';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
+const API_BASE_URL = '/api';
 
 export function getHealth() {
   // Assuming /health is at the root, not under /api. Adjusting URL logic.

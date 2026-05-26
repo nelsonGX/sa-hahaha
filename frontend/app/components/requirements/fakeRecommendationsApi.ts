@@ -1,4 +1,4 @@
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
+const API_BASE_URL = '/api';
 
 export interface RecommendedCourse {
   code: string;
@@ -10,18 +10,21 @@ export interface RecommendedCourse {
   remaining: number;
 }
 
-export async function fetchRecommendations(
-  category: string,
-  neededCredits: number,
-  department?: string,
-): Promise<RecommendedCourse[]> {
-  const params = new URLSearchParams({
-    category,
-    needed_credits: String(neededCredits),
-  });
-  if (department) params.set('department', department);
+export interface RecommendRequest {
+  category: string;
+  needed_credits: number;
+  department: string;
+  passed_courses: string[];
+  enrolled_courses: { name: string; offering_dept: string }[];
+}
 
-  const res = await fetch(`${API_BASE_URL}/recommend-courses?${params}`);
+export async function fetchRecommendations(req: RecommendRequest): Promise<RecommendedCourse[]> {
+  const res = await fetch(`${API_BASE_URL}/recommend-courses`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(req),
+  });
+  
   if (!res.ok) throw new Error('無法載入選課建議');
   const json = await res.json();
   return json.courses as RecommendedCourse[];
