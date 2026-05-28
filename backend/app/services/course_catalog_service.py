@@ -1,6 +1,8 @@
 import json
 import re
 from pathlib import Path
+from typing import List, Set
+from app.utils.course_utils import normalize_course_name
 
 COURSES_PATH = Path(__file__).parent.parent.parent / "fju_day_courses.json"
 
@@ -30,11 +32,49 @@ def _format_time(course: dict) -> str:
     for i in ("1", "2", "3"):
         weekday = course.get(f"weekday_{i}", "").strip()
         period = course.get(f"period_{i}", "").strip()
+        room = course.get(f"room_{i}", "").strip()
         if weekday and period:
             day_ch = weekday[0] if weekday else ""
             day = _WEEKDAY_MAP.get(day_ch, weekday)
-            parts.append(f"{day} {period}")
+            room_str = f" ({room})" if room else ""
+            parts.append(f"{day} {period}{room_str}")
     return " / ".join(parts) if parts else "時間未定"
+
+def get_course_time_string(norm_name: str, department: str = "") -> str:
+    """Find a matching course in the catalog and return its formatted time string."""
+    courses = _load_catalog()
+    for c in courses:
+        raw_c_name = c.get("course_name", "").split(" ")[0]
+        c_name = normalize_course_name(raw_c_name)
+        if c_name == norm_name:
+            c_dept = c.get("offering_unit", "")
+            # Basic department match if provided
+            if not department or department in c_dept or c_dept in department:
+                return _format_time(c)
+    return ""
+
+PERIODS_ORDER = ["D1", "D2", "D3", "D4", "DN", "D5", "D6", "D7", "D8", "E0", "E1", "E2", "E3", "E4"]
+
+def _parse_time_slots(course: dict) -> Set[str]:
+    slots = set()
+    for i in ("1", "2", "3"):
+        weekday = course.get(f"weekday_{i}", "").strip()
+        period = course.get(f"period_{i}", "").strip()
+        if weekday and period and period != "-":
+            day_ch = weekday[0] if weekday else ""
+            if "-" in period:
+                start, end = period.split("-", 1)
+                try:
+                    start_idx = PERIODS_ORDER.index(start)
+                    end_idx = PERIODS_ORDER.index(end)
+                    if start_idx <= end_idx:
+                        for p in PERIODS_ORDER[start_idx:end_idx+1]:
+                            slots.add(f"{day_ch}-{p}")
+                except ValueError:
+                    slots.add(f"{day_ch}-{period}")
+            else:
+                slots.add(f"{day_ch}-{period}")
+    return slots
 
 def _to_recommended(course: dict) -> dict:
     seats = _parse_capacity(course.get("capacity_and_attributes", ""))
@@ -57,8 +97,42 @@ _DOMAIN_MAP: dict[str, str] = {
 
 _CORE_KEYWORDS = ["大學入門", "人生哲學", "專業倫理", "企業倫理", "生命教育"]
 
-def get_recommendations(category: str, needed_credits: float, department: str = "") -> list[dict]:
+def get_recommendations(category: str, needed_credits: float, department: str = "", passed_courses: List[str] = None, enrolled_courses: list = None) -> list[dict]:
     courses = _load_catalog()
+    
+    passed_courses = passed_courses or []
+    enrolled_courses = enrolled_courses or []
+    
+    # 正規化使用者已經修過或正在修的課名
+    normalized_passed = {normalize_course_name(c) for c in passed_courses}
+    
+    # enrolled_courses 可能是 Pydantic models 或 dict
+    enrolled_info = []
+    normalized_enrolled_names = set()
+    for ec in enrolled_courses:
+        name = getattr(ec, "name", ec.get("name", "")) if isinstance(ec, dict) else ec.name
+        dept = getattr(ec, "offering_dept", ec.get("offering_dept", "")) if isinstance(ec, dict) else ec.offering_dept
+        norm_name = normalize_course_name(name)
+        if norm_name:
+            normalized_enrolled_names.add(norm_name)
+            enrolled_info.append((norm_name, dept))
+            
+    all_taken = normalized_passed | normalized_enrolled_names
+
+    # 計算正在修的課的時間，用來判斷衝堂
+    busy_periods: Set[str] = set()
+    if enrolled_info:
+        for c in courses:
+            raw_c_name = c.get("course_name", "").split(" ")[0]
+            c_name = normalize_course_name(raw_c_name)
+            c_dept = c.get("offering_unit", "")
+            
+            # 若課名相同，進一步比對開課單位，若有提供且不吻合則跳過，避免誤判多個班級的時間
+            for e_name, e_dept in enrolled_info:
+                if c_name == e_name:
+                    if e_dept and e_dept not in c_dept and c_dept not in e_dept:
+                        continue # 開課單位明確不符合，跳過這個時段
+                    busy_periods.update(_parse_time_slots(c))
 
     if category in _DOMAIN_MAP:
         domain_key = _DOMAIN_MAP[category]
@@ -97,4 +171,33 @@ def get_recommendations(category: str, needed_credits: float, department: str = 
     else:
         filtered = []
 
-    return [_to_recommended(c) for c in filtered]
+    results = []
+    for c in filtered:
+        raw_c_name = c.get("course_name", "").split(" ")[0]
+        c_name = normalize_course_name(raw_c_name)
+        
+        # 1. 剔除已經修過或正在修的課
+        if c_name in all_taken:
+            continue
+            
+        # 2. 剔除衝堂的課
+        course_slots = _parse_time_slots(c)
+        if busy_periods and not course_slots.isdisjoint(busy_periods):
+            continue
+            
+        rec = _to_recommended(c)
+        # 3. 剔除沒有名額的課 (選用，目前還是列出但排在後面)
+        results.append(rec)
+
+    # 排序：優先推薦名額多的
+    results.sort(key=lambda x: x["remaining"], reverse=True)
+
+    # 去除重複 (課程代碼相同者)
+    seen_codes = set()
+    unique_results = []
+    for r in results:
+        if r["code"] not in seen_codes:
+            unique_results.append(r)
+            seen_codes.add(r["code"])
+
+    return unique_results

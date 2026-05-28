@@ -1,6 +1,9 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from app.services.scraper_service import FjuScraperService
+from app.utils.exceptions import FjuAppError
+from datetime import datetime
+import traceback
 
 router = APIRouter()
 scraper_service = FjuScraperService()
@@ -10,13 +13,12 @@ class LoginRequest(BaseModel):
     password: str
     use_mock: bool = True
 
-from datetime import datetime
-
 @router.post("/sync-grades")
 async def sync_grades(request: LoginRequest):
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     try:
-        student_data = scraper_service.scrape_student_data(
+        # 現在是 async 了，需要 await
+        student_data = await scraper_service.scrape_student_data(
             student_id=request.student_id, 
             password=request.password, 
             use_mock=request.use_mock
@@ -27,22 +29,21 @@ async def sync_grades(request: LoginRequest):
             "timestamp": timestamp,
             "data": student_data.model_dump()
         }
-    except ValueError as ve:
-        # 帳號密碼錯誤或系統鎖定等預期內的錯誤
-        print(f"[{timestamp}] ⚠️ 登入失敗: {str(ve)}")
+    except FjuAppError as fe:
+        # 捕捉結構化異常
+        print(f"[{timestamp}] ⚠️ 業務異常 ({fe.code}): {fe.message}")
+        status_code = 401 if fe.code == "AUTH_FAILED" else 500
         raise HTTPException(
-            status_code=401, 
-            detail={"message": str(ve), "timestamp": timestamp, "code": "AUTH_FAILED"}
+            status_code=status_code, 
+            detail={"message": fe.message, "timestamp": timestamp, "code": fe.code}
         )
     except Exception as e:
-        # 網路連線或程式邏輯等非預期錯誤
-        import traceback
+        # 非預期系統錯誤
         error_msg = str(e)
-        print(f"[{timestamp}] 🔥 系統錯誤: {error_msg}")
-        print(traceback.format_exc()) # 內部記錄詳細錯誤軌跡
+        print(f"[{timestamp}] 🔥 系統崩潰: {error_msg}")
+        print(traceback.format_exc())
         
         raise HTTPException(
             status_code=500, 
-            # 遮蔽真實錯誤訊息，保護系統路徑與敏感資訊不外洩
-            detail={"message": "系統忙碌中，無法與學校伺服器建立連線，請稍後再試", "timestamp": timestamp, "code": "SYSTEM_ERROR"}
+            detail={"message": "系統忙碌中，請稍後再試", "timestamp": timestamp, "code": "SYSTEM_ERROR"}
         )

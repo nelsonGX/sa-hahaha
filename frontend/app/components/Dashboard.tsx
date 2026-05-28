@@ -10,11 +10,24 @@ import SummaryCards from './SummaryCards';
 import CourseTable from './CourseTable';
 import { CourseCartProvider } from './requirements/CourseCartContext';
 import CourseCartPanel from './CourseCartPanel';
+import Timetable from './Timetable';
 import SpecialRequirementsPanel from './SpecialRequirementsPanel';
 import ProficiencyOnboarding from './ProficiencyOnboarding';
 
 export default function Dashboard() {
-  const [data, setData] = useState<StudentData | null>(null);
+  const [data, setData] = useState<StudentData | null>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = sessionStorage.getItem('student_session_data');
+      if (saved) {
+        try {
+          return JSON.parse(saved);
+        } catch (e) {
+          console.error("Failed to parse session data", e);
+        }
+      }
+    }
+    return null;
+  });
   const [showOnboarding, setShowOnboarding] = useState(false);
 
   // 當資料載入時，檢查是否有本地儲存的門檻資訊並合併
@@ -40,6 +53,7 @@ export default function Dashboard() {
       });
     }
     setData(freshData);
+    sessionStorage.setItem('student_session_data', JSON.stringify(freshData));
 
     // 如果沒合併過（且後端說是第一次），才顯示導引
     if (freshData.is_first_time && !localStorage.getItem(`onboarded_${freshData.student_id}`)) {
@@ -77,9 +91,9 @@ export default function Dashboard() {
         const isCompDone = cp.passed_count >= 5 || (cp.passed_count >= 3 && cp.has_programming_elective);
         if (!isCompDone) {
           if (cp.passed_count >= 3) {
-            list.push(`📢 您的資訊素養機測已通過 ${cp.passed_count} 題，請記得修習程式選修以符合替代方案。`);
+            list.push(`📢 您的資訊素養機測已通過 3 題，請記得修習一門本系程式設計選修以符合替代方案。`);
           } else {
-            list.push(`📢 您的資訊素養機測尚未達標 (僅通過 ${cp.passed_count} 題)，目標為 5 題。`);
+            list.push(`📢 您的資訊素養機測尚未達標 (需一次通過 3 題，或累計 3 題＋修習程式選修)。`);
           }
         }
       }
@@ -129,6 +143,7 @@ export default function Dashboard() {
         }
       };
       setData(updatedData);
+      sessionStorage.setItem('student_session_data', JSON.stringify(updatedData));
       localStorage.setItem(`onboarded_${student_id}`, 'true');
       // 同時存儲具體數值以便下次自動填寫（可選）
       localStorage.setItem(`prof_data_${student_id}`, JSON.stringify({ english, computer }));
@@ -141,7 +156,10 @@ export default function Dashboard() {
       <Navbar
         studentId={student_id}
         departmentName={department_name}
-        onReset={() => setData(null)}
+        onReset={() => {
+          sessionStorage.removeItem('student_session_data');
+          setData(null);
+        }}
       />
 
       <main className="bg-[#f6f5f4] min-h-screen">
@@ -211,6 +229,14 @@ export default function Dashboard() {
                   enrollmentYear={enrollment_year}
                   departmentName={department_name}
                 />
+              </div>
+
+              <div className="space-y-4">
+                <h2 className="text-2xl font-bold tracking-tight text-black/95 flex items-center gap-2">
+                  <span className="w-1.5 h-6 bg-[#213183] rounded-full" />
+                  我的課表
+                </h2>
+                <Timetable records={course_records} />
               </div>
 
               <CourseTable records={course_records} enrollmentYear={enrollment_year} />

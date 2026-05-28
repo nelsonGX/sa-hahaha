@@ -8,6 +8,8 @@ from app.schemas.credit_schema import (
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from app.db.models import Department, GraduationRule, GEExclusion
+from app.utils.course_utils import normalize_course_name, get_course_status
+import re
 
 DB_PATH = "sqlite:///app/data/sa_hahaha.db"
 
@@ -76,13 +78,6 @@ class AuditService:
         warnings = []
         rules = self._load_rules(department_name, enrollment_year)
         
-        def get_status(score: str):
-            normalized_score = score.strip()
-            if not normalized_score or normalized_score == "未評定成績": return "enrolled"
-            if normalized_score.isdigit(): return "passed" if int(normalized_score) >= 60 else "failed"
-            if normalized_score in ["抵免", "及格", "通過"]: return "passed"
-            return "failed"
-
         # 計數器
         earned_total = 0
         req_earned = 0
@@ -106,12 +101,6 @@ class AuditService:
         PE_KEYWORDS = rules.get("pe_keywords") or ["體育"]
         DEPT_CODE = rules.get("dept_code") or "40" # 資管系代碼預設 40
         
-        # 輔助函數：正規化課名 (與 ScraperService 邏輯一致)
-        import re
-        def _normalize_name(name: str) -> str:
-            n = name.replace("英-專業", "").replace("英-專", "").replace(" ", "").strip()
-            return re.sub(r"(-英-網|-網-英|-英|-網|\(EMI\)|EMI)$", "", n).strip()
-
         ge_domains_config = rules.get("general_education_domains", {
             "人文藝術領域": 4, "自然科技領域": 4, "社會科學領域": 4
         }) if rules else {
@@ -135,8 +124,8 @@ class AuditService:
 
         # 預先掃描建立集合
         for r in records:
-            norm_name = _normalize_name(r.course_name)
-            st = get_status(r.score)
+            norm_name = normalize_course_name(r.course_name)
+            st = get_course_status(r.score)
             if st == "passed":
                 passed_normalized_names.add(norm_name)
                 # 記錄學期/學年狀態
@@ -147,9 +136,9 @@ class AuditService:
             elif st == "enrolled":
                 enrolled_normalized_names.add(norm_name)
 
-        passed_courses = {r.course_name for r in records if get_status(r.score) == "passed"}
-        enrolled_courses = {r.course_name for r in records if get_status(r.score) == "enrolled"}
-        failed_courses = {r.course_name for r in records if get_status(r.score) == "failed" and r.score != "停修"}
+        passed_courses = {r.course_name for r in records if get_course_status(r.score) == "passed"}
+        enrolled_courses = {r.course_name for r in records if get_course_status(r.score) == "enrolled"}
+        failed_courses = {r.course_name for r in records if get_course_status(r.score) == "failed" and r.score != "停修"}
 
         # 讀取通識排除名單
         ge_exclusions = self._load_ge_exclusions(department_name)
@@ -180,13 +169,13 @@ class AuditService:
         counted_courses = set()
 
         for r in records:
-            r.status = get_status(r.score)
+            r.status = get_course_status(r.score)
             
             if r.status == "failed":
                 r.audit_category = "不及格/停修"
                 continue
                 
-            norm_name = _normalize_name(r.course_name)
+            norm_name = normalize_course_name(r.course_name)
             is_passed_course = (r.status == "passed")
             is_enrolled_course = (r.status == "enrolled")
 
@@ -399,9 +388,20 @@ class AuditService:
 
         details = None
         if rules:
+            # 處理資管系選修拆分邏輯
+            dept_electives = None
+            non_dept_electives = None
+            if "資訊管理" in department_name:
+                non_dept_ele_earned = ele_earned - dept_ele_earned
+                total_ele_target = rules.get("elective_credits") or 32
+                dept_electives = CreditCategory(earned=dept_ele_earned, target=10)
+                non_dept_electives = CreditCategory(earned=non_dept_ele_earned, target=total_ele_target - 10)
+
             details = DetailedRequirements(
                 required_courses=CreditCategory(earned=req_earned, target=rules.get("required_credits") or 64),
                 elective_courses=CreditCategory(earned=ele_earned, target=rules.get("elective_credits") or 32),
+                dept_electives=dept_electives,
+                non_dept_electives=non_dept_electives,
                 holistic_education=CreditCategory(
                     earned=actual_holistic_valid, 
                     target=rules.get("holistic_total_credits") or 32

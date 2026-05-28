@@ -104,7 +104,7 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
               disabled={loading}
               className="flex items-center justify-center gap-2 px-4 py-2 rounded text-[15px] font-semibold text-white bg-(--notion-blue) border border-transparent transition-colors cursor-pointer hover:bg-(--notion-blue-active) active:scale-[.97] disabled:bg-[#a39e98] disabled:cursor-not-allowed"
             >
-              {loading ? '同步中...' : '開始同步'}
+              {loading ? '登入中...' : '登入'}
             </button>
           </form>
         </div>

@@ -5,6 +5,11 @@ export interface CourseRecord {
   score: string;
   category: string;
   audit_category: string;
+  status: string;
+  offering_dept: string;
+  time?: string;
+  is_distance_learning: boolean;
+  term_type: string;
 }
 
 export interface CreditCategory {
@@ -41,6 +46,8 @@ export interface EMIProficiency {
 export interface DetailedRequirements {
   required_courses: CreditCategory;
   elective_courses: CreditCategory;
+  dept_electives?: CreditCategory;
+  non_dept_electives?: CreditCategory;
   holistic_education: CreditCategory;
   holistic_core: CreditCategory;
   basic_skills: CreditCategory;

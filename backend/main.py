@@ -10,10 +10,10 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# 設定 CORS 允許前端 (localhost:3000) 存取 API
+# 設定 CORS 允許前端存取 API
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"], # 開發階段限制只能由本地前端發出請求
+    allow_origins=["*"], # 開發階段允許所有來源
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -35,5 +35,5 @@ async def index():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("main:app", host="0.0.0.0", port=8667, reload=True)
 
