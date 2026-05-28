@@ -7,6 +7,7 @@ export interface CourseRecord {
   audit_category: string;
   status: string;
   offering_dept: string;
+  time?: string;
   is_distance_learning: boolean;
   term_type: string;
 }

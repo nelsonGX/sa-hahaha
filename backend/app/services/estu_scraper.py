@@ -100,11 +100,33 @@ class EstuScraper:
                         cols = row.find_all("td", recursive=False)
                         if len(cols) >= 10:
                             course_data = {}
+                            time_parts = []
+                            current_day = ""
+                            current_period = ""
+                            
                             for i, col in enumerate(cols):
                                 if i < len(headers):
                                     val = col.text.strip()
                                     val = " ".join(val.split())
-                                    course_data[headers[i]] = val
+                                    header = headers[i]
+                                    
+                                    if header == "星期":
+                                        current_day = val
+                                    elif header == "節次":
+                                        current_period = val
+                                    elif header == "教室":
+                                        current_room = val
+                                        if current_day and current_period:
+                                            day_str = f"週{current_day}" if current_day in "一二三四五六日" else current_day
+                                            room_str = f" ({current_room})" if current_room else ""
+                                            time_parts.append(f"{day_str} {current_period}{room_str}")
+                                        current_day = ""
+                                        current_period = ""
+                                    elif header not in course_data:
+                                        course_data[header] = val
+                            
+                            if time_parts:
+                                course_data['time'] = " / ".join(time_parts)
                             
                             if course_data.get('科目名稱'):
                                 if "\n" in course_data['科目名稱']:

@@ -13,13 +13,15 @@ export default function ProficiencyOnboarding({ onComplete, initialComputer, ini
   const [step, setStep] = useState(1);
   const [english, setEnglish] = useState<EnglishProficiency>(initialEnglish);
   const [computerCount, setComputerCount] = useState(initialComputer.passed_count);
+  const [hasProgrammingElective, setHasProgrammingElective] = useState(initialComputer.has_programming_elective);
 
   const handleFinish = () => {
     onComplete({
       english,
       computer: {
         ...initialComputer,
-        passed_count: computerCount
+        passed_count: computerCount,
+        has_programming_elective: hasProgrammingElective
       }
     });
   };
@@ -100,25 +102,41 @@ export default function ProficiencyOnboarding({ onComplete, initialComputer, ini
             <div className="space-y-6">
               <div className="space-y-3">
                 <label className="text-sm font-semibold text-[#2d2a26]">
-                  資訊素養機測題數
+                  資訊素養機測狀態
                 </label>
-                <p className="text-xs text-[#8c8782]">
-                  畢業前須通過 5 題機測題目；或通過 3 題且加修本系程式選修。
+                <p className="text-xs text-[#8c8782] mb-3">
+                  依據資管系修業規則：須通過程式語言機測（一次通過 3 題），或累計通過 3 題且加修一門本系程式選修。
                 </p>
-                <div className="grid grid-cols-6 gap-2">
-                  {[0, 1, 2, 3, 4, 5].map((num) => (
-                    <button
-                      key={num}
-                      onClick={() => setComputerCount(num)}
-                      className={`aspect-square rounded-lg flex items-center justify-center font-bold transition-all ${
-                        computerCount === num 
-                        ? 'bg-[#213183] text-white' 
-                        : 'bg-[#f6f5f4] text-[#8c8782] hover:bg-[#e7e1d9]'
-                      }`}
-                    >
-                      {num}
-                    </button>
-                  ))}
+                <div className="grid grid-cols-1 gap-2">
+                  {[
+                    { label: '✅ 已通過機測 (一次通過 3 題)', passed: 5, hasElec: false }, // 5 represents fully done here
+                    { label: '✅ 已累計 3 題，且「已修畢」程式選修', passed: 3, hasElec: true },
+                    { label: '⚠️ 已累計 3 題，但「尚未」修程式選修', passed: 3, hasElec: false },
+                    { label: '❌ 尚未達標 (未滿 3 題)', passed: 0, hasElec: false }
+                  ].map((opt, idx) => {
+                    const isSelected = computerCount === opt.passed && hasProgrammingElective === opt.hasElec;
+                    return (
+                      <button
+                        key={idx}
+                        onClick={() => {
+                          setComputerCount(opt.passed);
+                          setHasProgrammingElective(opt.hasElec);
+                        }}
+                        className={`text-left px-4 py-3 rounded-xl border-2 transition-all ${
+                          isSelected 
+                          ? 'border-[#213183] bg-[#213183]/5 text-[#213183]' 
+                          : 'border-[#f6f5f4] hover:border-[#e7e1d9] text-[#615d59]'
+                        }`}
+                      >
+                        <div className="flex justify-between items-center">
+                          <span className="font-bold text-sm">{opt.label}</span>
+                          {isSelected && (
+                            <div className="w-2 h-2 rounded-full bg-[#213183]" />
+                          )}
+                        </div>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
 

@@ -8,6 +8,7 @@ from app.schemas.credit_schema import (
 )
 from app.services.estu_scraper import EstuScraper
 from app.services.audit_service import AuditService
+from app.services.course_catalog_service import get_course_time_string
 from app.constants import DEPARTMENT_MAP
 from app.utils.course_utils import normalize_course_name
 from app.utils.exceptions import FjuAuthError, SchoolServerError, DataProcessingError
@@ -158,24 +159,32 @@ class FjuScraperService:
                         
                         if "英-專業" in mark:
                             category += " [英-專業]"
-                            
+
+                        # 直接使用 ESTU 爬蟲精確解析出的時間
+                        course_time = course.get("time", "")
+
                         if norm_name in existing_enrolled:
                             r = existing_enrolled[norm_name]
                             if offering_dept: r.offering_dept = offering_dept
+                            if course_time: r.time = course_time
                             r.category = self._more_specific_category(r.category, category)
                         else:
                             try:
                                 c_val = int(float(course.get("學分", 0)))
                             except:
                                 c_val = 0
-                                
+
+                            # 直接使用 ESTU 爬蟲精確解析出的時間
+                            course_time = course.get("time", "")
+
                             records.append(CourseRecord(
                                 semester=f"{course.get('學年度', '114')}-{course.get('學期', '2')}",
                                 course_name=course_name,
                                 credits=c_val,
                                 score="", 
                                 category=category,
-                                offering_dept=offering_dept
+                                offering_dept=offering_dept,
+                                time=course_time
                             ))
                 except Exception as estu_e:
                     print(f"⚠️ 選課系統當期資料同步失敗: {estu_e}")

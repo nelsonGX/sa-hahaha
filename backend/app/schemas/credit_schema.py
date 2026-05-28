@@ -11,6 +11,7 @@ class CourseRecord(BaseModel):
     audit_category: str = "未分類"  # 系統審查後的精確分類
     status: str = "passed"          # 狀態: passed (通過), failed (不及格/停修), enrolled (正在修課)
     offering_dept: str = ""         # 開課單位 (主要由 ESTU 選課系統提供)
+    time: str = ""                  # 上課時間 (如: 週一 D3-D4 (LI105))
     is_distance_learning: bool = False # 是否為遠距教學 (-網)
     term_type: str = ""             # 學期課/學年課標記 (e.g., "1(學年)")
 

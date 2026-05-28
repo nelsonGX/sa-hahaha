@@ -32,11 +32,26 @@ def _format_time(course: dict) -> str:
     for i in ("1", "2", "3"):
         weekday = course.get(f"weekday_{i}", "").strip()
         period = course.get(f"period_{i}", "").strip()
+        room = course.get(f"room_{i}", "").strip()
         if weekday and period:
             day_ch = weekday[0] if weekday else ""
             day = _WEEKDAY_MAP.get(day_ch, weekday)
-            parts.append(f"{day} {period}")
+            room_str = f" ({room})" if room else ""
+            parts.append(f"{day} {period}{room_str}")
     return " / ".join(parts) if parts else "時間未定"
+
+def get_course_time_string(norm_name: str, department: str = "") -> str:
+    """Find a matching course in the catalog and return its formatted time string."""
+    courses = _load_catalog()
+    for c in courses:
+        raw_c_name = c.get("course_name", "").split(" ")[0]
+        c_name = normalize_course_name(raw_c_name)
+        if c_name == norm_name:
+            c_dept = c.get("offering_unit", "")
+            # Basic department match if provided
+            if not department or department in c_dept or c_dept in department:
+                return _format_time(c)
+    return ""
 
 PERIODS_ORDER = ["D1", "D2", "D3", "D4", "DN", "D5", "D6", "D7", "D8", "E0", "E1", "E2", "E3", "E4"]
 

@@ -36,14 +36,21 @@ function metaLabel(slot: CourseSlot): string {
 }
 
 export default function CourseChip({ slot, onClick }: { slot: CourseSlot; onClick: (s: CourseSlot) => void }) {
+  const isRecommendable = slot.status === 'unknown' || slot.status === 'failed';
+
   return (
     <button
       onClick={() => onClick(slot)}
-      className={`rounded-lg px-3 py-2 text-sm cursor-pointer border flex items-center gap-2.5 w-full text-left transition-colors ${STYLES[slot.status]}`}
+      className={`rounded-lg px-3 py-2 text-sm cursor-pointer border flex items-center gap-2.5 w-full text-left transition-all ${STYLES[slot.status]} ${isRecommendable ? 'hover:-translate-y-0.5 hover:shadow-sm' : ''}`}
     >
       <StatusDot status={slot.status} />
-      <span className="flex-1 font-medium truncate">
-        {slot.status === 'unknown' && slot.name === '???' ? '待修課程' : slot.name}
+      <span className="flex-1 font-medium truncate flex items-center gap-2">
+        {slot.status === 'unknown' && slot.name === '???' ? '推薦課程' : slot.name}
+        {isRecommendable && (
+          <span className="inline-flex items-center gap-1 text-[10px] font-bold tracking-wider uppercase px-1.5 py-0.5 rounded bg-black/5 text-black/40">
+            ✨ 推薦課程
+          </span>
+        )}
       </span>
       <span className="text-xs opacity-50 shrink-0 tabular-nums">{metaLabel(slot)}</span>
     </button>
