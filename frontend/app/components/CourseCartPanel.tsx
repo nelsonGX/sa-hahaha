@@ -4,29 +4,19 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useCourseCart } from './requirements/CourseCartContext';
 
-export default function CourseCartPanel() {
+interface CourseCartPanelProps {
+  open: boolean;
+  setOpen: (open: boolean) => void;
+}
+
+export default function CourseCartPanel({ open, setOpen }: CourseCartPanelProps) {
   const { items, remove } = useCourseCart();
-  const [open, setOpen] = useState(false);
   const router = useRouter();
 
   const totalCredits = items.reduce((s, i) => s + i.credits, 0);
 
   return (
     <>
-      {/* Floating button */}
-      <button
-        onClick={() => setOpen(true)}
-        className="fixed bottom-6 right-6 z-40 flex items-center gap-2.5 bg-black text-white rounded-2xl px-5 py-3 shadow-[0_4px_20px_rgba(0,0,0,0.25)] hover:bg-black/85 transition-all active:scale-95"
-      >
-        <span className="text-base">📋</span>
-        <span className="font-semibold text-sm">選課清單</span>
-        {items.length > 0 && (
-          <span className="bg-white text-black text-xs font-bold rounded-full min-w-[20px] h-5 flex items-center justify-center px-1.5 -mr-1">
-            {items.length}
-          </span>
-        )}
-      </button>
-
       {/* Slide-over panel */}
       {open && (
         <div className="fixed inset-0 z-50 flex justify-end" onClick={() => setOpen(false)}>

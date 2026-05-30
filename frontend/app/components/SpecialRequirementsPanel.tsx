@@ -8,6 +8,7 @@ interface SpecialRequirementsPanelProps {
   computer?: ComputerProficiency;
   emi?: EMIProficiency;
   onEdit: () => void;
+  departmentName?: string;
 }
 
 function RequirementCard({ 
@@ -67,20 +68,29 @@ function RequirementCard({
   );
 }
 
-export default function SpecialRequirementsPanel({ english, computer, emi, onEdit }: SpecialRequirementsPanelProps) {
-  if (!english && !computer && !emi) return null;
+export default function SpecialRequirementsPanel({ english, computer, emi, onEdit, departmentName }: SpecialRequirementsPanelProps) {
+  const isIM = departmentName?.includes('資訊管理');
+  
+  // 如果 emi 物件完全沒資料，嘗試從後端可能有的 emi_courses 欄位或即時計算 (這裡以傳入的 emi 為主)
+  // 確保 progress 有值，即使 emi 為 undefined 也要顯示 0/15
+  const emiCredits = emi?.earned_credits ?? 0;
+  const emiTarget = emi?.target_credits ?? 15;
+  
+  if (!english && !computer && !emi && !isIM) return null;
 
-  const computerStatus = (computer: ComputerProficiency) => {
+  const computerStatus = (computer?: ComputerProficiency) => {
+    if (!computer) return '未達標';
     if (computer.passed_count >= computer.target_count) return '已完成';
     if (computer.passed_count >= 3 && computer.has_programming_elective) return '已完成 (替代方案)';
     if (computer.passed_count >= 3) return `待修程式選修 (${computer.passed_count}/3)`;
     return '未達標';
   };
 
-  const isComputerDone = (computer: ComputerProficiency) => 
-    computer.passed_count >= computer.target_count || (computer.passed_count >= 3 && computer.has_programming_elective);
+  const isComputerDone = (computer?: ComputerProficiency) => 
+    !!computer && (computer.passed_count >= computer.target_count || (computer.passed_count >= 3 && computer.has_programming_elective));
 
-  const emiStatus = (emi: EMIProficiency) => {
+  const emiStatus = (emi?: EMIProficiency) => {
+    if (!emi) return '未達標';
     if (emi.course_count >= emi.target_courses || emi.earned_credits >= emi.target_credits) return '已完成';
     return '未達標';
   };
@@ -95,38 +105,34 @@ export default function SpecialRequirementsPanel({ english, computer, emi, onEdi
         修改資訊
       </button>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-      {english && (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <RequirementCard
           title="英文畢業門檻 (CEFR B2)"
-          status={english.status}
+          status={english?.status || '未通過'}
           description="須達多益 785 / 托福 72 / 雅思 6.0 或參加管院自學方案。"
-          progress={english.status.includes('自學') ? english.self_study_count : (english.status === '已通過' ? 1 : 0)}
-          target={english.status.includes('自學') ? 8 : 1}
+          progress={english?.status.includes('自學') ? english.self_study_count : (english?.status === '已通過' ? 1 : 0)}
+          target={english?.status.includes('自學') ? 8 : 1}
         />
-      )}
-      
-      {computer && (
+        
         <RequirementCard
           title="資訊素養機測"
           status={computerStatus(computer)}
           isSpecialDone={isComputerDone(computer)}
-          progress={computer.passed_count}
-          target={computer.target_count}
-          description="畢業前須通過 5 題機測題目。"
+          progress={computer?.passed_count || 0}
+          target={computer?.target_count || 5}
+          description="畢業前須通過 5 題機測題目 (或 3 題＋程式選修)。"
         />
-      )}
 
-      {emi && (
-        <RequirementCard
-          title="EMI 專業課程 (Beta)"
-          status={emiStatus(emi)}
-          progress={emi.course_count}
-          target={emi.target_courses}
-          progressLabel="修畢門數"
-          description="需修畢 5 門（或 15 學分）本院開設之英語授課專業課程。此功能目前透過關鍵字自動判定，僅供參考。"
-        />
-      )}
+        {(emi || isIM) && (
+          <RequirementCard
+            title="EMI 專業課程"
+            status={emiStatus(emi)}
+            progress={emiCredits}
+            target={emiTarget}
+            progressLabel="累計學分"
+            description="資管系需修畢 15 學分（或 5 門）英語授課專業課程。系統依名稱自動判定僅供參考。"
+          />
+        )}
       </div>
     </div>
   );

@@ -3,7 +3,8 @@ import os
 from pathlib import Path
 from app.schemas.credit_schema import (
     CourseRecord, CreditSummary, 
-    CreditCategory, GeneralEducationCredit, DetailedRequirements
+    CreditCategory, GeneralEducationCredit, DetailedRequirements,
+    EnglishProficiency, ComputerProficiency, EMIProficiency
 )
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -88,6 +89,7 @@ class AuditService:
         basic_skills_earned = 0
         pe_count = 0
         emi_passed_count = 0
+        emi_earned_credits = 0
         distance_learning_credits = 0 # 遠距教學學分
 
         # 用於檢查重複修習與學年課
@@ -326,12 +328,25 @@ class AuditService:
             else:
                 r.audit_category = "其他"
 
-            # 檢查 EMI (英-專業)
-            if "英-專業" in r.category or "英-專業" in (r.offering_dept or "") or "英-專業" in r.course_name or "[英-專業]" in r.category:
+            # 檢查 EMI (英-專業 / EMI / 全英)
+            is_emi = False
+            emi_patterns = ["英-專業", "EMI", "(英)", "(全英)", "全英語授課", "英-專", "[英]"]
+            r_cat = r.category.upper() if r.category else ""
+            r_dept = r.offering_dept.upper() if r.offering_dept else ""
+            r_name = r.course_name.upper() if r.course_name else ""
+            
+            if any(p.upper() in r_cat for p in emi_patterns) or \
+               any(p.upper() in r_dept for p in emi_patterns) or \
+               any(p.upper() in r_name for p in emi_patterns):
+                is_emi = True
+
+            if is_emi:
                 if "(EMI)" not in r.audit_category:
                     r.audit_category += " (EMI)"
-                if is_passed_course:
+                # 對於畢業門檻進度，計入已通過與正在修讀的課程
+                if is_passed_course or is_enrolled_course:
                     emi_passed_count += 1
+                    emi_earned_credits += r.credits
             
             # 檢查程式設計標記 (程)
             if "程" in r.category or "[程]" in r.category:
@@ -414,6 +429,12 @@ class AuditService:
                     domains=ge_domains
                 ),
                 pe_semesters=CreditCategory(earned=pe_count, target=rules.get("pe_semesters") or 4),
+                emi_proficiency=EMIProficiency(
+                    earned_credits=emi_earned_credits,
+                    course_count=emi_passed_count,
+                    target_credits=15,
+                    target_courses=5
+                ) if "資訊管理" in department_name else None,
                 emi_courses=CreditCategory(earned=emi_passed_count, target=rules.get("emi_course_minimum") or 0) if "emi_course_minimum" in rules else None,
                 distance_learning_credits=distance_learning_credits
             )

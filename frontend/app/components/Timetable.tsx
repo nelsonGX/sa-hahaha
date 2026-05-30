@@ -1,6 +1,8 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useMemo, useRef, useState, useEffect } from 'react';
+import { toJpeg } from 'html-to-image';
+import { jsPDF } from 'jspdf';
 import type { CourseRecord } from '../types';
 import { useCourseCart } from './requirements/CourseCartContext';
 
@@ -96,8 +98,38 @@ function getFullRoomName(roomCode: string) {
   return name ? `${name} (${roomCode})` : roomCode;
 }
 
+function downloadDataUrl(dataUrl: string, filename: string) {
+  const link = document.createElement('a');
+  link.download = filename;
+  link.href = dataUrl;
+  link.click();
+}
+
+function loadImage(dataUrl: string) {
+  return new Promise<HTMLImageElement>((resolve, reject) => {
+    const image = new Image();
+    image.onload = () => resolve(image);
+    image.onerror = reject;
+    image.src = dataUrl;
+  });
+}
+
 export default function Timetable({ records }: { records: CourseRecord[] }) {
   const { items: cartItems } = useCourseCart();
+  const exportRef = useRef<HTMLDivElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const [isExportMenuOpen, setIsExportMenuOpen] = useState(false);
+  const [exporting, setExporting] = useState(false);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setIsExportMenuOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const allBlocks = useMemo(() => {
     const blocks: ParsedSlot[] = [];
@@ -133,11 +165,55 @@ export default function Timetable({ records }: { records: CourseRecord[] }) {
     return blocks;
   }, [records, cartItems]);
 
+  const createTimetableImage = async () => {
+    if (!exportRef.current) {
+      throw new Error('Timetable export target is missing.');
+    }
+
+    await document.fonts.ready;
+
+    return toJpeg(exportRef.current, {
+      quality: 0.95,
+      pixelRatio: 2,
+      backgroundColor: '#ffffff',
+      filter: (node) => !(node instanceof HTMLElement && node.dataset.exportIgnore === 'true'),
+    });
+  };
+
+  const handleExport = async (format: ExportFormat) => {
+    try {
+      setIsExportMenuOpen(false);
+      setExporting(true);
+      const dataUrl = await createTimetableImage();
+
+      if (format === 'jpg') {
+        downloadDataUrl(dataUrl, 'timetable.jpg');
+        return;
+      }
+
+      const image = await loadImage(dataUrl);
+      const orientation = image.width >= image.height ? 'landscape' : 'portrait';
+      const pdf = new jsPDF({
+        orientation,
+        unit: 'px',
+        format: [image.width, image.height],
+      });
+
+      pdf.addImage(dataUrl, 'JPEG', 0, 0, image.width, image.height);
+      pdf.save('timetable.pdf');
+    } catch (error) {
+      console.error(`Failed to export timetable as ${format.toUpperCase()}`, error);
+      alert(`課表匯出 ${format.toUpperCase()} 失敗，請稍後再試。`);
+    } finally {
+      setExporting(false);
+    }
+  };
+
   return (
     <div className="bg-white rounded-2xl shadow-[var(--shadow-card)] border border-black/10 overflow-hidden flex flex-col">
-      <div className="px-6 py-4 border-b border-black/5 bg-[#fcfcfc] flex items-center justify-between">
+      <div className="px-6 py-4 border-b border-black/5 bg-[#fcfcfc] flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <h3 className="font-bold text-lg text-black/90">我的課表</h3>
-        <div className="flex gap-4 text-xs font-semibold">
+        <div className="flex flex-wrap items-center gap-4 text-xs font-semibold">
           <div className="flex items-center gap-1.5 text-[#0055b3]">
             <div className="w-3 h-3 rounded bg-[#00f]/15 border border-[#0075de]/30" />
             已選課程
@@ -146,11 +222,39 @@ export default function Timetable({ records }: { records: CourseRecord[] }) {
             <div className="w-3 h-3 rounded border-2 border-dashed border-[#dd5b00]/40 bg-[#fff4ee]" />
             預排推薦
           </div>
+          <div data-export-ignore="true" className="relative" ref={menuRef}>
+            <button
+              type="button"
+              onClick={() => setIsExportMenuOpen(!isExportMenuOpen)}
+              disabled={exporting}
+              className="rounded-lg border border-black/10 bg-white px-3 py-1.5 text-[#213183] transition-colors hover:bg-[#f0f5ff] disabled:cursor-not-allowed disabled:opacity-50 flex items-center gap-1"
+            >
+              {exporting ? '匯出中...' : '匯出'}
+              <span className="text-[10px] ml-1">▼</span>
+            </button>
+            
+            {isExportMenuOpen && (
+              <div className="absolute right-0 mt-2 w-32 rounded-xl bg-white shadow-xl ring-1 ring-black/5 z-50 overflow-hidden py-1 border border-black/5">
+                <button
+                  onClick={() => handleExport('jpg')}
+                  className="w-full text-left px-4 py-2 text-sm text-[#615d59] hover:bg-[#f6f5f4] transition-colors"
+                >
+                  匯出為 JPG
+                </button>
+                <button
+                  onClick={() => handleExport('pdf')}
+                  className="w-full text-left px-4 py-2 text-sm text-[#615d59] hover:bg-[#f6f5f4] transition-colors"
+                >
+                  匯出為 PDF
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
       
       <div className="overflow-x-auto">
-        <div className="min-w-[800px] relative">
+        <div ref={exportRef} className="min-w-[800px] relative bg-white">
           
           {/* Main Grid: 1 header row + 15 period rows. 7 columns (Time + 6 Days) */}
           {/* grid-rows-[40px_repeat(15,minmax(60px,auto))] allows height to stretch if content is too much */}

@@ -1,10 +1,13 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { getProgressValue } from '../../utils/progress';
 import ProgressBar from './ProgressBar';
 
+const CREDIT_SECTION_EVENT = 'graduation-credit-section-request';
+
 interface BigSectionProps {
+  id?: string;
   title: string;
   subtitle: string;
   earned: number;
@@ -15,6 +18,7 @@ interface BigSectionProps {
 }
 
 export default function BigSection({
+  id,
   title,
   subtitle,
   earned,
@@ -24,10 +28,63 @@ export default function BigSection({
   defaultOpen = false,
 }: BigSectionProps) {
   const [open, setOpen] = useState(defaultOpen);
+  const [highlighted, setHighlighted] = useState(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
   const { pct, done } = getProgressValue(earned, target);
 
+  useEffect(() => {
+    if (!id) return;
+
+    let highlightTimer: number | undefined;
+    let scrollTimer: number | undefined;
+
+    const reveal = (behavior: ScrollBehavior) => {
+      setOpen(true);
+      setHighlighted(true);
+      window.clearTimeout(highlightTimer);
+      window.clearTimeout(scrollTimer);
+      scrollTimer = window.setTimeout(() => {
+        sectionRef.current?.scrollIntoView({ behavior, block: 'start' });
+      }, 0);
+      highlightTimer = window.setTimeout(() => setHighlighted(false), 1800);
+    };
+
+    const handleRequest = (event: Event) => {
+      const requestedId = (event as CustomEvent<{ id?: string }>).detail?.id;
+      if (requestedId === id) {
+        reveal('smooth');
+      }
+    };
+
+    const handleHashChange = () => {
+      if (window.location.hash === `#${id}`) {
+        reveal('smooth');
+      }
+    };
+
+    window.addEventListener(CREDIT_SECTION_EVENT, handleRequest);
+    window.addEventListener('hashchange', handleHashChange);
+
+    if (window.location.hash === `#${id}`) {
+      reveal('auto');
+    }
+
+    return () => {
+      window.removeEventListener(CREDIT_SECTION_EVENT, handleRequest);
+      window.removeEventListener('hashchange', handleHashChange);
+      window.clearTimeout(highlightTimer);
+      window.clearTimeout(scrollTimer);
+    };
+  }, [id]);
+
   return (
-    <div className="rounded-2xl bg-white border border-black/10 shadow-[var(--shadow-card)] overflow-hidden">
+    <div
+      ref={sectionRef}
+      id={id}
+      className={`rounded-2xl bg-white border border-black/10 shadow-[var(--shadow-card)] overflow-hidden scroll-mt-24 transition-all duration-300 ${
+        highlighted ? 'border-[#213183] ring-2 ring-[#213183] ring-offset-2 shadow-lg' : ''
+      }`}
+    >
       <button
         className="w-full flex items-center gap-4 px-6 py-5 text-left hover:bg-[#fafafa] transition-colors"
         onClick={() => setOpen(v => !v)}

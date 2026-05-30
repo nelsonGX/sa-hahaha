@@ -58,6 +58,7 @@ export default function RequirementsTree({ details, records, departmentName }: R
         <BigSection
           title="核心"
           subtitle="全人/核心課程"
+          id="graduation-credit-core"
           earned={details.holistic_core.earned}
           target={details.holistic_core.target}
           accent="#615d59"
@@ -73,6 +74,7 @@ export default function RequirementsTree({ details, records, departmentName }: R
         <BigSection
           title="能力"
           subtitle="全人/基本能力課程"
+          id="graduation-credit-basic"
           earned={details.basic_skills.earned}
           target={details.basic_skills.target}
           accent="#4a5568"
@@ -91,6 +93,7 @@ export default function RequirementsTree({ details, records, departmentName }: R
         <BigSection
           title="通識"
           subtitle="通識涵養課程"
+          id="graduation-credit-general"
           earned={details.general_ed.earned}
           target={details.general_ed.target}
           accent="#9b6fb3"
@@ -126,6 +129,7 @@ export default function RequirementsTree({ details, records, departmentName }: R
         <BigSection
           title="必修"
           subtitle="系所必修"
+          id="graduation-credit-required"
           earned={details.required_courses.earned}
           target={details.required_courses.target}
           accent="#0075de"
@@ -139,6 +143,7 @@ export default function RequirementsTree({ details, records, departmentName }: R
         <BigSection
           title="選修"
           subtitle={details.dept_electives ? "系所選修與外系選修" : "系所選修"}
+          id="graduation-credit-elective"
           earned={details.elective_courses.earned}
           target={details.elective_courses.target}
           accent="#2a9d99"

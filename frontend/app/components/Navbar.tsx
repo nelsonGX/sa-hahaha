@@ -1,10 +1,15 @@
+import { useCourseCart } from './requirements/CourseCartContext';
+
 interface NavbarProps {
   studentId: string;
   departmentName: string;
   onReset: () => void;
+  onOpenCart?: () => void;
 }
 
-export default function Navbar({ studentId, departmentName, onReset }: NavbarProps) {
+export default function Navbar({ studentId, departmentName, onReset, onOpenCart }: NavbarProps) {
+  const { items } = useCourseCart();
+
   return (
     <nav className="sticky top-0 z-40 bg-white border-b border-black/10">
       <div className="max-w-6xl mx-auto px-6">
@@ -24,6 +29,20 @@ export default function Navbar({ studentId, departmentName, onReset }: NavbarPro
               <p className="font-mono text-xs text-[#615d59]">{studentId}</p>
               <p className="text-xs text-[#615d59]">{departmentName}</p>
             </div>
+
+            <button
+              onClick={onOpenCart}
+              className="relative p-2 rounded-full hover:bg-black/4 transition-colors text-[#615d59] hover:text-black/95"
+              aria-label="開啟選課清單"
+            >
+              <span className="text-lg">📋</span>
+              {items.length > 0 && (
+                <span className="absolute top-0 right-0 bg-black text-white text-[10px] font-bold rounded-full min-w-[16px] h-4 flex items-center justify-center px-1 border border-white">
+                  {items.length}
+                </span>
+              )}
+            </button>
+
             <button
               onClick={onReset}
               className="px-3 py-1 border border-black/10 rounded text-[13px] font-medium text-[#615d59] bg-transparent cursor-pointer transition-colors hover:text-black/95 hover:bg-black/4"
