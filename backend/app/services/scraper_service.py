@@ -2,7 +2,8 @@ import requests
 import re
 from app.schemas.credit_schema import (
     StudentData, CourseRecord, CreditSummary, 
-    CreditCategory, GeneralEducationCredit, DetailedRequirements
+    CreditCategory, GeneralEducationCredit, DetailedRequirements,
+    EnglishProficiency, ComputerProficiency, EMIProficiency
 )
 from app.services.estu_scraper import EstuScraper
 
@@ -181,15 +182,25 @@ class FjuScraperService:
                             course_name=course_name,
                             credits=credits_val,
                             score="", # 空字串代表正在修 (enrolled)
-                            category=category
+                            category=category,
+                            offering_dept=course.get("開課單位名稱", "")
                         ))
             except Exception as estu_e:
                 print(f"⚠️ 選課系統爬取失敗，但不影響主成績單: {estu_e}")
             
             records = self._deduplicate_enrolled_records(records)
 
-            estimated_enrollment_year = 100 + int(student_id[1:3]) if len(student_id) >= 3 and student_id.startswith('4') else 0
-            department_name = self.DEPARTMENT_MAP.get(student_id[3:5], "未知系所") if len(student_id) >= 5 else "未知系所"
+            # 修正入學年計算：支援日間部(4)與進修部(5)
+            # 輔大學號格式：[部別][學年度][系所代碼][序號]
+            # 例如 413... (日間部113入學), 512... (進修部112入學)
+            prefix = student_id[0]
+            if len(student_id) >= 3 and prefix in ['4', '5']:
+                estimated_enrollment_year = 100 + int(student_id[1:3])
+            else:
+                estimated_enrollment_year = 0
+            
+            department_code = student_id[3:5] if len(student_id) >= 5 else ""
+            department_name = self.DEPARTMENT_MAP.get(department_code, "未知系所")
 
             summary, warnings = self._calculate_credit_summary(records, department_name, estimated_enrollment_year)
 
@@ -199,7 +210,8 @@ class FjuScraperService:
                 enrollment_year=estimated_enrollment_year,
                 course_records=records,
                 credit_summary=summary,
-                warnings=warnings
+                warnings=warnings,
+                is_first_time=True # 始終為 True，讓前端判斷是否需要提示 (可根據持久化資料調整)
             )
 
         except Exception as e:
@@ -236,7 +248,12 @@ class FjuScraperService:
         # 關鍵字清單
         HOLISTIC_CORE_KEYWORDS = ["大學入門", "人生哲學", "專業倫理", "企業倫理"]
         BASIC_SKILLS_KEYWORDS = ["國文", "外語", "外國語文", "英語", "英文", "法文", "德文", "日文", "西班牙文", "韓文"]
-        PE_KEYWORDS = ["體育", "羽球", "桌球", "游泳", "網球", "排球", "籃球"]
+        PE_KEYWORDS = [
+            "體育", "羽球", "桌球", "游泳", "網球", "排球", "籃球", 
+            "瑜珈", "高爾夫", "重量訓練", "慢跑", "太極拳", "防身術", 
+            "柔道", "流行舞蹈", "國標舞", "保齡球", "壘球", "足球",
+            "肌力", "體能", "皮拉提斯", "飛輪", "潛水", "TRX", "體適能", "有氧"
+        ]
 
         passed_courses = {r.course_name for r in records if get_status(r.score) == "passed"}
         enrolled_courses = {r.course_name for r in records if get_status(r.score) == "enrolled"}
@@ -310,8 +327,13 @@ class FjuScraperService:
             else:
                 r.audit_category = "其他"
 
-            if "(EMI)" in r.category:
+            if "(EMI)" in r.category or "-英文" in r.course_name or "-英" in r.course_name or "英-專" in r.course_name:
                 r.audit_category += " (EMI)"
+
+        # EMI 統計
+        emi_passed_records = [r for r in records if "(EMI)" in r.audit_category and get_status(r.score) == "passed"]
+        emi_credits = sum(r.credits for r in emi_passed_records)
+        emi_count = len(emi_passed_records)
 
         # 擋修預警
         if "系統分析與設計" not in passed_courses and "系統分析與設計" not in enrolled_courses: 
@@ -325,6 +347,45 @@ class FjuScraperService:
         # 封裝結果
         details = None
         if department_name == "資訊管理學系":
+            # 檢查是否修過程式相關選修 (用於機測門檻)
+            PROGRAMMING_KEYWORDS = ["程式", "Python", "Java", "C++", "網頁設計", "資料結構", "演算法"]
+            has_prog_elective = any(
+                any(k in r.course_name for k in PROGRAMMING_KEYWORDS) 
+                for r in records if "選修" in r.category and get_status(r.score) == "passed"
+            )
+
+            # 初始化特殊門檻
+            eng_prof = EnglishProficiency(
+                status="未通過",
+                method="待檢定",
+                self_study_count=0
+            )
+            comp_prof = ComputerProficiency(
+                passed_count=0,
+                target_count=5,
+                has_programming_elective=has_prog_elective
+            )
+            emi_prof = EMIProficiency(
+                earned_credits=emi_credits,
+                course_count=emi_count
+            )
+
+            # 新增：非學分門檻預警
+            if eng_prof.status == "未通過":
+                warnings.append("📢 您尚未通過英文畢業門檻 (CEFR B2)，請記得參加檢定或自學方案。")
+            
+            is_comp_done = comp_prof.passed_count >= comp_prof.target_count or (comp_prof.passed_count >= 3 and comp_prof.has_programming_elective)
+            if not is_comp_done:
+                if comp_prof.passed_count >= 3:
+                    warnings.append(f"📢 您的資訊素養機測已通過 {comp_prof.passed_count} 題，請記得修習程式選修以符合替代方案。")
+                else:
+                    warnings.append(f"📢 您的資訊素養機測尚未達標 (僅通過 {comp_prof.passed_count} 題)，目標為 5 題。")
+
+            # EMI 預警
+            is_emi_done = emi_credits >= 15 or emi_count >= 5
+            if not is_emi_done:
+                warnings.append(f"📢 您的 EMI 課程尚未達標 (目前 {emi_count} 門 / {emi_credits} 學分)，目標為 5 門或 15 學分。")
+
             details = DetailedRequirements(
                 required_courses=CreditCategory(earned=req_earned, target=64),
                 elective_courses=CreditCategory(earned=ele_earned, target=32),
@@ -332,7 +393,10 @@ class FjuScraperService:
                 holistic_core=CreditCategory(earned=holistic_core_earned, target=8),
                 basic_skills=CreditCategory(earned=basic_skills_earned, target=12),
                 general_ed=GeneralEducationCredit(earned=ge_earned, target=12, domains=ge_domains),
-                pe_semesters=CreditCategory(earned=pe_count, target=4)
+                pe_semesters=CreditCategory(earned=pe_count, target=4),
+                english_proficiency=eng_prof,
+                computer_proficiency=comp_prof,
+                emi_proficiency=emi_prof
             )
 
         summary = CreditSummary(

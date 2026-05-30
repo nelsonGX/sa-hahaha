@@ -23,6 +23,26 @@ class GeneralEducationCredit(BaseModel):
     target: int
     domains: Dict[str, CreditCategory]
 
+# 英文檢定狀態
+class EnglishProficiency(BaseModel):
+    status: str = "未通過"      # 未通過, 已通過 (B2), 自學方案中, 自學方案完成
+    method: str = ""           # 檢定名稱 (TOEIC, TOEFL等) 或 "自學方案"
+    test_score: Optional[str] = None
+    self_study_count: int = 0  # 已參加自學測驗次數 (目標 8)
+
+# 機測題目狀態
+class ComputerProficiency(BaseModel):
+    passed_count: int = 0      # 已通過題數
+    target_count: int = 5      # 目標題數
+    has_programming_elective: bool = False # 是否修畢一門程式設計相關選修 (用於3題門檻)
+
+# EMI 課程狀態
+class EMIProficiency(BaseModel):
+    earned_credits: int = 0    # 已取得 EMI 學分 (目標 15)
+    course_count: int = 0      # 已修畢 EMI 門數 (目標 5)
+    target_credits: int = 15
+    target_courses: int = 5
+
 # 簡化後的畢業門檻結構 (v2)
 class DetailedRequirements(BaseModel):
     required_courses: CreditCategory      # 必修 (64)
@@ -32,6 +52,9 @@ class DetailedRequirements(BaseModel):
     basic_skills: CreditCategory          # 2. 基本能力課程 (12學分，含國文/外語)
     general_ed: GeneralEducationCredit    # 3. 通識 (12學分，含人文/自然/社會)
     pe_semesters: CreditCategory          # 體育及格學期數 (4學期)
+    english_proficiency: Optional[EnglishProficiency] = None  # 英文畢業門檻
+    computer_proficiency: Optional[ComputerProficiency] = None # 機測門檻
+    emi_proficiency: Optional[EMIProficiency] = None           # EMI 門檻
 
 # 整體學分統計
 class CreditSummary(BaseModel):
@@ -46,3 +69,4 @@ class StudentData(BaseModel):
     course_records: List[CourseRecord]
     credit_summary: CreditSummary
     warnings: List[str] = []
+    is_first_time: bool = True  # 是否為第一次使用/需要引導
