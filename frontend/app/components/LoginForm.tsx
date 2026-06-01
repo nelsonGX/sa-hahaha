@@ -38,7 +38,7 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
             岩壁計算機
           </h1>
           <p className="mt-2 text-sm text-[#615d59]">
-            同步 SIS 成績，掌握畢業進度
+            要延畢了嗎?懶得找一堆網站重複對比成績了嗎?快來用這個超好用的酷東西!!!
           </p>
         </div>
 
@@ -70,27 +70,13 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="SIS 密碼"
+                placeholder="LDAP密碼"
                 required
                 className="w-full px-2 py-1.5 border border-[#dddddd] rounded text-base text-black/90 bg-white outline-none focus:border-[#097fe8] focus:shadow-[0_0_0_2px_rgba(9,127,232,0.15)]"
               />
             </div>
 
-            <label className="flex items-center gap-3 cursor-pointer select-none">
-              <div className="relative shrink-0">
-                <input
-                  type="checkbox"
-                  checked={useMock}
-                  onChange={(e) => setUseMock(e.target.checked)}
-                  className="sr-only peer"
-                />
-                <div className="w-9 h-5 rounded-full border border-black/15 bg-black/8 transition-colors peer-checked:bg-(--notion-blue) peer-checked:border-transparent" />
-                <div className="absolute top-0.5 left-0.5 w-4 h-4 bg-white rounded-full shadow-sm transition-transform peer-checked:translate-x-4" />
-              </div>
-              <span className="text-sm text-[#615d59]">
-                使用測試假資料 (Mock)
-              </span>
-            </label>
+            
 
             {error && (
               <div className="flex items-start gap-2 px-3 py-2.5 rounded bg-[rgba(221,91,0,0.06)] border border-[rgba(221,91,0,0.2)]">
