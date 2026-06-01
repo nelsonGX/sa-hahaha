@@ -180,6 +180,8 @@ export default function Timetable({ records }: { records: CourseRecord[] }) {
     });
   };
 
+  type ExportFormat = 'jpg' | 'pdf';
+
   const handleExport = async (format: ExportFormat) => {
     try {
       setIsExportMenuOpen(false);
