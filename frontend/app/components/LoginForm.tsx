@@ -11,7 +11,7 @@ interface LoginFormProps {
 export default function LoginForm({ onSuccess }: LoginFormProps) {
   const [studentId, setStudentId] = useState('');
   const [password, setPassword] = useState('');
-  const [useMock, setUseMock] = useState(true);
+  const [useMock, setUseMock] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -76,7 +76,6 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
               />
             </div>
 
-            
 
             {error && (
               <div className="flex items-start gap-2 px-3 py-2.5 rounded bg-[rgba(221,91,0,0.06)] border border-[rgba(221,91,0,0.2)]">
