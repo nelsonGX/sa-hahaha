@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/api/:path*",
-        destination: `http://sa-hahaha-ing.zeabur.internal:8000/api/:path*`,
+        destination: `http://sa-hahaha-ing.zeabur.internal:8080/api/:path*`,
       },
     ];
   },
