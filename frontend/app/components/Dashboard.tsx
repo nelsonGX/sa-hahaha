@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import type { ComputerProficiency, EnglishProficiency, StudentData } from '../types';
 import LoginForm from './LoginForm';
 import Navbar from './Navbar';
@@ -15,21 +15,22 @@ import SpecialRequirementsPanel from './SpecialRequirementsPanel';
 import ProficiencyOnboarding from './ProficiencyOnboarding';
 
 export default function Dashboard() {
-  const [data, setData] = useState<StudentData | null>(() => {
-    if (typeof window !== 'undefined') {
-      const saved = sessionStorage.getItem('student_session_data');
-      if (saved) {
-        try {
-          return JSON.parse(saved);
-        } catch (e) {
-          console.error("Failed to parse session data", e);
-        }
-      }
-    }
-    return null;
-  });
+  const [data, setData] = useState<StudentData | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+    const saved = sessionStorage.getItem('student_session_data');
+    if (saved) {
+      try {
+        setData(JSON.parse(saved));
+      } catch (e) {
+        console.error("Failed to parse session data", e);
+      }
+    }
+  }, []);
 
   // 當資料載入時，檢查是否有本地儲存的門檻資訊並合併
   const handleDataLoaded = (freshData: StudentData) => {
@@ -61,6 +62,10 @@ export default function Dashboard() {
       setShowOnboarding(true);
     }
   };
+
+  if (!isMounted) {
+    return null; // Avoid rendering anything until client has hydrated to prevent mismatch
+  }
 
   if (!data) {
     return <LoginForm onSuccess={handleDataLoaded} />;

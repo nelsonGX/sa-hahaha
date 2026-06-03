@@ -152,11 +152,11 @@ export default function RequirementsTree({ details, records, departmentName }: R
             {details.dept_electives && details.non_dept_electives ? (
               <>
                 <SubAccordion title="系所選修" earned={details.dept_electives.earned} target={details.dept_electives.target} defaultOpen>
-                  {buildSlots(electiveRecords.filter(r => r.audit_category === '系選修'), details.dept_electives.target, 'ele-dept', '系選修')
+                  {buildSlots(electiveRecords.filter(r => r.audit_category.includes('系選修')), details.dept_electives.target, 'ele-dept', '系選修')
                     .map(s => <CourseChip key={s.id} slot={s} onClick={setModalSlot} />)}
                 </SubAccordion>
                 <SubAccordion title="外系/自由選修" earned={details.non_dept_electives.earned} target={details.non_dept_electives.target} defaultOpen>
-                  {buildSlots(electiveRecords.filter(r => r.audit_category === '選修'), details.non_dept_electives.target, 'ele-non-dept', '選修')
+                  {buildSlots(electiveRecords.filter(r => !r.audit_category.includes('系選修')), details.non_dept_electives.target, 'ele-other', '外系/自由選修')
                     .map(s => <CourseChip key={s.id} slot={s} onClick={setModalSlot} />)}
                 </SubAccordion>
               </>
